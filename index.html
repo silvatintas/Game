@@ -16,6 +16,7 @@
             --accent-color: #ff7f00;
             --border-color: #444;
             --modal-bg: rgba(0, 0, 0, 0.85);
+            --gemini-glow: #00aaff;
         }
 
         * {
@@ -95,6 +96,16 @@
             transform: scale(1.05);
         }
         
+        /* Botão Gemini */
+        .gemini-btn {
+            background-color: var(--gemini-glow);
+            color: white;
+            box-shadow: 0 0 10px var(--gemini-glow);
+        }
+        .gemini-btn:hover {
+            background-color: #33bbff;
+        }
+        
         .input-field {
             padding: 10px;
             border-radius: 5px;
@@ -106,8 +117,6 @@
             width: 80%;
             max-width: 300px;
         }
-
-        /* --- NOVOS ESTILOS --- */
 
         /* Barra de Status */
         #status-bar {
@@ -164,7 +173,6 @@
             margin: 5px;
         }
 
-        /* Botões de Ação (Inventário, etc) */
         #action-buttons {
             position: absolute;
             top: 60px;
@@ -181,7 +189,6 @@
             margin-bottom: 10px;
         }
 
-        /* Modal Genérico */
         .modal {
             position: absolute;
             top: 0;
@@ -218,7 +225,6 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* Notificação de Evento */
         #event-notification {
             position: absolute;
             top: -100px;
@@ -374,7 +380,7 @@
                 }
                 checkForNarrativeProgression(character, storyEvent) {
                     if (storyEvent.eventType === "IntenseTraining") {
-                        if(character.storyFlags["trained_today"]) return; // Só progride uma vez por dia de treino
+                        if(character.storyFlags["trained_today"]) return;
 
                         const currentProficiencyIndex = this.proficiencyLevels.indexOf(this.proficiency);
                         if (currentProficiencyIndex < this.proficiencyLevels.length - 1 && storyEvent.intensity >= 8) {
@@ -441,34 +447,24 @@
                     storyText: document.getElementById('story-text'),
                     choicesContainer: document.getElementById('choices-container'),
                     notification: document.getElementById('event-notification'),
-                    // Modals
                     inventoryModal: document.getElementById('inventory-modal'),
                     jutsuModal: document.getElementById('jutsu-modal'),
                     trainingModal: document.getElementById('training-modal'),
-                    // Status
                     locationStatus: document.getElementById('location-status'),
                     timeStatus: document.getElementById('time-status'),
                 },
                 
                 init() {
-                    // CORREÇÃO: Usar gameManager explicitamente para evitar problemas de contexto 'this'.
-                    // Navegação inicial
                     document.getElementById('new-game-btn').addEventListener('click', () => gameManager.showScreen('difficulty'));
                     document.querySelectorAll('.difficulty-btn').forEach(btn => {
                         btn.addEventListener('click', (e) => gameManager.selectDifficulty(e.target.dataset.difficulty));
                     });
                     document.getElementById('create-character-btn').addEventListener('click', () => gameManager.createCharacter());
-
-                    // Botões de Ação
                     document.getElementById('inventory-btn').addEventListener('click', () => gameManager.showInventory());
                     document.getElementById('jutsu-btn').addEventListener('click', () => gameManager.showJutsuList());
-
-                    // Botões de Fechar Modals
                     document.getElementById('close-inventory-btn').addEventListener('click', () => gameManager.ui.inventoryModal.classList.add('hidden'));
                     document.getElementById('close-jutsu-btn').addEventListener('click', () => gameManager.ui.jutsuModal.classList.add('hidden'));
                     document.getElementById('cancel-training-btn').addEventListener('click', () => gameManager.ui.trainingModal.classList.add('hidden'));
-                    
-                    // Botões do Modal de Treino
                     document.querySelectorAll('.training-option-btn').forEach(btn => {
                         btn.addEventListener('click', (e) => gameManager.startTraining(parseInt(e.target.dataset.duration)));
                     });
@@ -519,6 +515,9 @@
                         const button = document.createElement('button');
                         button.textContent = choice.text;
                         button.className = 'btn choice-btn';
+                        if (choice.isGemini) {
+                           button.classList.add('gemini-btn');
+                        }
                         button.onclick = () => choice.action();
                         this.ui.choicesContainer.appendChild(button);
                     });
@@ -532,15 +531,57 @@
                     }, 4000);
                 },
 
-                // --- NOVAS MECÂNICAS ---
+                // --- MECÂNICAS GEMINI ---
+                async callGemini(prompt, buttonToDisable) {
+                    if(buttonToDisable) buttonToDisable.disabled = true;
+                    this.ui.storyText.innerHTML += "<p><i>Gerando conteúdo com IA...</i></p>";
+
+                    let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // Chave de API é gerenciada pelo ambiente
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const result = await response.json();
+                        if (result.candidates && result.candidates.length > 0) {
+                            return result.candidates[0].content.parts[0].text;
+                        } else {
+                            return "A IA não conseguiu gerar uma resposta. Tente novamente.";
+                        }
+                    } catch (error) {
+                        return "Erro ao conectar com a IA. Verifique sua conexão.";
+                    } finally {
+                         if(buttonToDisable) buttonToDisable.disabled = false;
+                    }
+                },
+
+                async generateMission(event) {
+                    const prompt = `Gere uma missão ninja de Rank D para um genin chamado ${this.player.name} do clã ${this.player.playerClan.name}. A missão deve ser simples, adequada para um novato, e ter um título, um cliente e uma descrição. Formate a resposta como: **Título:** [título] **Cliente:** [cliente] **Descrição:** [descrição]`;
+                    const missionText = await this.callGemini(prompt, event.target);
+                    this.updateStory(missionText.replace(/\*\*/g, '<b>').replace(/\n/g, '<br>'), [{ text: "Voltar", action: () => this.updateLocation(this.currentLocation) }]);
+                },
+
+                async getNpcAdvice(npcName, event) {
+                    const prompt = `Aja como ${npcName} do universo de Naruto. Dê um conselho sábio e encorajador para um jovem genin chamado ${this.player.name}. O conselho deve ser curto, impactante e fiel ao personagem.`;
+                    const adviceText = await this.callGemini(prompt, event.target);
+                    const dialogue = `<p><b>${npcName}:</b> '${adviceText}'</p>`;
+                    this.updateStory(dialogue, [{ text: "Agradecer", action: () => this.updateLocation(this.currentLocation) }]);
+                },
+
+                // --- MECÂNICAS DO JOGO ---
 
                 advanceTime(periods = 1) {
                     this.currentTimeIndex = (this.currentTimeIndex + periods) % this.timePeriods.length;
-                    if (this.currentTimeIndex === 0) { // Passou para o dia seguinte
+                    if (this.currentTimeIndex === 0) {
                         this.showNotification("Um novo dia começa.");
-                        this.player.storyFlags["trained_today"] = false; // Reseta a flag de treino
+                        this.player.storyFlags["trained_today"] = false;
                     }
-                    this.updateLocation(this.currentLocation); // Atualiza o local com o novo período
+                    this.updateLocation(this.currentLocation);
                 },
 
                 updateLocation(locationName) {
@@ -552,10 +593,11 @@
 
                     switch(locationName) {
                         case 'Apartamento':
-                            text = "<p>Você está em seu apartamento. É um lugar simples, mas familiar.</p>";
+                            text = "<p>Você está em seu apartamento. Há um quadro de missões na parede.</p>";
+                            choices.push({ text: "Gerar Missão ✨", isGemini: true, action: (e) => this.generateMission(e) });
                             choices.push({ text: "Ir para o Campo de Treinamento", action: () => this.updateLocation('Campo de Treinamento') });
                             choices.push({ text: "Dormir (Avançar para Manhã)", action: () => {
-                                this.currentTimeIndex = -1; // -1 para que o advanceTime(1) vire 0
+                                this.currentTimeIndex = -1;
                                 this.advanceTime();
                             }});
                             break;
@@ -563,8 +605,7 @@
                             text = "<p>O campo de treinamento está quieto. O som do vento e dos pássaros é tudo que se ouve.</p>";
                             choices.push({ text: "Treinar", action: () => this.ui.trainingModal.classList.remove('hidden') });
                             
-                            // Lógica de NPC
-                            if (this.currentTimeIndex < 2) { // Manhã ou Tarde
+                            if (this.currentTimeIndex < 2) {
                                 text += "<p>Iruka-sensei está observando alguns genins de longe.</p>";
                                 choices.push({ text: "Falar com Iruka", action: () => this.npcs.iruka.interact() });
                             }
@@ -578,7 +619,7 @@
 
                 startTraining(duration) {
                     this.ui.trainingModal.classList.add('hidden');
-                    let intensity = duration * 2; // Intensidade do evento baseada na duração
+                    let intensity = duration * 2;
                     let text = `<p>Você treina por ${duration} hora(s).</p>`;
 
                     if (duration >= 4) text += "<p>O suor escorre pelo seu rosto, mas você sente seus músculos e seu chakra respondendo ao esforço.</p>";
@@ -592,8 +633,12 @@
                 
                 setupNPCs() {
                     this.npcs.iruka = new NPC("Iruka", () => {
-                        let dialogue = "<p><b>Iruka:</b> 'Olá, " + this.player.name + ". É bom ver você se dedicando tanto ao treinamento. Lembre-se, a força de um ninja não vem apenas dos jutsus, mas do coração e da vontade de proteger seus companheiros.'</p>";
-                        this.updateStory(dialogue, [{ text: "Agradecer", action: () => this.updateLocation(this.currentLocation) }]);
+                        let dialogue = `<p><b>Iruka:</b> 'Olá, ${this.player.name}. O que deseja?'</p>`;
+                        let choices = [
+                            { text: "Pedir Conselho ✨", isGemini: true, action: (e) => this.getNpcAdvice("Iruka", e) },
+                            { text: "Despedir-se", action: () => this.updateLocation(this.currentLocation) }
+                        ];
+                        this.updateStory(dialogue, choices);
                     });
                 },
 
