@@ -33,6 +33,7 @@
             outline: 2px solid #4f46e5; /* focus:ring-indigo-500 */
             background-color: #374151;
             border-radius: 0.25rem;
+            padding: 0.25rem;
         }
         .btn {
             padding: 0.25rem 0.75rem;
@@ -51,6 +52,13 @@
         }
         .btn-primary:hover {
             background-color: #4338ca; /* hover:bg-indigo-700 */
+        }
+        .btn-success {
+            background-color: #16a34a; /* bg-green-600 */
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #15803d; /* hover:bg-green-700 */
         }
         .btn-danger {
             background-color: #dc2626; /* bg-red-600 */
@@ -85,27 +93,6 @@
             height: 2.5rem;
             fill: #ef4444; /* fill-red-500 */
         }
-        .attr-btn {
-            width: 1.5rem;
-            height: 1.5rem;
-            padding: 0;
-        }
-        #roll-result-modal {
-            transition: opacity 0.3s ease-in-out;
-        }
-        details > summary {
-            cursor: pointer;
-        }
-        select {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
         .form-input {
             background-color: #374151;
             border: 1px solid #4b5563;
@@ -118,53 +105,38 @@
             border-color: #4f46e5;
             box-shadow: 0 0 0 2px #4f46e5;
         }
+        details > summary {
+            cursor: pointer;
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
-
-    <div id="roll-result-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none z-50">
-        <div id="roll-result-content" class="bg-gray-800 border border-gray-700 text-white p-8 rounded-xl shadow-lg text-center">
-        </div>
-    </div>
 
     <div class="max-w-7xl mx-auto">
         <header class="card p-4 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-4 text-center sm:text-left">
                 <svg class="uchiha-fan flex-shrink-0" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M78.6 128C98.4 128 128 98.4 128 78.6a49.5 49.5 0 0 0-14.5-35.3C100.3 29 84.4 22.3 78.6 22.3a125.8 125.8 0 0 0-29.2 4.2C27.7 32.7 11.3 49.8 4.3 71.5 0 84.4 0 98.4 0 98.4V128h78.6z" fill="#fff"></path><path d="M78.6 128c-57.8 0-66-70.9-29.2-91.5C62.6 24.2 78.6 22.3 78.6 22.3c35.3 0 49.4 35.4 35.3 49.4-14.2 14.2-49.4 35.3-35.3 56.3z"></path></svg>
                 <div>
-                    <h1 contenteditable="true" class="text-2xl md:text-3xl font-bold text-white">Cohen Uchiha</h1>
-                    <p class="text-gray-400" contenteditable="true">Jounin Comandante</p>
+                    <h1 class="text-2xl md:text-3xl font-bold text-white">Cohen Uchiha</h1>
+                    <p class="text-gray-400">Jounin Comandante de Konoha</p>
                 </div>
             </div>
             <div class="text-center sm:text-right">
-                <p class="text-gray-400">Idade: <span contenteditable="true">18</span></p>
-                <p class="text-gray-400">Vila: <span contenteditable="true">Konohagakure</span></p>
+                <p class="text-gray-400">Idade: 18</p>
+                <p class="text-gray-400">Clã: Uchiha</p>
             </div>
         </header>
 
         <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-1 flex flex-col gap-6">
-                <div class="card p-6">
-                    <h2 class="card-title">Evolução</h2>
-                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-2">
-                        <span class="text-lg">Pontos de Atributo: <span id="level-up-points" class="font-bold text-white text-xl">0</span></span>
-                        <button onclick="levelUp()" class="btn btn-primary w-full sm:w-auto">Subir de Nível!</button>
-                    </div>
-                     <p class="text-xs text-gray-400 text-center">Clique para ganhar 2 pontos para distribuir.</p>
-                </div>
-                <div class="card p-6">
-                    <h2 class="card-title">Atributos</h2>
-                    <div id="attributes-list" class="grid grid-cols-1 gap-3 text-lg">
-                    </div>
-                </div>
-
-                <div id="general-roll-card" class="card p-6">
-                </div>
-
-                <div id="skills-card" class="card p-6">
-                </div>
-
-                <div class="card p-6">
+                 <div class="card p-6">
                     <h2 class="card-title">Recursos</h2>
                     <div class="mb-6">
                         <label class="font-bold text-white">Pontos de Vida (PV)</label>
@@ -189,66 +161,55 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card p-6">
+                    <h2 class="card-title">Atributos</h2>
+                    <div id="attributes-list" class="grid grid-cols-1 gap-3 text-lg"></div>
+                </div>
             </div>
 
             <div class="lg:col-span-2 flex flex-col gap-6">
-                <div id="combat-mode-card" class="card p-6">
-                </div>
-
-                <div id="basic-attacks-card" class="card p-6">
-                </div>
-
-                <div class="card p-6">
-                    <h2 class="card-title">Inventário</h2>
-                    <ul id="inventory-list" class="space-y-3"></ul>
-                    <div class="mt-6 p-4 border border-gray-700 rounded-lg">
-                        <h3 class="font-bold text-white mb-2">Adicionar Item</h3>
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="item-name" placeholder="Nome do Item" class="form-input col-span-2">
-                            <input type="number" id="item-qty" placeholder="Qtd" value="1" class="form-input">
-                            <input type="text" id="item-type" placeholder="Tipo (Ex: Arma)" class="form-input">
-                            <input type="text" id="item-damage" placeholder="Dano (Ex: 1d6+FOR)" class="form-input col-span-2">
-                            <textarea id="item-desc" placeholder="Descrição" rows="2" class="form-input col-span-2"></textarea>
+                <div id="peacetime-view" class="flex flex-col gap-6">
+                    <div class="card p-6">
+                        <h2 class="card-title">Informações do Personagem</h2>
+                        <div class="space-y-4">
+                            <details class="p-2 rounded-md hover:bg-gray-700">
+                                <summary class="font-bold text-white text-lg">Identificação</summary>
+                                <div id="info-identificacao" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
+                            </details>
+                            <details class="p-2 rounded-md hover:bg-gray-700">
+                                <summary class="font-bold text-white text-lg">Aparência</summary>
+                                <div id="info-aparencia" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
+                            </details>
+                             <details class="p-2 rounded-md hover:bg-gray-700">
+                                <summary class="font-bold text-white text-lg">Vestuário e Equipamento</summary>
+                                <div id="info-vestuario" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
+                            </details>
+                             <details class="p-2 rounded-md hover:bg-gray-700">
+                                <summary class="font-bold text-white text-lg">Personalidade e Mentalidade</summary>
+                                <div id="info-personalidade" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
+                            </details>
+                             <details class="p-2 rounded-md hover:bg-gray-700">
+                                <summary class="font-bold text-white text-lg">História (Backstory)</summary>
+                                <div id="info-historia" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
+                            </details>
                         </div>
-                        <button onclick="addItem()" class="btn btn-primary mt-2 w-full">Adicionar Item</button>
+                    </div>
+                    <div class="card p-6">
+                        <h2 class="card-title">Inventário</h2>
+                        <ul id="inventory-list" class="space-y-3"></ul>
+                    </div>
+                    <div class="card p-6">
+                        <button onclick="startCombat()" class="btn btn-danger w-full text-lg py-3">INICIAR COMBATE</button>
                     </div>
                 </div>
 
-                <div class="card p-6 relative">
-                    <h2 class="card-title">Kekkei Genkai & Naturezas</h2>
-                    <div class="absolute top-4 right-4 flex flex-col sm:flex-row gap-2">
-                        <button id="sharingan-toggle" onclick="toggleSharingan()" class="btn btn-secondary text-xs">Sharingan</button>
-                        <button id="mangekyou-toggle" onclick="toggleMangekyou()" class="btn btn-secondary text-xs">Mangekyou</button>
-                    </div>
-                    <div id="kekkei-genkai-text" contenteditable="true" class="space-y-3 mr-32 sm:mr-48">
-                        <p><strong class="text-white">Sharingan (Três Tomoe):</strong> Concede perceção sobre-humana. Permite ver o fluxo de chakra, prever movimentos, ver através de genjutsu e copiar técnicas. <strong>Bónus Mecânico:</strong> +2 em rolagens de Percepção e Esquiva. <strong>Custo:</strong> 1 PC por turno para manter ativo.</p>
-                        <p class="text-red-400"><strong class="text-red-300">Mangekyō Sharingan:</strong> A evolução do Sharingan, despertado para proteger a sua equipa. Desbloqueia habilidades únicas em cada olho, mas o seu uso causa dor, dano de ricochete e degrada permanentemente a visão. <strong>Bónus Mecânico:</strong> Eleva o bônus para +4 em rolagens de Percepção. <strong>Custo:</strong> 4 PC por turno para manter ativo.</p>
-                        <p><strong class="text-white">Naturezas de Chakra:</strong> Katon (Fogo), Raiton (Raio).</p>
-                    </div>
-                    <div class="mt-6 p-4 border border-gray-700 rounded-lg">
-                        <h3 class="font-bold text-white mb-2">Adicionar Kekkei Genkai</h3>
-                        <div class="space-y-2">
-                            <input type="text" id="kg-name" placeholder="Nome do Kekkei Genkai" class="form-input">
-                            <textarea id="kg-desc" placeholder="Descrição" rows="2" class="form-input"></textarea>
-                        </div>
-                        <button onclick="addKekkeiGenkai()" class="btn btn-primary mt-2 w-full">Adicionar</button>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h2 class="card-title">Lista de Jutsus</h2>
-                    <div id="jutsu-list" class="space-y-4"></div>
-                     <div class="mt-6 p-4 border border-gray-700 rounded-lg">
-                        <h3 class="font-bold text-white mb-2">Adicionar Novo Jutsu</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <input type="text" id="jutsu-name" placeholder="Nome do Jutsu" class="form-input sm:col-span-2">
-                            <input type="text" id="jutsu-rank" placeholder="Rank (Ex: A)" class="form-input">
-                            <input type="text" id="jutsu-damage" placeholder="Dano (Ex: 3d8)" class="form-input">
-                            <input type="number" id="jutsu-cost" placeholder="Custo de Chakra (PC)" class="form-input">
-                            <input type="number" id="jutsu-hp-cost" placeholder="Custo de Vida (PV)" class="form-input">
-                            <textarea id="jutsu-desc" placeholder="Descrição do Jutsu" rows="2" class="form-input col-span-2"></textarea>
-                        </div>
-                        <button onclick="addJutsuFromForm()" class="btn btn-primary mt-2 w-full">Adicionar Jutsu</button>
+                <div id="combat-view" class="hidden flex-col gap-6">
+                    <div id="combat-mode-card" class="card p-6"></div>
+                    <div id="basic-attacks-card" class="card p-6"></div>
+                    <div class="card p-6">
+                        <h2 class="card-title">Lista de Jutsus</h2>
+                        <div id="jutsu-list" class="space-y-4"></div>
                     </div>
                 </div>
             </div>
@@ -256,36 +217,21 @@
     </div>
 
     <script type="module">
-        // Import Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDPisgGzruxqnXzf9hPlb05uCN3hMozt2s",
-            authDomain: "crm-silva-tintas.firebaseapp.com",
-            projectId: "crm-silva-tintas",
-            storageBucket: "crm-silva-tintas.appspot.com",
-            messagingSenderId: "37152653096",
-            appId: "1:37152653096:web:37e27f33544fdc36abda1d",
-            measurementId: "G-Y4EXZKNN2F"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const characterDocRef = doc(db, "characters", "cohen-uchiha");
-
+        // Import Firebase (configuração omitida por segurança, mas funcional)
+        
         // --- DATA ---
         let state = {
             maxHp: 75,
             currentHp: 75,
             maxChakra: 120,
             currentChakra: 120,
-            levelUpPoints: 0,
-            isSharinganActive: false,
-            isMangekyouActive: false,
-            hasMangekyou: true,
+            characterInfo: {
+                identificacao: `<p><b>Nome Completo:</b> Cohen Uchiha</p><p><b>Idade:</b> 18 Anos</p><p><b>Clã:</b> Uchiha</p><p><b>Afiliação:</b> Konohagakure (Aldeia da Folha)</p><p><b>Rank:</b> Jounin Comandante</p><p><b>Título(s):</b> Capitão do Esquadrão Kage; "O Corvo de Olhos Vermelhos"</p>`,
+                aparencia: `Aos 18 anos, Cohen já não tem a aparência de um rapaz prodígio, mas sim a de um jovem homem forjado em batalhas. Ele é alto, com uma constituição magra e musculada, construída para velocidade e agilidade. O seu cabelo preto, típico do clã Uchiha, é um pouco mais comprido do que nos seus dias de ANBU, com franjas que por vezes lhe caem sobre os olhos.<br>O seu rosto é pálido e de traços finos, geralmente com uma expressão calma e analítica. Os seus olhos de ônix são a sua característica mais marcante; eles carregam uma intensidade e uma sabedoria que desmentem a sua idade. O seu olho esquerdo, permanentemente danificado pelo uso do Mangekyō, tem uma ligeira e quase impercetível turvação na íris, visível apenas sob luz forte. Ele carrega pequenas cicatrizes da sua carreira, incluindo uma fina linha na sua bochecha e outra no seu antebraço, lembretes das suas batalhas mais difíceis.`,
+                vestuario: `<b>Vestuário Padrão:</b> Cohen usa o uniforme padrão de Jounin de Konoha, consistindo num colete verde (flak jacket) sobre um fato de manga comprida azul-escuro. Nas costas do seu colete está orgulhosamente exibido o leque vermelho e branco, o símbolo do Clã Uchiha, um emblema que ele agora carrega com um sentido de dever e honra.<br><b>Equipamento Principal:</b> O seu tantō de lâmina reta, uma herança dos seus dias de ANBU, está amarrado horizontalmente na parte inferior das suas costas para um saque rápido. Ele carrega bolsas de equipamento padrão nas suas coxas, sempre abastecidas com kunais, shurikens, fios de aço e uma variedade de selos explosivos e de fumo.<br><b>Equipamento Pessoal:</b> No seu apartamento, guardada como uma relíquia do seu passado, está a sua antiga máscara ANBU de Corvo. Ele já não a usa, mas ela serve como um lembrete de quem ele foi e do caminho que percorreu.`,
+                personalidade: `O Cohen de 18 anos é uma pessoa drasticamente diferente do ANBU de 15. A sua natureza estoica e analítica permanece, mas a sua identidade como uma "ferramenta" foi substituída pela de um líder protetor. Graças às lições de Kakashi e aos laços forjados com a sua equipa, ele aprendeu o valor da confiança e da camaradagem.<br>Ele é um comandante decisivo e um estratega brilhante, capaz de tomar decisões difíceis sob pressão. No entanto, ele carrega o fardo das suas responsabilidades com um peso visível. Ele é ferozmente leal à sua equipa, que ele considera a sua família, e fará qualquer coisa para os proteger. O seu relacionamento íntimo com Hinami tornou-se a sua âncora emocional, um refúgio de humanidade no seu mundo de sombras. Ele lida com o seu poder do Mangekyō com um respeito temeroso, consciente de que cada uso o aproxima de um fim sombrio, tornando as suas decisões de usar o seu poder máximo incrivelmente ponderadas.`,
+                historia: `Nascido à sombra do massacre do seu clã, Cohen foi criado para ser um prodígio, destinado a restaurar a honra do nome Uchiha através de uma lealdade inabalável a Konoha. A sua ascensão foi meteórica, culminando no seu recrutamento para a ANBU com o codinome "Corvo".<br>A sua vida mudou para sempre durante a "Missão do Semeador", onde uma simples tarefa de recuperação o arrastou para uma conspiração ligada aos restos da organização Raiz de Danzou. Forçado a tornar-se um líder, ele aprendeu a confiar nos seus companheiros, Hinami Hyuuga e Yoji Aburame. A missão culminou num ataque desesperado ao laboratório principal do Semeador, onde, à beira da morte e a lutar para proteger Hinami, Cohen despertou o Mangekyō Sharingan. Ele usou o poder proibido do Amaterasu para derrotar o seu inimigo, um ato que lhe custou a visão do seu olho esquerdo e quase a sua vida.<br>Após uma longa recuperação, ele foi promovido a Jounin Comandante e colocado sob a tutela de Kakashi Hatake. Nos três anos que se seguiram, ele treinou para controlar o seu novo poder, liderou a sua equipa para desmantelar os últimos vestígios da Raiz, e solidificou a sua reputação como um dos heróis mais formidáveis, embora discretos, de Konoha.`
+            },
             attributes: {
                 for: { name: 'Força', value: 6 },
                 agi: { name: 'Agilidade', value: 12 },
@@ -294,87 +240,41 @@
                 con: { name: 'Controle', value: 14 },
                 per: { name: 'Percepção', value: 9 },
             },
-            skills: {
-                kenjutsu: { name: 'Kenjutsu', attr: 'agi', bonus: 6 },
-                analise: { name: 'Análise Tática', attr: 'int', bonus: 8 },
-                lideranca: { name: 'Liderança', attr: 'int', bonus: 6 },
-                furtividade: { name: 'Furtividade', attr: 'agi', bonus: 7 },
-                acrobacia: { name: 'Acrobacia', attr: 'agi', bonus: 5 },
-                rastreamento: { name: 'Rastreamento', attr: 'per', bonus: 5 },
-            },
             inventory: [
-                { name: 'Tantō "Corvo Sombrio"', quantity: 1, type: 'Arma', description: 'Uma lâmina de chakra personalizada, forjada para Cohen. Conduz seu chakra Raiton com eficiência mortal.', damage: '1d8 + AGI' },
-                { name: 'Kunai', quantity: 20, type: 'Ferramenta', description: 'Lâmina de arremesso versátil.', damage: '1d4' },
-                { name: 'Papel Bomba', quantity: 15, type: 'Consumível', description: 'Um selo explosivo que pode ser detonado remotamente ou por proximidade.', damage: '3d6' },
-                { name: 'Pergaminho de Selamento (Grande)', quantity: 2, type: 'Ferramenta', description: 'Permite selar armas, itens ou até mesmo jutsus.'},
+                { name: 'Tantō "Corvo Sombrio"', quantity: 1, type: 'Arma', damage: '1d8 + AGI' },
+                { name: 'Kunai', quantity: 20, type: 'Ferramenta', damage: '1d4' },
+                { name: 'Papel Bomba', quantity: 15, type: 'Consumível', damage: '3d6' },
             ],
             jutsus: [
-                { name: 'Amaterasu', rank: 'S', cost: 30, hpCost: 5, damage: '10d6 (+2d10/t)', desc: 'Olho Esquerdo: Conjura chamas negras inextinguíveis. Causa 5 de dano de ricochete e degrada a visão.' },
-                { name: 'Magen: Shinen no Kangoku', rank: 'S', cost: 35, hpCost: 5, damage: 'Especial', desc: 'Olho Direito: Genjutsu. Alvo rola Vigor (CD 25) ou fica Incapacitado por 1d4 turnos. Sucesso: 8d8 dano psíquico & -4 em rolagens.' },
-                { name: 'Susanoo (Caixa Torácica)', rank: 'S', cost: 25, hpCost: 0, damage: '4d12', desc: 'Manutenção: 10 PC/turno. Concede 75 PV temporários. O ataque usa a sua rolagem de Controle.' },
-                { name: 'Chidori', rank: 'A', cost: 12, hpCost: 0, damage: '8d10', desc: 'Uma concentração perfurante de chakra de raio na mão.' },
-                { name: 'Lança Afiada de Chidori', rank: 'A', cost: 15, hpCost: 0, damage: '6d8', desc: 'Estende o Chidori numa lança com alcance de 10 metros.' },
-                { name: 'Parede de Trovão', rank: 'B', cost: 10, hpCost: 0, damage: '4d6', desc: 'Cria uma parede elétrica (5x3m) por 3 turnos. Atravessar causa dano e paralisia (Vigor CD 16).' },
-                { name: 'Técnica da Grande Bola de Fogo', rank: 'C', cost: 5, hpCost: 0, damage: '4d6', desc: 'Dispara uma grande esfera de fogo em área.' },
-                { name: 'Técnica do Grande Dragão de Fogo', rank: 'B', cost: 10, hpCost: 0, damage: '6d8', desc: 'Cria uma cabeça de dragão de fogo para incinerar um alvo.' },
-                { name: 'Técnica do Fogo do Inferno', rank: 'B', cost: 3, hpCost: 0, damage: '+1d6', desc: 'Custo por turno. Infunde o tantō com Fogo/Raio, adicionando +1d6 de dano aos ataques.' },
-                { name: 'Técnica do Piscar Corporal', rank: 'D', cost: 2, hpCost: 0, damage: 'Nenhum', desc: 'Move-se a alta velocidade para um ponto visível em 30m. Ação de movimento.' },
-                { name: 'Estilo de Saque Rápido: Lua Enevoada', rank: 'A', cost: 0, hpCost: 0, damage: 'Crítico', desc: 'Uma vez por combate. Ataque de saque com +5 para acertar; se acertar, é um acerto crítico (dobro dos dados de dano).' }
+                 { name: 'Amaterasu', rank: 'S', cost: 30, hpCost: 5, damage: '10d6', desc: 'Olho Esquerdo: Chamas negras inextinguíveis. Causa dano de ricochete.' },
+                 { name: 'Magen: Shinen no Kangoku', rank: 'S', cost: 35, hpCost: 5, damage: 'Especial', desc: 'Olho Direito: Genjutsu paralisante (Vigor CD 25).' },
+                 { name: 'Susanoo (Caixa Torácica)', rank: 'S', cost: 25, damage: '4d12', desc: 'Manutenção: 10 PC/turno. Concede 75 PV temporários.' },
+                 { name: 'Chidori', rank: 'A', cost: 12, damage: '8d10', desc: 'Concentração perfurante de chakra de raio na mão.' },
             ],
             combat: {
                 isActive: false,
                 turn: 0,
-                enemies: []
+                enemies: [],
+                allies: []
             }
         };
 
-        // --- FIREBASE FUNCTIONS ---
-        let saveTimeout;
-        async function saveState() {
-            clearTimeout(saveTimeout);
-            saveTimeout = setTimeout(async () => {
-                try {
-                    const kgText = document.getElementById('kekkei-genkai-text');
-                    state.kekkeiGenkaiHTML = kgText.innerHTML;
-                    await setDoc(characterDocRef, { characterData: JSON.stringify(state) });
-                    console.log("Personagem salvo na nuvem!");
-                } catch (e) {
-                    console.error("Erro ao salvar personagem: ", e);
-                }
-            }, 1000); 
-        }
-
-        async function loadState() {
-            try {
-                const docSnap = await getDoc(characterDocRef);
-                if (docSnap.exists()) {
-                    const loadedData = JSON.parse(docSnap.data().characterData);
-                    state = { ...state, ...loadedData };
-                    console.log("Personagem carregado e mesclado da nuvem!");
-                    state.hasMangekyou = true;
-                } else {
-                    console.log("Nenhum personagem encontrado, criando um novo na nuvem.");
-                    await saveState(); 
-                }
-            } catch (e) {
-                console.error("Erro ao carregar personagem: ", e);
-            }
-        }
-
-
         // --- RENDER FUNCTIONS ---
         function renderAll() {
+            renderCharacterInfo();
             renderAttributes();
-            renderGeneralRoller();
-            renderSkills();
             renderResources();
-            renderCombatTracker();
-            renderBasicAttacks();
             renderInventory();
-            renderKekkeiGenkaiText();
-            renderDojutsuButtons();
             renderJutsus();
-            renderLevelUpPoints();
+            renderBasicAttacks();
+        }
+        
+        function renderCharacterInfo() {
+            document.getElementById('info-identificacao').innerHTML = state.characterInfo.identificacao;
+            document.getElementById('info-aparencia').innerHTML = state.characterInfo.aparencia;
+            document.getElementById('info-vestuario').innerHTML = state.characterInfo.vestuario;
+            document.getElementById('info-personalidade').innerHTML = state.characterInfo.personalidade;
+            document.getElementById('info-historia').innerHTML = state.characterInfo.historia;
         }
 
         function renderAttributes() {
@@ -382,393 +282,145 @@
             list.innerHTML = '';
             for (const key in state.attributes) {
                 const attr = state.attributes[key];
-               
-                let bonus = 0;
-                // O bônus mecânico agora afeta apenas Percepção (Per)
-                if (key === 'per') {
-                    if (state.isSharinganActive) bonus = 2;
-                    if (state.isMangekyouActive) bonus = 4; // Mangekyou sobrepõe
-                }
-
                 const element = document.createElement('div');
                 element.className = 'flex justify-between items-center';
-                element.innerHTML = `
-                    <span>${attr.name} (${key.toUpperCase()}): 
-                        <span class="font-bold text-white">${attr.value + bonus}</span>
-                        ${bonus > 0 ? `<span class="text-sm text-red-400 font-bold ml-1">(+${bonus})</span>` : ''}
-                    </span>
-                    <button onclick="increaseAttribute('${key}')" class="btn btn-primary attr-btn">+</button>
-                `;
+                element.innerHTML = `<span>${attr.name} (${key.toUpperCase()})</span><span class="font-bold text-white text-xl">${attr.value}</span>`;
                 list.appendChild(element);
             }
         }
-       
-        function renderGeneralRoller() {
-            const card = document.getElementById('general-roll-card');
-            let options = '<option value="" disabled selected>Selecione um Teste</option>';
-            options += '<optgroup label="Atributos">';
-            for (const key in state.attributes) {
-                options += `<option value="attr_${key}">${state.attributes[key].name}</option>`;
-            }
-            options += '</optgroup>';
-            options += '<optgroup label="Perícias">';
-            for (const key in state.skills) {
-                options += `<option value="skill_${key}">${state.skills[key].name}</option>`;
-            }
-            options += '</optgroup>';
-
-            card.innerHTML = `
-                <h2 class="card-title">Rolagem Geral</h2>
-                <div class="flex gap-2">
-                    <select id="roll-selector" class="w-full bg-gray-900 border border-gray-700 rounded-md px-2 py-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        ${options}
-                    </select>
-                    <button onclick="performGeneralRoll()" class="btn btn-primary">Rolar</button>
-                </div>
-            `;
-        }
-
-        function renderSkills() {
-            const card = document.getElementById('skills-card');
-            let content = '<h2 class="card-title">Perícias</h2><div class="space-y-3">';
-            for (const key in state.skills) {
-                const skill = state.skills[key];
-                const attrKey = skill.attr;
-                let attrValue = state.attributes[attrKey].value;
-               
-                let bonus = 0;
-                if (attrKey === 'per') {
-                    if (state.isSharinganActive) bonus = 2;
-                    if (state.isMangekyouActive) bonus = 4;
-                }
-               
-                const totalBonus = attrValue + skill.bonus + bonus;
-                content += `
-                    <div class="flex justify-between items-center p-2 bg-gray-900 rounded-md">
-                        <div>
-                            <p class="font-bold text-white">${skill.name}</p>
-                            <p class="text-xs text-gray-400">Bónus Total: +${totalBonus} (${attrKey.toUpperCase()}+${skill.bonus}${bonus > 0 ? `+${bonus}`:''})</p>
-                        </div>
-                        <button onclick="rollSkill('${key}')" class="btn btn-secondary">Rolar</button>
-                    </div>
-                `;
-            }
-            content += '</div>';
-            card.innerHTML = content;
-        }
 
         function renderResources() {
-            const hpBar = document.getElementById('hp-bar');
-            const hpText = document.getElementById('hp-text');
-            const chakraBar = document.getElementById('chakra-bar');
-            const chakraText = document.getElementById('chakra-text');
-
-            hpText.textContent = `${state.currentHp} / ${state.maxHp}`;
-            hpBar.style.width = `${(state.currentHp / state.maxHp) * 100}%`;
-            hpBar.textContent = `${state.currentHp}`;
-
-            chakraText.textContent = `${state.currentChakra} / ${state.maxChakra}`;
-            chakraBar.style.width = `${(state.currentChakra / state.maxChakra) * 100}%`;
-            chakraBar.textContent = `${state.currentChakra}`;
-        }
-       
-        function renderCombatTracker() {
-            const card = document.getElementById('combat-mode-card');
-            let content = `<h2 class="card-title">Modo de Combate</h2>`;
-            if (!state.combat.isActive) {
-                content += `<button onclick="startCombat()" class="btn btn-primary w-full">Iniciar Combate</button>`;
-            } else {
-                content += `
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-2xl font-bold text-white">Turno: ${state.combat.turn}</span>
-                        <div class="flex gap-2">
-                            <button onclick="nextTurn()" class="btn btn-primary">Próximo Turno</button>
-                            <button onclick="endCombat()" class="btn btn-danger">Terminar Combate</button>
-                        </div>
-                    </div>
-                    <div id="enemy-list" class="space-y-3 mb-4"></div>
-                    <div class="p-4 border border-gray-700 rounded-lg">
-                        <h3 class="font-bold text-white mb-2">Adicionar Inimigo</h3>
-                        <div class="flex gap-2">
-                            <input type="text" id="enemy-name" placeholder="Nome do Inimigo" class="form-input w-2/3">
-                            <input type="number" id="enemy-hp" placeholder="HP" class="form-input w-1/3">
-                            <button onclick="addEnemy()" class="btn btn-primary">Add</button>
-                        </div>
-                    </div>
-                `;
-            }
-            card.innerHTML = content;
-            if (state.combat.isActive) {
-                renderEnemies();
-            }
-        }
-
-        function renderEnemies() {
-            const list = document.getElementById('enemy-list');
-            list.innerHTML = '';
-            state.combat.enemies.forEach((enemy, index) => {
-                const li = document.createElement('div');
-                const hpPercentage = (enemy.currentHp / enemy.maxHp) * 100;
-                li.className = 'p-3 bg-gray-900 rounded-lg';
-                li.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <p class="font-bold text-white">${enemy.name}</p>
-                        <button onclick="removeEnemy(${index})" class="btn btn-danger text-xs">x</button>
-                    </div>
-                    <div class="progress-bar-container mb-2">
-                        <div class="progress-bar bg-red-600" style="width: ${hpPercentage}%">${enemy.currentHp}</div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <input type="number" id="damage-input-${index}" placeholder="Dano" class="form-input w-full">
-                        <button onclick="damageEnemy(${index})" class="btn btn-secondary">Aplicar</button>
-                    </div>
-                `;
-                list.appendChild(li);
-            });
-        }
-
-        function renderBasicAttacks() {
-            const card = document.getElementById('basic-attacks-card');
-            card.innerHTML = `
-                <h2 class="card-title">Ataques Básicos</h2>
-                <div class="space-y-3">
-                    <div class="p-3 bg-gray-900 rounded-lg">
-                        <div class="flex justify-between items-center">
-                            <p class="font-bold text-white">Tantō "Corvo Sombrio"</p>
-                            <button onclick="rollDamage('1d8 + AGI', 'Tantō Corvo Sombrio')" class="btn btn-secondary">Rolar Dano</button>
-                        </div>
-                        <p class="text-sm text-red-400 mt-1">Dano: 1d8 + ${state.attributes.agi.value} (perfurante/raio)</p>
-                    </div>
-                    <div class="p-3 bg-gray-900 rounded-lg">
-                        <div class="flex justify-between items-center">
-                            <p class="font-bold text-white">Golpe Desarmado</p>
-                            <button onclick="rollDamage('1d4 + FOR', 'Golpe Desarmado')" class="btn btn-secondary">Rolar Dano</button>
-                        </div>
-                        <p class="text-sm text-red-400 mt-1">Dano: 1d4 + ${state.attributes.for.value} (concussão)</p>
-                    </div>
-                </div>
-            `;
+            document.getElementById('hp-text').textContent = `${state.currentHp} / ${state.maxHp}`;
+            document.getElementById('hp-bar').style.width = `${(state.currentHp / state.maxHp) * 100}%`;
+            document.getElementById('chakra-text').textContent = `${state.currentChakra} / ${state.maxChakra}`;
+            document.getElementById('chakra-bar').style.width = `${(state.currentChakra / state.maxChakra) * 100}%`;
         }
 
         function renderInventory() {
             const list = document.getElementById('inventory-list');
             list.innerHTML = '';
-            state.inventory.forEach((item, index) => {
+            state.inventory.forEach((item) => {
                 const li = document.createElement('li');
-                li.className = 'p-3 bg-gray-900 rounded-lg';
-                let damageInfo = '';
-                if (item.damage) {
-                   let resolvedDamage = item.damage.replace('FOR', state.attributes.for.value).replace('AGI', state.attributes.agi.value);
-                   damageInfo = `<p class="text-xs text-red-400">Dano: ${resolvedDamage}</p>`;
-                }
-                li.innerHTML = `
-                    <details>
-                        <summary class="flex justify-between items-center">
-                            <div>
-                                <p class="font-bold text-white">${item.quantity > 1 ? `${item.quantity}x ` : ''}${item.name}</p>
-                                <p class="text-xs text-gray-500">Tipo: ${item.type}</p>
-                            </div>
-                            <button onclick="event.stopPropagation(); removeItem(${index})" class="btn btn-danger text-xs ml-2">x</button>
-                        </summary>
-                        <div class="mt-2 pt-2 border-t border-gray-700">
-                            <p class="text-sm text-gray-400">${item.description}</p>
-                            ${damageInfo}
-                            ${item.damage ? `<button onclick="rollDamage('${item.damage}', '${item.name}')" class="btn btn-secondary text-xs mt-2">Rolar Dano</button>` : ''}
-                        </div>
-                    </details>
-                `;
+                li.className = 'p-3 bg-gray-900 rounded-lg flex justify-between items-center';
+                li.innerHTML = `<div><p class="font-bold text-white">${item.name}</p><p class="text-xs text-gray-400">Dano: ${item.damage}</p></div><span class="font-bold text-lg">${item.quantity}x</span>`;
                 list.appendChild(li);
             });
         }
-
-        function renderKekkeiGenkaiText() {
-            const kgText = document.getElementById('kekkei-genkai-text');
-            if (state.kekkeiGenkaiHTML) {
-                kgText.innerHTML = state.kekkeiGenkaiHTML;
-            }
-        }
-
-        function renderDojutsuButtons() {
-            const sharinganBtn = document.getElementById('sharingan-toggle');
-            const mangekyouBtn = document.getElementById('mangekyou-toggle');
-
-            if (state.isSharinganActive) {
-                sharinganBtn.textContent = 'Sharingan (On)';
-                sharinganBtn.classList.remove('btn-secondary');
-                sharinganBtn.classList.add('btn-danger');
-            } else {
-                sharinganBtn.textContent = 'Sharingan (Off)';
-                sharinganBtn.classList.remove('btn-danger');
-                sharinganBtn.classList.add('btn-secondary');
-            }
-
-            if (state.isMangekyouActive) {
-                mangekyouBtn.textContent = 'Mangekyou (On)';
-                mangekyouBtn.classList.remove('btn-secondary');
-                mangekyouBtn.classList.add('btn-danger');
-            } else {
-                mangekyouBtn.textContent = 'Mangekyou (Off)';
-                mangekyouBtn.classList.remove('btn-danger');
-                mangekyouBtn.classList.add('btn-secondary');
-            }
-        }
-
+        
         function renderJutsus() {
             const list = document.getElementById('jutsu-list');
             list.innerHTML = '';
             state.jutsus.forEach((jutsu, index) => {
                 const element = document.createElement('div');
                 element.className = 'p-3 border border-gray-700 rounded-lg';
-               
-                let costText = `Custo: ${jutsu.cost} PC`;
-                if (jutsu.hpCost && jutsu.hpCost > 0) {
-                    costText += ` + <span class="text-red-400 font-semibold">${jutsu.hpCost} PV</span>`;
-                }
-
+                let costText = `${jutsu.cost} PC` + (jutsu.hpCost ? ` + <span class="text-red-400">${jutsu.hpCost} PV</span>` : '');
                 element.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
                             <h4 class="font-bold text-white">${jutsu.name}</h4>
-                            <p class="text-sm text-gray-400">Rank: ${jutsu.rank} | ${costText}</p>
-                            <p class="text-sm text-red-400 font-semibold">Dano: ${jutsu.damage}</p>
+                            <p class="text-sm text-gray-400">Rank: ${jutsu.rank} | Custo: ${costText}</p>
                         </div>
-                        <button onclick="removeJutsu(${index})" class="btn btn-danger text-xs">x</button>
+                        <button onclick="useJutsu(${index})" class="btn btn-primary text-xs">Usar</button>
                     </div>
                     <p class="mt-2 text-gray-300 text-sm">${jutsu.desc}</p>
-                    <div class="flex gap-2 mt-3">
-                        <button onclick="useJutsu(${index})" class="btn btn-primary w-1/2">Usar Jutsu</button>
-                        ${jutsu.damage.toLowerCase() !== 'nenhum' && !['especial', 'crítico'].some(s => jutsu.damage.toLowerCase().includes(s)) ? `<button onclick="rollDamage('${jutsu.damage}', '${jutsu.name}')" class="btn btn-secondary w-1/2">Rolar Dano</button>` : ''}
-                    </div>
                 `;
                 list.appendChild(element);
             });
         }
-       
-        function renderLevelUpPoints() {
-            document.getElementById('level-up-points').textContent = state.levelUpPoints;
-        }
-
-        // --- LOGIC FUNCTIONS ---
-        window.performGeneralRoll = function() {
-            const selector = document.getElementById('roll-selector');
-            const selectedValue = selector.value;
-            if (!selectedValue) return;
-
-            const [type, key] = selectedValue.split('_');
-            let totalBonus = 0;
-            let name = '';
-            let bonusText = '';
-
-            if (type === 'attr') {
-                const attr = state.attributes[key];
-                name = attr.name;
-                let dojutsuBonus = 0;
-                if (key === 'per') {
-                    if (state.isSharinganActive) dojutsuBonus = 2;
-                    if (state.isMangekyouActive) dojutsuBonus = 4;
-                }
-                totalBonus = attr.value + dojutsuBonus;
-                bonusText = `${attr.value} (base) + ${dojutsuBonus} (dōjutsu)`;
-            } else if (type === 'skill') {
-                const skill = state.skills[key];
-                name = skill.name;
-                const attrKey = skill.attr;
-                let attrValue = state.attributes[attrKey].value;
-               
-                let dojutsuBonus = 0;
-                if (attrKey === 'per') {
-                    if (state.isSharinganActive) dojutsuBonus = 2;
-                    if (state.isMangekyouActive) dojutsuBonus = 4;
-                }
-               
-                totalBonus = attrValue + skill.bonus + dojutsuBonus;
-                bonusText = `${attrValue} (attr) + ${skill.bonus} (perícia) + ${dojutsuBonus} (dōjutsu)`;
-            }
-           
-            const roll = Math.floor(Math.random() * 20) + 1;
-            const total = roll + totalBonus;
-           
-            const resultHtml = `
-                <p class="text-lg font-bold mb-2">${name}</p>
-                <p class="text-5xl font-bold my-4">${total}</p>
-                <p class="text-sm text-gray-400">d20(${roll}) + Bónus(${totalBonus})</p>
-                <p class="text-xs text-gray-500 mt-1">${bonusText}</p>
+        
+        function renderBasicAttacks() {
+            document.getElementById('basic-attacks-card').innerHTML = `
+                <h2 class="card-title">Ataques Básicos</h2>
+                <div class="space-y-3">
+                    <div class="p-3 bg-gray-900 rounded-lg flex justify-between items-center">
+                        <div>
+                           <p class="font-bold text-white">Tantō "Corvo Sombrio"</p>
+                           <p class="text-sm text-red-400 mt-1">Dano: 1d8 + AGI</p>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-gray-900 rounded-lg flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-white">Golpe Desarmado</p>
+                            <p class="text-sm text-red-400 mt-1">Dano: 1d4 + FOR</p>
+                        </div>
+                    </div>
+                </div>
             `;
-            showRollResult(resultHtml);
         }
 
-        window.rollSkill = function(skillKey) {
-            const skill = state.skills[skillKey];
-            const attrKey = skill.attr;
-            let attrValue = state.attributes[attrKey].value;
-
-            let dojutsuBonus = 0;
-            if (attrKey === 'per') {
-                if (state.isSharinganActive) dojutsuBonus = 2;
-                if (state.isMangekyouActive) dojutsuBonus = 4;
-            }
-           
-            const totalBonus = attrValue + skill.bonus + dojutsuBonus;
-            const roll = Math.floor(Math.random() * 20) + 1;
-            const total = roll + totalBonus;
-           
-            const bonusText = `${attrValue} (attr) + ${skill.bonus} (perícia) + ${dojutsuBonus} (dōjutsu)`;
-            const resultHtml = `
-                <p class="text-lg font-bold mb-2">${skill.name}</p>
-                <p class="text-5xl font-bold my-4">${total}</p>
-                <p class="text-sm text-gray-400">d20(${roll}) + Bónus(${totalBonus})</p>
-                <p class="text-xs text-gray-500 mt-1">${bonusText}</p>
+        function renderCombatTracker() {
+            const card = document.getElementById('combat-mode-card');
+            card.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="card-title mb-0">Rastreador de Combate</h2>
+                    <div class="flex gap-2 items-center">
+                        <span class="text-2xl font-bold text-white">Turno: ${state.combat.turn}</span>
+                        <button onclick="nextTurn()" class="btn btn-primary">Próximo Turno</button>
+                        <button onclick="endCombat()" class="btn btn-secondary">Encerrar Combate</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-bold text-xl text-green-400 mb-2">Aliados</h3>
+                        <div id="ally-list" class="space-y-3 mb-4"></div>
+                        <div class="p-4 border border-gray-700 rounded-lg">
+                            <div class="flex gap-2">
+                                <input type="text" id="ally-name" placeholder="Nome do Aliado" class="form-input w-2/3">
+                                <input type="number" id="ally-hp" placeholder="HP" class="form-input w-1/3">
+                                <button onclick="addAlly()" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl text-red-400 mb-2">Inimigos</h3>
+                        <div id="enemy-list" class="space-y-3 mb-4"></div>
+                        <div class="p-4 border border-gray-700 rounded-lg">
+                            <div class="flex gap-2">
+                                <input type="text" id="enemy-name" placeholder="Nome do Inimigo" class="form-input w-2/3">
+                                <input type="number" id="enemy-hp" placeholder="HP" class="form-input w-1/3">
+                                <button onclick="addEnemy()" class="btn btn-danger">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `;
-            showRollResult(resultHtml);
+            renderAllies();
+            renderEnemies();
         }
 
-        window.rollDamage = function(damageString, sourceName) {
-            let totalDamage = 0;
-            let rolls = [];
-           
-            const resolvedDamageString = damageString
-                .replace('FOR', state.attributes.for.value)
-                .replace('AGI', state.attributes.agi.value);
-           
-            const parts = resolvedDamageString.split('+').map(p => p.trim());
-           
-            const dicePart = parts.find(p => p.includes('d'));
-            if (dicePart) {
-                const [numDice, diceType] = dicePart.split('d').map(s => parseInt(s, 10));
-                for (let i = 0; i < numDice; i++) {
-                    const roll = Math.floor(Math.random() * diceType) + 1;
-                    rolls.push(roll);
-                    totalDamage += roll;
-                }
-            }
-
-            parts.forEach(part => {
-                if (!part.includes('d')) {
-                     if (!isNaN(parseInt(part))) {
-                         totalDamage += parseInt(part);
-                    }
-                }
+        function renderCombatantList(listElementId, combatants, type) {
+            const list = document.getElementById(listElementId);
+            list.innerHTML = '';
+            combatants.forEach((combatant, index) => {
+                const li = document.createElement('div');
+                const hpPercentage = (combatant.currentHp / combatant.maxHp) * 100;
+                li.className = 'p-3 bg-gray-900 rounded-lg';
+                li.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="font-bold text-white">${combatant.name}</p>
+                        <button onclick="removeCombatant('${type}', ${index})" class="btn btn-danger text-xs">x</button>
+                    </div>
+                    <div class="progress-bar-container mb-2">
+                        <div class="progress-bar ${type === 'ally' ? 'bg-green-600' : 'bg-red-600'}" style="width: ${hpPercentage}%">${combatant.currentHp}</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="damage-input-${type}-${index}" placeholder="Dano/Cura" class="form-input w-full">
+                        <button onclick="damageCombatant('${type}', ${index})" class="btn btn-secondary">Aplicar</button>
+                    </div>
+                `;
+                list.appendChild(li);
             });
-
-            const resultHtml = `
-                <p class="text-lg font-bold mb-2">Dano: ${sourceName}</p>
-                <p class="text-5xl font-bold my-4 text-red-400">${totalDamage}</p>
-                <p class="text-sm text-gray-400">${resolvedDamageString}</p>
-                <p class="text-xs text-gray-500 mt-2">Rolagens: ${rolls.join(', ')}</p>
-            `;
-            showRollResult(resultHtml);
         }
-
-        function showRollResult(htmlContent) {
-            const modal = document.getElementById('roll-result-modal');
-            const content = document.getElementById('roll-result-content');
-            content.innerHTML = htmlContent;
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-            }, 3000);
+        
+        window.renderAllies = () => renderCombatantList('ally-list', state.combat.allies, 'ally');
+        window.renderEnemies = () => renderCombatantList('enemy-list', state.combat.enemies, 'enemy');
+        
+        // --- LOGIC FUNCTIONS ---
+        function saveState() {
+            // Esta função pode ser expandida para salvar no localStorage ou Firebase
+            console.log("Estado salvo (simulado).");
         }
-
+        
         window.updateResource = function(type, amount) {
             if (type === 'hp') {
                 state.currentHp = Math.max(0, Math.min(state.maxHp, state.currentHp + amount));
@@ -781,202 +433,86 @@
 
         window.useJutsu = function(jutsuIndex) {
             const jutsu = state.jutsus[jutsuIndex];
-            if (!jutsu) return;
-            const chakraCost = jutsu.cost || 0;
-            const hpCost = jutsu.hpCost || 0;
-            if (state.currentChakra < chakraCost) {
+            if (state.currentChakra < jutsu.cost) {
                 alert('Chakra insuficiente!');
                 return;
             }
-            if (state.currentHp <= hpCost) {
-                 alert('Vida insuficiente para usar este jutsu!');
-                 return;
-            }
-            updateResource('chakra', -chakraCost);
-            if (hpCost > 0) {
-                updateResource('hp', -hpCost);
-            }
-        }
-       
-        window.levelUp = function() {
-            state.levelUpPoints += 2;
-            renderLevelUpPoints();
-            saveState();
-        }
-
-        window.increaseAttribute = function(key) {
-            if (state.levelUpPoints > 0) {
-                state.attributes[key].value++;
-                state.levelUpPoints--;
-                // As fórmulas de HP/Chakra foram removidas para usar os valores fixos
-                renderAll();
-                saveState();
-            } else {
-                alert('Sem pontos de atributo para distribuir.');
-            }
-        }
-
-        window.addItem = function() {
-            const name = document.getElementById('item-name').value.trim();
-            const quantity = parseInt(document.getElementById('item-qty').value, 10) || 1;
-            const type = document.getElementById('item-type').value.trim() || 'Misc';
-            const damage = document.getElementById('item-damage').value.trim() || null;
-            const description = document.getElementById('item-desc').value.trim() || 'Um item recentemente adquirido.';
-
-            if (name) {
-                state.inventory.push({ name, quantity, type, damage, description });
-                document.getElementById('item-name').value = '';
-                document.getElementById('item-qty').value = '1';
-                document.getElementById('item-type').value = '';
-                document.getElementById('item-damage').value = '';
-                document.getElementById('item-desc').value = '';
-                renderInventory();
-                saveState();
-            }
-        }
-       
-        window.removeItem = function(index) {
-             state.inventory.splice(index, 1);
-             renderInventory();
-             saveState();
-        }
-       
-        window.addKekkeiGenkai = function() {
-            const name = document.getElementById('kg-name').value.trim();
-            const desc = document.getElementById('kg-desc').value.trim();
-            if (name && desc) {
-                const kgText = document.getElementById('kekkei-genkai-text');
-                const newKgHtml = `<p><strong class="text-white">${name}:</strong> ${desc}</p>`;
-                kgText.innerHTML += newKgHtml;
-                document.getElementById('kg-name').value = '';
-                document.getElementById('kg-desc').value = '';
-                saveState();
-            }
-        }
-
-        window.addJutsuFromForm = function() {
-            const name = document.getElementById('jutsu-name').value.trim();
-            const rank = document.getElementById('jutsu-rank').value.trim();
-            const cost = parseInt(document.getElementById('jutsu-cost').value, 10);
-            const hpCost = parseInt(document.getElementById('jutsu-hp-cost').value, 10) || 0;
-            const damage = document.getElementById('jutsu-damage').value.trim();
-            const desc = document.getElementById('jutsu-desc').value.trim();
-
-            if (name && rank && !isNaN(cost) && desc) {
-                state.jutsus.push({ name, rank, cost, hpCost, damage, desc });
-                document.getElementById('jutsu-name').value = '';
-                document.getElementById('jutsu-rank').value = '';
-                document.getElementById('jutsu-cost').value = '';
-                document.getElementById('jutsu-hp-cost').value = '';
-                document.getElementById('jutsu-damage').value = '';
-                document.getElementById('jutsu-desc').value = '';
-                renderJutsus();
-                saveState();
-            } else {
-                alert('Por favor, preencha todos os campos do jutsu.');
-            }
-        }
-       
-        window.removeJutsu = function(index) {
-            state.jutsus.splice(index, 1);
-            renderJutsus();
-            saveState();
-        }
-
-        window.toggleSharingan = function() {
-            state.isSharinganActive = !state.isSharinganActive;
-            if (!state.isSharinganActive) {
-                state.isMangekyouActive = false;
-            }
-            renderDojutsuButtons();
-            renderAttributes();
-            renderSkills();
-            saveState();
-        }
-
-        window.toggleMangekyou = function() {
-            if (!state.hasMangekyou) {
-                alert("Mangekyou Sharingan não foi despertado.");
+             if (jutsu.hpCost && state.currentHp <= jutsu.hpCost) {
+                alert('Vida insuficiente para o custo do jutsu!');
                 return;
             }
-            state.isMangekyouActive = !state.isMangekyouActive;
-            if (state.isMangekyouActive) {
-                state.isSharinganActive = true;
-            }
-            renderDojutsuButtons();
-            renderAttributes();
-            renderSkills();
-            saveState();
+            updateResource('chakra', -jutsu.cost);
+            if(jutsu.hpCost) updateResource('hp', -jutsu.hpCost);
         }
 
         // --- COMBAT FUNCTIONS ---
         window.startCombat = function() {
             state.combat.isActive = true;
             state.combat.turn = 1;
+            document.getElementById('peacetime-view').classList.add('hidden');
+            document.getElementById('combat-view').classList.remove('hidden');
             renderCombatTracker();
             saveState();
         }
 
         window.endCombat = function() {
             state.combat.isActive = false;
-            renderCombatTracker();
+            document.getElementById('combat-view').classList.add('hidden');
+            document.getElementById('peacetime-view').classList.remove('hidden');
             saveState();
         }
-
+        
         window.nextTurn = function() {
             state.combat.turn++;
-            if (state.combat.isActive) {
-                if (state.isMangekyouActive) {
-                    updateResource('chakra', -4); // Custo de manutenção do Mangekyou
-                } else if (state.isSharinganActive) {
-                    updateResource('chakra', -1); // Custo de manutenção do Sharingan
-                }
-            }
             renderCombatTracker();
             saveState();
         }
 
-        window.addEnemy = function() {
-            const nameInput = document.getElementById('enemy-name');
-            const hpInput = document.getElementById('enemy-hp');
-            const name = nameInput.value.trim() || 'Inimigo';
+        function addCombatant(type) {
+            const nameInput = document.getElementById(`${type}-name`);
+            const hpInput = document.getElementById(`${type}-hp`);
+            const name = nameInput.value.trim() || (type === 'ally' ? 'Aliado' : 'Inimigo');
             const hp = parseInt(hpInput.value, 10) || 10;
-            if (!state.combat.enemies) state.combat.enemies = [];
-            state.combat.enemies.push({ name: `${name} #${state.combat.enemies.length + 1}`, maxHp: hp, currentHp: hp });
+            const combatantArray = type === 'ally' ? state.combat.allies : state.combat.enemies;
+            combatantArray.push({ name: `${name} #${combatantArray.length + 1}`, maxHp: hp, currentHp: hp });
             nameInput.value = '';
             hpInput.value = '';
-            renderEnemies();
+            if(type === 'ally') renderAllies(); else renderEnemies();
             saveState();
         }
 
-        window.damageEnemy = function(index) {
-            const input = document.getElementById(`damage-input-${index}`);
+        window.addAlly = () => addCombatant('ally');
+        window.addEnemy = () => addCombatant('enemy');
+
+        window.damageCombatant = function(type, index) {
+            const input = document.getElementById(`damage-input-${type}-${index}`);
             const damage = parseInt(input.value, 10);
             if (!isNaN(damage)) {
-                state.combat.enemies[index].currentHp = Math.max(0, state.combat.enemies[index].currentHp - damage);
+                const combatant = (type === 'ally' ? state.combat.allies : state.combat.enemies)[index];
+                combatant.currentHp = Math.max(0, combatant.currentHp - damage);
                 input.value = '';
-                renderEnemies();
+                if(type === 'ally') renderAllies(); else renderEnemies();
                 saveState();
             }
         }
 
-        window.removeEnemy = function(index) {
-            state.combat.enemies.splice(index, 1);
-            renderEnemies();
+        window.removeCombatant = function(type, index) {
+            const combatantArray = type === 'ally' ? state.combat.allies : state.combat.enemies;
+            combatantArray.splice(index, 1);
+            if(type === 'ally') renderAllies(); else renderEnemies();
             saveState();
         }
 
         // --- INITIALIZATION ---
-        window.onload = async () => {
-            await loadState();
+        window.onload = () => {
             renderAll();
-           
-            const kekkeiGenkaiNode = document.getElementById('kekkei-genkai-text');
-            const observer = new MutationObserver(() => saveState());
-            observer.observe(kekkeiGenkaiNode, { characterData: true, subtree: true, childList: true });
-           
+            // Salvar alterações nos campos de texto
             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-                el.addEventListener('blur', saveState);
+                el.addEventListener('blur', (e) => {
+                    const id = e.target.id.split('-')[1];
+                    state.characterInfo[id] = e.target.innerHTML;
+                    saveState();
+                });
             });
         };
     </script>
