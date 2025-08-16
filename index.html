@@ -124,7 +124,7 @@
 
     <div id="roll-result-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none z-50">
         <div id="roll-result-content" class="bg-gray-800 border border-gray-700 text-white p-8 rounded-xl shadow-lg text-center">
-            </div>
+        </div>
     </div>
 
     <div class="max-w-7xl mx-auto">
@@ -155,14 +155,14 @@
                 <div class="card p-6">
                     <h2 class="card-title">Atributos</h2>
                     <div id="attributes-list" class="grid grid-cols-1 gap-3 text-lg">
-                        </div>
+                    </div>
                 </div>
 
                 <div id="general-roll-card" class="card p-6">
-                    </div>
+                </div>
 
                 <div id="skills-card" class="card p-6">
-                    </div>
+                </div>
 
                 <div class="card p-6">
                     <h2 class="card-title">Recursos</h2>
@@ -193,10 +193,10 @@
 
             <div class="lg:col-span-2 flex flex-col gap-6">
                 <div id="combat-mode-card" class="card p-6">
-                    </div>
+                </div>
 
                 <div id="basic-attacks-card" class="card p-6">
-                    </div>
+                </div>
 
                 <div class="card p-6">
                     <h2 class="card-title">Inventário</h2>
@@ -221,9 +221,9 @@
                         <button id="mangekyou-toggle" onclick="toggleMangekyou()" class="btn btn-secondary text-xs">Mangekyou</button>
                     </div>
                     <div id="kekkei-genkai-text" contenteditable="true" class="space-y-3 mr-32 sm:mr-48">
-                        <p><strong class="text-white">Sharingan (3 Tomoe):</strong> Permite prever movimentos, copiar jutsus e ver o fluxo de chakra. Concede +2 em rolagens de Percepção.</p>
-                        <p class="text-red-400"><strong class="text-red-300">Mangekyō Sharingan:</strong> Despertado para proteger a sua equipa. O uso contínuo, especialmente do Amaterasu, causou danos permanentes à visão do seu olho esquerdo, resultando em visão turva e dor. Kakashi Hatake o treinou por três anos para controlar o seu poder e mitigar os seus custos. Eleva o bônus para +4 em rolagens de Percepção.</p>
-                        <p><strong class="text-white">Naturezas de Chakra:</strong> Katon (Fogo), Suiton (Água), Raiton (Relâmpago).</p>
+                        <p><strong class="text-white">Sharingan (Três Tomoe):</strong> Concede perceção sobre-humana. Permite ver o fluxo de chakra, prever movimentos, ver através de genjutsu e copiar técnicas. <strong>Bónus Mecânico:</strong> +2 em rolagens de Percepção e Esquiva. <strong>Custo:</strong> 1 PC por turno para manter ativo.</p>
+                        <p class="text-red-400"><strong class="text-red-300">Mangekyō Sharingan:</strong> A evolução do Sharingan, despertado para proteger a sua equipa. Desbloqueia habilidades únicas em cada olho, mas o seu uso causa dor, dano de ricochete e degrada permanentemente a visão. <strong>Bónus Mecânico:</strong> Eleva o bônus para +4 em rolagens de Percepção. <strong>Custo:</strong> 4 PC por turno para manter ativo.</p>
+                        <p><strong class="text-white">Naturezas de Chakra:</strong> Katon (Fogo), Raiton (Raio).</p>
                     </div>
                     <div class="mt-6 p-4 border border-gray-700 rounded-lg">
                         <h3 class="font-bold text-white mb-2">Adicionar Kekkei Genkai</h3>
@@ -382,7 +382,7 @@
             list.innerHTML = '';
             for (const key in state.attributes) {
                 const attr = state.attributes[key];
-                
+               
                 let bonus = 0;
                 // O bônus mecânico agora afeta apenas Percepção (Per)
                 if (key === 'per') {
@@ -402,7 +402,7 @@
                 list.appendChild(element);
             }
         }
-        
+       
         function renderGeneralRoller() {
             const card = document.getElementById('general-roll-card');
             let options = '<option value="" disabled selected>Selecione um Teste</option>';
@@ -435,13 +435,13 @@
                 const skill = state.skills[key];
                 const attrKey = skill.attr;
                 let attrValue = state.attributes[attrKey].value;
-                
+               
                 let bonus = 0;
                 if (attrKey === 'per') {
                     if (state.isSharinganActive) bonus = 2;
                     if (state.isMangekyouActive) bonus = 4;
                 }
-                
+               
                 const totalBonus = attrValue + skill.bonus + bonus;
                 content += `
                     <div class="flex justify-between items-center p-2 bg-gray-900 rounded-md">
@@ -471,7 +471,7 @@
             chakraBar.style.width = `${(state.currentChakra / state.maxChakra) * 100}%`;
             chakraBar.textContent = `${state.currentChakra}`;
         }
-        
+       
         function renderCombatTracker() {
             const card = document.getElementById('combat-mode-card');
             let content = `<h2 class="card-title">Modo de Combate</h2>`;
@@ -619,7 +619,7 @@
             state.jutsus.forEach((jutsu, index) => {
                 const element = document.createElement('div');
                 element.className = 'p-3 border border-gray-700 rounded-lg';
-                
+               
                 let costText = `Custo: ${jutsu.cost} PC`;
                 if (jutsu.hpCost && jutsu.hpCost > 0) {
                     costText += ` + <span class="text-red-400 font-semibold">${jutsu.hpCost} PV</span>`;
@@ -643,7 +643,7 @@
                 list.appendChild(element);
             });
         }
-        
+       
         function renderLevelUpPoints() {
             document.getElementById('level-up-points').textContent = state.levelUpPoints;
         }
@@ -674,20 +674,20 @@
                 name = skill.name;
                 const attrKey = skill.attr;
                 let attrValue = state.attributes[attrKey].value;
-                
+               
                 let dojutsuBonus = 0;
                 if (attrKey === 'per') {
                     if (state.isSharinganActive) dojutsuBonus = 2;
                     if (state.isMangekyouActive) dojutsuBonus = 4;
                 }
-                
+               
                 totalBonus = attrValue + skill.bonus + dojutsuBonus;
                 bonusText = `${attrValue} (attr) + ${skill.bonus} (perícia) + ${dojutsuBonus} (dōjutsu)`;
             }
-            
+           
             const roll = Math.floor(Math.random() * 20) + 1;
             const total = roll + totalBonus;
-            
+           
             const resultHtml = `
                 <p class="text-lg font-bold mb-2">${name}</p>
                 <p class="text-5xl font-bold my-4">${total}</p>
@@ -707,11 +707,11 @@
                 if (state.isSharinganActive) dojutsuBonus = 2;
                 if (state.isMangekyouActive) dojutsuBonus = 4;
             }
-            
+           
             const totalBonus = attrValue + skill.bonus + dojutsuBonus;
             const roll = Math.floor(Math.random() * 20) + 1;
             const total = roll + totalBonus;
-            
+           
             const bonusText = `${attrValue} (attr) + ${skill.bonus} (perícia) + ${dojutsuBonus} (dōjutsu)`;
             const resultHtml = `
                 <p class="text-lg font-bold mb-2">${skill.name}</p>
@@ -725,13 +725,13 @@
         window.rollDamage = function(damageString, sourceName) {
             let totalDamage = 0;
             let rolls = [];
-            
+           
             const resolvedDamageString = damageString
                 .replace('FOR', state.attributes.for.value)
                 .replace('AGI', state.attributes.agi.value);
-            
+           
             const parts = resolvedDamageString.split('+').map(p => p.trim());
-            
+           
             const dicePart = parts.find(p => p.includes('d'));
             if (dicePart) {
                 const [numDice, diceType] = dicePart.split('d').map(s => parseInt(s, 10));
@@ -745,7 +745,7 @@
             parts.forEach(part => {
                 if (!part.includes('d')) {
                      if (!isNaN(parseInt(part))) {
-                        totalDamage += parseInt(part);
+                         totalDamage += parseInt(part);
                     }
                 }
             });
@@ -797,7 +797,7 @@
                 updateResource('hp', -hpCost);
             }
         }
-        
+       
         window.levelUp = function() {
             state.levelUpPoints += 2;
             renderLevelUpPoints();
@@ -834,13 +834,13 @@
                 saveState();
             }
         }
-        
+       
         window.removeItem = function(index) {
              state.inventory.splice(index, 1);
              renderInventory();
              saveState();
         }
-        
+       
         window.addKekkeiGenkai = function() {
             const name = document.getElementById('kg-name').value.trim();
             const desc = document.getElementById('kg-desc').value.trim();
@@ -876,7 +876,7 @@
                 alert('Por favor, preencha todos os campos do jutsu.');
             }
         }
-        
+       
         window.removeJutsu = function(index) {
             state.jutsus.splice(index, 1);
             renderJutsus();
@@ -970,11 +970,11 @@
         window.onload = async () => {
             await loadState();
             renderAll();
-            
+           
             const kekkeiGenkaiNode = document.getElementById('kekkei-genkai-text');
             const observer = new MutationObserver(() => saveState());
             observer.observe(kekkeiGenkaiNode, { characterData: true, subtree: true, childList: true });
-            
+           
             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
                 el.addEventListener('blur', saveState);
             });
