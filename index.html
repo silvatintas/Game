@@ -299,7 +299,7 @@
             currentChakra: 58,
             levelUpPoints: 0,
             isSharinganActive: false,
-            hasMangekyou: false,
+            hasMangekyou: true,
             attributes: {
                 for: { name: 'Força', value: 4 },
                 agi: { name: 'Agilidade', value: 7 },
@@ -330,6 +330,9 @@
                 { name: 'Suiton: Suijinheki', rank: 'B', cost: 9, damage: 'Nenhum', desc: 'Expele um jato de água da boca que forma uma barreira defensiva circular.' },
                 { name: 'Genjutsu: Sharingan', rank: '-', cost: 8, damage: 'Nenhum', desc: 'Usando contato visual, prende o alvo em uma ilusão paralisante.' },
                 { name: 'Jigoku Gouka no Jutsu (Original)', rank: 'A', cost: 15, damage: '2d8 + Paralisia', desc: 'Infunde o tantō com chakra de fogo e raio. O corte queima e paralisa.' },
+                { name: 'Amaterasu', rank: 'S', cost: 20, damage: '4d12', desc: 'Cria chamas negras inextinguíveis no ponto de foco do usuário.' },
+                { name: 'Tsukuyomi', rank: 'S', cost: 18, damage: 'Nenhum', desc: 'Prende o alvo em um genjutsu que distorce a percepção do tempo.' },
+                { name: 'Susano\'o (Costelas)', rank: 'S', cost: 25, damage: 'Nenhum', desc: 'Manifesta uma caixa torácica de chakra como defesa. Custo inicial, mais 5 por turno para manter.' },
             ],
             combat: {
                 isActive: false,
@@ -337,12 +340,6 @@
                 enemies: []
             }
         };
-
-        const mangekyouJutsus = [
-            { name: 'Amaterasu', rank: 'S', cost: 20, damage: '4d12', desc: 'Cria chamas negras inextinguíveis no ponto de foco do usuário.' },
-            { name: 'Tsukuyomi', rank: 'S', cost: 18, damage: 'Nenhum', desc: 'Prende o alvo em um genjutsu que distorce a percepção do tempo.' },
-            { name: 'Susano\'o (Costelas)', rank: 'S', cost: 25, damage: 'Nenhum', desc: 'Manifesta uma caixa torácica de chakra como defesa. Custo inicial, mais 5 por turno para manter.' },
-        ];
 
         // --- FIREBASE FUNCTIONS ---
         let saveTimeout;
