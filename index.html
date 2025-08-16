@@ -30,9 +30,15 @@
         details > summary { cursor: pointer; list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
         .hidden { display: none; }
+        #roll-result-modal { transition: opacity 0.3s ease-in-out; }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
+
+    <div id="roll-result-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 pointer-events-none z-50">
+        <div id="roll-result-content" class="bg-gray-800 border border-gray-700 text-white p-8 rounded-xl shadow-lg text-center max-w-sm">
+        </div>
+    </div>
 
     <div class="max-w-7xl mx-auto">
         <header class="card p-4 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -51,6 +57,14 @@
 
         <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-1 flex flex-col gap-6">
+                <div class="card p-6">
+                    <h2 class="card-title">Evolução</h2>
+                    <div class="flex justify-between items-center gap-4 mb-2">
+                        <span class="text-lg">Pontos de Atributo: <span id="level-up-points" class="font-bold text-white text-xl">0</span></span>
+                        <button onclick="levelUp()" class="btn btn-primary">Subir de Nível!</button>
+                    </div>
+                </div>
+
                  <div class="card p-6">
                     <h2 class="card-title">Recursos</h2>
                     <div class="mb-6">
@@ -81,7 +95,7 @@
 
                 <div class="card p-6">
                     <h2 class="card-title">Atributos</h2>
-                    <div id="attributes-list" class="grid grid-cols-1 gap-3 text-lg"></div>
+                    <div id="attributes-list" class="grid grid-cols-1 gap-4 text-lg"></div>
                 </div>
 
                 <div class="card p-6">
@@ -89,12 +103,12 @@
                     <div class="space-y-4">
                         <div>
                              <p class="font-bold text-white">Sharingan (Três Tomoe)</p>
-                             <p class="text-xs text-gray-400">Custo: 1 PC/turno. Bônus: +2 em Percepção.</p>
+                             <p class="text-xs text-gray-400">Custo: 1 PC/turno. Bônus: +2 em AGI, CON, PER.</p>
                              <button id="sharingan-toggle" onclick="toggleSharingan()" class="btn btn-secondary w-full mt-2">Ativar Sharingan</button>
                         </div>
                          <div>
                              <p class="font-bold text-white">Mangekyō Sharingan</p>
-                             <p class="text-xs text-red-400">Custo: 4 PC/turno. Bônus: +4 em Percepção.</p>
+                             <p class="text-xs text-red-400">Custo: 4 PC/turno. Bônus: +4 em AGI, CON, PER.</p>
                              <button id="mangekyou-toggle" onclick="toggleMangekyou()" class="btn btn-secondary w-full mt-2">Ativar Mangekyō</button>
                         </div>
                     </div>
@@ -106,26 +120,11 @@
                     <div class="card p-6">
                         <h2 class="card-title">Informações do Personagem</h2>
                         <div class="space-y-4">
-                            <details class="p-2 rounded-md hover:bg-gray-700">
-                                <summary class="font-bold text-white text-lg">Identificação</summary>
-                                <div id="info-identificacao" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
-                            </details>
-                            <details class="p-2 rounded-md hover:bg-gray-700">
-                                <summary class="font-bold text-white text-lg">Aparência</summary>
-                                <div id="info-aparencia" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
-                            </details>
-                             <details class="p-2 rounded-md hover:bg-gray-700">
-                                <summary class="font-bold text-white text-lg">Vestuário e Equipamento</summary>
-                                <div id="info-vestuario" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
-                            </details>
-                             <details class="p-2 rounded-md hover:bg-gray-700">
-                                <summary class="font-bold text-white text-lg">Personalidade e Mentalidade</summary>
-                                <div id="info-personalidade" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
-                            </details>
-                             <details class="p-2 rounded-md hover:bg-gray-700">
-                                <summary class="font-bold text-white text-lg">História (Backstory)</summary>
-                                <div id="info-historia" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div>
-                            </details>
+                            <details class="p-2 rounded-md hover:bg-gray-700"><summary class="font-bold text-white text-lg">Identificação</summary><div id="info-identificacao" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div></details>
+                            <details class="p-2 rounded-md hover:bg-gray-700"><summary class="font-bold text-white text-lg">Aparência</summary><div id="info-aparencia" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div></details>
+                            <details class="p-2 rounded-md hover:bg-gray-700"><summary class="font-bold text-white text-lg">Vestuário e Equipamento</summary><div id="info-vestuario" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div></details>
+                            <details class="p-2 rounded-md hover:bg-gray-700"><summary class="font-bold text-white text-lg">Personalidade e Mentalidade</summary><div id="info-personalidade" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div></details>
+                            <details class="p-2 rounded-md hover:bg-gray-700"><summary class="font-bold text-white text-lg">História (Backstory)</summary><div id="info-historia" contenteditable="true" class="mt-2 text-gray-400 text-sm border-l-2 border-gray-600 pl-3"></div></details>
                         </div>
                     </div>
                     <div class="card p-6">
@@ -150,15 +149,9 @@
     </div>
 
     <script type="module">
-        // --- DATA ---
         let state = {
-            maxHp: 75,
-            currentHp: 75,
-            maxChakra: 120,
-            currentChakra: 120,
-            isSharinganActive: false,
-            isMangekyouActive: false,
-            hasMangekyou: true,
+            maxHp: 75, currentHp: 75, maxChakra: 120, currentChakra: 120, levelUpPoints: 0,
+            isSharinganActive: false, isMangekyouActive: false, hasMangekyou: true,
             characterInfo: {
                 identificacao: `<p><b>Nome Completo:</b> Cohen Uchiha</p><p><b>Idade:</b> 18 Anos</p><p><b>Clã:</b> Uchiha</p><p><b>Afiliação:</b> Konohagakure (Aldeia da Folha)</p><p><b>Rank:</b> Jounin Comandante</p><p><b>Título(s):</b> Capitão do Esquadrão Kage; "O Corvo de Olhos Vermelhos"</p>`,
                 aparencia: `Aos 18 anos, Cohen já não tem a aparência de um rapaz prodígio, mas sim a de um jovem homem forjado em batalhas. Ele é alto, com uma constituição magra e musculada, construída para velocidade e agilidade. O seu cabelo preto, típico do clã Uchiha, é um pouco mais comprido do que nos seus dias de ANBU, com franjas que por vezes lhe caem sobre os olhos.<br>O seu rosto é pálido e de traços finos, geralmente com uma expressão calma e analítica. Os seus olhos de ônix são a sua característica mais marcante; eles carregam uma intensidade e uma sabedoria que desmentem a sua idade. O seu olho esquerdo, permanentemente danificado pelo uso do Mangekyō, tem uma ligeira e quase impercetível turvação na íris, visível apenas sob luz forte. Ele carrega pequenas cicatrizes da sua carreira, incluindo uma fina linha na sua bochecha e outra no seu antebraço, lembretes das suas batalhas mais difíceis.`,
@@ -193,35 +186,42 @@
 
         // --- RENDER FUNCTIONS ---
         function renderAll() {
-            renderCharacterInfo();
+            renderLevelUp(); renderCharacterInfo(); renderAttributes(); renderResources();
+            renderInventory(); renderDojutsuButtons(); renderJutsus(); renderBasicAttacks();
+        }
+
+        function renderLevelUp() {
+            document.getElementById('level-up-points').textContent = state.levelUpPoints;
             renderAttributes();
-            renderResources();
-            renderInventory();
-            renderDojutsuButtons();
-            renderJutsus();
-            renderBasicAttacks();
         }
         
         function renderCharacterInfo() {
-            for (const key in state.characterInfo) {
-                document.getElementById(`info-${key}`).innerHTML = state.characterInfo[key];
-            }
+            for (const key in state.characterInfo) document.getElementById(`info-${key}`).innerHTML = state.characterInfo[key];
         }
 
         function renderAttributes() {
             const list = document.getElementById('attributes-list');
             list.innerHTML = '';
+            const bonusAttrs = ['agi', 'con', 'per'];
             for (const key in state.attributes) {
                 const attr = state.attributes[key];
                 let bonus = 0;
-                if (key === 'per') {
+                if (bonusAttrs.includes(key)) {
                     if (state.isMangekyouActive) bonus = 4;
                     else if (state.isSharinganActive) bonus = 2;
                 }
                 const totalValue = attr.value + bonus;
                 const element = document.createElement('div');
                 element.className = 'flex justify-between items-center';
-                element.innerHTML = `<span>${attr.name} (${key.toUpperCase()})</span><span class="font-bold text-white text-xl">${totalValue} ${bonus > 0 ? `<span class='text-sm text-red-400'>(+${bonus})</span>` : ''}</span>`;
+                element.innerHTML = `
+                    <div class="flex items-center gap-2">
+                         ${state.levelUpPoints > 0 ? `<button onclick="increaseAttribute('${key}')" class="btn btn-success p-1 w-6 h-6">+</button>` : '<div class="w-6"></div>'}
+                        <span>${attr.name}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-white text-xl">${totalValue} ${bonus > 0 ? `<span class='text-sm text-red-400'>(+${bonus})</span>` : ''}</span>
+                        <button onclick="rollAttribute('${key}')" class="btn btn-secondary text-xs">Rolar</button>
+                    </div>`;
                 list.appendChild(element);
             }
         }
@@ -236,29 +236,25 @@
         function renderDojutsuButtons() {
             const sharinganBtn = document.getElementById('sharingan-toggle');
             const mangekyouBtn = document.getElementById('mangekyou-toggle');
-            if (state.isMangekyouActive) {
-                mangekyouBtn.textContent = 'Desativar Mangekyō';
-                mangekyouBtn.classList.replace('btn-secondary', 'btn-danger');
-            } else {
-                mangekyouBtn.textContent = 'Ativar Mangekyō';
-                mangekyouBtn.classList.replace('btn-danger', 'btn-secondary');
-            }
-            if (state.isSharinganActive) {
-                sharinganBtn.textContent = 'Desativar Sharingan';
-                sharinganBtn.classList.replace('btn-secondary', 'btn-danger');
-            } else {
-                sharinganBtn.textContent = 'Ativar Sharingan';
-                sharinganBtn.classList.replace('btn-danger', 'btn-secondary');
-            }
+            mangekyouBtn.textContent = state.isMangekyouActive ? 'Desativar Mangekyō' : 'Ativar Mangekyō';
+            mangekyouBtn.classList.toggle('btn-danger', state.isMangekyouActive);
+            mangekyouBtn.classList.toggle('btn-secondary', !state.isMangekyouActive);
+            sharinganBtn.textContent = state.isSharinganActive ? 'Desativar Sharingan' : 'Ativar Sharingan';
+            sharinganBtn.classList.toggle('btn-danger', state.isSharinganActive);
+            sharinganBtn.classList.toggle('btn-secondary', !state.isSharinganActive);
         }
 
         function renderInventory() {
             const list = document.getElementById('inventory-list');
             list.innerHTML = '';
-            state.inventory.forEach((item) => {
+            state.inventory.forEach(item => {
                 const li = document.createElement('li');
                 li.className = 'p-3 bg-gray-900 rounded-lg flex justify-between items-center';
-                li.innerHTML = `<div><p class="font-bold text-white">${item.name}</p><p class="text-xs text-gray-400">Dano: ${item.damage}</p></div><span class="font-bold text-lg">${item.quantity}x</span>`;
+                li.innerHTML = `
+                    <div>
+                        <p class="font-bold text-white">${item.name} <span class="text-sm font-normal text-gray-400">(${item.quantity}x)</span></p>
+                    </div>
+                    <button onclick="rollDamage('${item.damage}', '${item.name}')" class="btn btn-secondary text-xs">Rolar Dano</button>`;
                 list.appendChild(li);
             });
         }
@@ -267,20 +263,26 @@
             const list = document.getElementById('jutsu-list');
             list.innerHTML = '';
             state.jutsus.forEach((jutsu, index) => {
-                const element = document.createElement('div');
-                element.className = 'p-3 border border-gray-700 rounded-lg';
+                const el = document.createElement('div');
+                el.className = 'p-3 border border-gray-700 rounded-lg';
                 let costText = `${jutsu.cost} PC` + (jutsu.hpCost ? ` + <span class="text-red-400">${jutsu.hpCost} PV</span>` : '');
-                element.innerHTML = `
-                    <div class="flex justify-between items-start">
+                const damageTypes = ['nenhum', 'especial', 'crítico'];
+                const canRollDamage = jutsu.damage && !damageTypes.includes(jutsu.damage.toLowerCase());
+
+                el.innerHTML = `
+                    <div class="flex justify-between items-start gap-2">
                         <div>
                             <h4 class="font-bold text-white">${jutsu.name} <span class="text-xs font-normal text-gray-400">(Rank ${jutsu.rank})</span></h4>
-                            <p class="text-sm text-gray-400">Custo: ${costText} | Dano: <span class="text-red-400 font-semibold">${jutsu.damage}</span></p>
+                            <p class="text-sm text-gray-400">Custo: ${costText}</p>
+                            <p class="text-sm text-gray-400">Dano: <span class="text-red-400 font-semibold">${jutsu.damage}</span></p>
                         </div>
-                        <button onclick="useJutsu(${index})" class="btn btn-primary text-xs">Usar</button>
+                        <div class="flex flex-col items-end gap-2">
+                            <button onclick="useJutsu(${index})" class="btn btn-primary text-xs w-full">Usar</button>
+                            ${canRollDamage ? `<button onclick="rollDamage('${jutsu.damage}', '${jutsu.name}')" class="btn btn-secondary text-xs w-full">Rolar Dano</button>` : ''}
+                        </div>
                     </div>
-                    <p class="mt-2 text-gray-300 text-sm">${jutsu.desc}</p>
-                `;
-                list.appendChild(element);
+                    <p class="mt-2 text-gray-300 text-sm">${jutsu.desc}</p>`;
+                list.appendChild(el);
             });
         }
         
@@ -288,10 +290,9 @@
             document.getElementById('basic-attacks-card').innerHTML = `
                 <h2 class="card-title">Ataques Básicos</h2>
                 <div class="space-y-3">
-                    <div class="p-3 bg-gray-900 rounded-lg"><p><span class="font-bold text-white">Tantō "Corvo Sombrio":</span> <span class="text-red-400">Dano: 1d8 + AGI</span></p></div>
-                    <div class="p-3 bg-gray-900 rounded-lg"><p><span class="font-bold text-white">Golpe Desarmado:</span> <span class="text-red-400">Dano: 1d4 + FOR</span></p></div>
-                </div>
-            `;
+                    <div class="p-3 bg-gray-900 rounded-lg flex justify-between items-center"><p><span class="font-bold text-white">Tantō "Corvo Sombrio"</span></p><button onclick="rollDamage('1d8 + AGI', 'Tantō')" class="btn btn-secondary text-xs">Rolar Dano</button></div>
+                    <div class="p-3 bg-gray-900 rounded-lg flex justify-between items-center"><p><span class="font-bold text-white">Golpe Desarmado</span></p><button onclick="rollDamage('1d4 + FOR', 'Golpe Desarmado')" class="btn btn-secondary text-xs">Rolar Dano</button></div>
+                </div>`;
         }
 
         function renderCombatTracker() {
@@ -307,13 +308,11 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <h3 class="font-bold text-xl text-green-400 mb-2">Aliados</h3>
-                        <div id="ally-list" class="space-y-3 mb-4"></div>
+                        <h3 class="font-bold text-xl text-green-400 mb-2">Aliados</h3><div id="ally-list" class="space-y-3 mb-4"></div>
                         <div class="p-4 border border-gray-700 rounded-lg"><div class="flex gap-2"><input type="text" id="ally-name" placeholder="Nome" class="form-input w-2/3"><input type="number" id="ally-hp" placeholder="HP" class="form-input w-1/3"><button onclick="addAlly()" class="btn btn-success">Add</button></div></div>
                     </div>
                     <div>
-                        <h3 class="font-bold text-xl text-red-400 mb-2">Inimigos</h3>
-                        <div id="enemy-list" class="space-y-3 mb-4"></div>
+                        <h3 class="font-bold text-xl text-red-400 mb-2">Inimigos</h3><div id="enemy-list" class="space-y-3 mb-4"></div>
                         <div class="p-4 border border-gray-700 rounded-lg"><div class="flex gap-2"><input type="text" id="enemy-name" placeholder="Nome" class="form-input w-2/3"><input type="number" id="enemy-hp" placeholder="HP" class="form-input w-1/3"><button onclick="addEnemy()" class="btn btn-danger">Add</button></div></div>
                     </div>
                 </div>`;
@@ -321,114 +320,102 @@
             renderCombatantList('enemy-list', state.combat.enemies, 'enemy');
         }
 
-        function renderCombatantList(listElementId, combatants, type) {
-            const list = document.getElementById(listElementId);
+        function renderCombatantList(listElId, combatants, type) {
+            const list = document.getElementById(listElId);
             list.innerHTML = '';
-            combatants.forEach((c, index) => {
+            combatants.forEach((c, i) => {
                 const li = document.createElement('div');
                 li.className = 'p-3 bg-gray-900 rounded-lg';
                 li.innerHTML = `
-                    <div class="flex justify-between items-center mb-2"><p class="font-bold text-white">${c.name}</p><button onclick="removeCombatant('${type}', ${index})" class="btn btn-danger text-xs">x</button></div>
-                    <div class="progress-bar-container mb-2"><div class="progress-bar ${type === 'ally' ? 'bg-green-600' : 'bg-red-600'}" style="width: ${ (c.currentHp / c.maxHp) * 100}%">${c.currentHp}</div></div>
-                    <div class="flex items-center gap-2"><input type="number" id="damage-input-${type}-${index}" placeholder="Dano/Cura" class="form-input w-full"><button onclick="damageCombatant('${type}', ${index})" class="btn btn-secondary">Aplicar</button></div>`;
+                    <div class="flex justify-between items-center mb-2"><p class="font-bold text-white">${c.name}</p><button onclick="removeCombatant('${type}', ${i})" class="btn btn-danger text-xs">x</button></div>
+                    <div class="progress-bar-container mb-2"><div class="progress-bar ${type === 'ally' ? 'bg-green-600' : 'bg-red-600'}" style="width: ${(c.currentHp/c.maxHp)*100}%">${c.currentHp}</div></div>
+                    <div class="flex items-center gap-2"><input type="number" id="damage-input-${type}-${i}" placeholder="Dano/Cura" class="form-input w-full"><button onclick="damageCombatant('${type}', ${i})" class="btn btn-secondary">Aplicar</button></div>`;
                 list.appendChild(li);
             });
         }
         
-        // --- LOGIC FUNCTIONS ---
+        // --- LOGIC & ACTIONS ---
+        window.levelUp = () => { state.levelUpPoints += 2; renderLevelUp(); };
+        window.increaseAttribute = (key) => { if(state.levelUpPoints > 0) { state.attributes[key].value++; state.levelUpPoints--; renderLevelUp(); }};
         window.updateResource = (type, amount) => {
             if (type === 'hp') state.currentHp = Math.max(0, Math.min(state.maxHp, state.currentHp + amount));
             else if (type === 'chakra') state.currentChakra = Math.max(0, Math.min(state.maxChakra, state.currentChakra + amount));
             renderResources();
         }
-        
-        window.adjustResource = (type, operation) => {
+        window.adjustResource = (type, op) => {
             const input = document.getElementById(`${type}-adjust-amount`);
             let amount = parseInt(input.value, 10) || 1;
-            updateResource(type, operation === 'subtract' ? -amount : amount);
+            updateResource(type, op === 'subtract' ? -amount : amount);
         }
-
-        window.useJutsu = (index) => {
-            const j = state.jutsus[index];
+        window.useJutsu = i => {
+            const j = state.jutsus[i];
             if (state.currentChakra < j.cost) return alert('Chakra insuficiente!');
             if (j.hpCost && state.currentHp <= j.hpCost) return alert('Vida insuficiente!');
             updateResource('chakra', -j.cost);
             if (j.hpCost) updateResource('hp', -j.hpCost);
         }
-        
-        window.toggleSharingan = () => {
-            state.isSharinganActive = !state.isSharinganActive;
-            if (!state.isSharinganActive) state.isMangekyouActive = false; // Desativa Mangekyou se o Sharingan base for desligado
-            renderDojutsuButtons();
-            renderAttributes();
+        window.toggleSharingan = () => { state.isSharinganActive = !state.isSharinganActive; if (!state.isSharinganActive) state.isMangekyouActive = false; renderDojutsuButtons(); renderAttributes(); };
+        window.toggleMangekyou = () => { if (!state.hasMangekyou) return; state.isMangekyouActive = !state.isMangekyouActive; if (state.isMangekyouActive) state.isSharinganActive = true; renderDojutsuButtons(); renderAttributes(); };
+
+        // --- DICE ROLLING ---
+        function showRollResult(htmlContent) {
+            const modal = document.getElementById('roll-result-modal');
+            document.getElementById('roll-result-content').innerHTML = htmlContent;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 3000);
         }
 
-        window.toggleMangekyou = () => {
-            if (!state.hasMangekyou) return alert("Mangekyou não despertado.");
-            state.isMangekyouActive = !state.isMangekyouActive;
-            if (state.isMangekyouActive) state.isSharinganActive = true; // Ativa o base se o Mangekyou for ligado
-            renderDojutsuButtons();
-            renderAttributes();
+        window.rollAttribute = (key) => {
+            const attr = state.attributes[key];
+            let bonus = 0;
+            const bonusAttrs = ['agi', 'con', 'per'];
+            if (bonusAttrs.includes(key)) {
+                if (state.isMangekyouActive) bonus = 4;
+                else if (state.isSharinganActive) bonus = 2;
+            }
+            const totalBonus = attr.value + bonus;
+            const roll = Math.floor(Math.random() * 20) + 1;
+            const total = roll + totalBonus;
+            showRollResult(`<p class="text-lg font-bold mb-2">Teste de ${attr.name}</p><p class="text-6xl font-bold my-4">${total}</p><p class="text-sm text-gray-400">d20(<span class="text-white font-bold">${roll}</span>) + Bônus(<span class="text-white font-bold">${totalBonus}</span>)</p>`);
+        }
+        
+        window.rollDamage = (damageString, sourceName) => {
+            if (!damageString || damageString === 'N/A') return;
+            let totalDamage = 0; let rolls = []; let bonus = 0; let formula = damageString;
+            
+            formula = formula.replace('AGI', state.attributes.agi.value).replace('FOR', state.attributes.for.value);
+            
+            const parts = formula.split('+');
+            const dicePart = parts.find(p => p.includes('d'));
+            
+            if (dicePart) {
+                const [numDice, diceType] = dicePart.trim().split('d').map(s => parseInt(s));
+                for (let i = 0; i < numDice; i++) {
+                    const roll = Math.floor(Math.random() * diceType) + 1;
+                    rolls.push(roll);
+                    totalDamage += roll;
+                }
+            }
+            parts.forEach(p => { if (!p.includes('d')) bonus += parseInt(p.trim()) || 0; });
+            totalDamage += bonus;
+
+            showRollResult(`<p class="text-lg font-bold mb-2">Dano: ${sourceName}</p><p class="text-6xl font-bold my-4 text-red-400">${totalDamage}</p><p class="text-sm text-gray-400">${formula}</p>${rolls.length > 0 ? `<p class="text-xs text-gray-500 mt-2">Rolagens: ${rolls.join(', ')}</p>` : ''}`);
         }
 
         // --- COMBAT FUNCTIONS ---
-        window.startCombat = () => {
-            state.combat.isActive = true;
-            state.combat.turn = 1;
-            document.getElementById('peacetime-view').classList.add('hidden');
-            document.getElementById('combat-view').classList.remove('hidden');
-            renderCombatTracker();
-        }
-
-        window.endCombat = () => {
-            state.combat.isActive = false;
-            document.getElementById('combat-view').classList.add('hidden');
-            document.getElementById('peacetime-view').classList.remove('hidden');
-        }
-        
-        window.nextTurn = () => {
-            state.combat.turn++;
-            if (state.isMangekyouActive) updateResource('chakra', -4);
-            else if (state.isSharinganActive) updateResource('chakra', -1);
-            renderCombatTracker();
-        }
-
-        const addCombatant = (type) => {
-            const name = document.getElementById(`${type}-name`).value.trim() || (type === 'ally' ? 'Aliado' : 'Inimigo');
-            const hp = parseInt(document.getElementById(`${type}-hp`).value, 10) || 10;
-            const list = state.combat[type === 'ally' ? 'allies' : 'enemies'];
-            list.push({ name: `${name} #${list.length + 1}`, maxHp: hp, currentHp: hp });
-            document.getElementById(`${type}-name`).value = '';
-            document.getElementById(`${type}-hp`).value = '';
-            renderCombatantList(`${type}-list`, list, type);
-        }
-        window.addAlly = () => addCombatant('ally');
-        window.addEnemy = () => addCombatant('enemy');
-
-        window.damageCombatant = (type, index) => {
-            const input = document.getElementById(`damage-input-${type}-${index}`);
-            const damage = parseInt(input.value, 10);
-            if (!isNaN(damage)) {
-                const list = state.combat[type === 'ally' ? 'allies' : 'enemies'];
-                list[index].currentHp = Math.max(0, list[index].currentHp - damage);
-                input.value = '';
-                renderCombatantList(`${type}-list`, list, type);
-            }
-        }
-
-        window.removeCombatant = (type, index) => {
-            const list = state.combat[type === 'ally' ? 'allies' : 'enemies'];
-            list.splice(index, 1);
-            renderCombatantList(`${type}-list`, list, type);
-        }
+        window.startCombat = () => { state.combat.isActive = true; state.combat.turn = 1; document.getElementById('peacetime-view').classList.add('hidden'); document.getElementById('combat-view').classList.remove('hidden'); renderCombatTracker(); };
+        window.endCombat = () => { state.combat.isActive = false; document.getElementById('combat-view').classList.add('hidden'); document.getElementById('peacetime-view').classList.remove('hidden'); };
+        window.nextTurn = () => { state.combat.turn++; if (state.isMangekyouActive) updateResource('chakra', -4); else if (state.isSharinganActive) updateResource('chakra', -1); renderCombatTracker(); };
+        const addCombatant = (type) => { const name = document.getElementById(`${type}-name`).value.trim() || (type === 'ally' ? 'Aliado' : 'Inimigo'); const hp = parseInt(document.getElementById(`${type}-hp`).value, 10) || 10; const list = state.combat[type === 'ally' ? 'allies' : 'enemies']; list.push({ name: `${name} #${list.length + 1}`, maxHp: hp, currentHp: hp }); document.getElementById(`${type}-name`).value = ''; document.getElementById(`${type}-hp`).value = ''; renderCombatantList(`${type}-list`, list, type); };
+        window.addAlly = () => addCombatant('ally'); window.addEnemy = () => addCombatant('enemy');
+        window.damageCombatant = (type, i) => { const input = document.getElementById(`damage-input-${type}-${i}`); const damage = parseInt(input.value, 10); if (!isNaN(damage)) { const list = state.combat[type === 'ally' ? 'allies' : 'enemies']; list[i].currentHp = Math.max(0, list[i].currentHp - damage); input.value = ''; renderCombatantList(`${type}-list`, list, type); }};
+        window.removeCombatant = (type, i) => { const list = state.combat[type === 'ally' ? 'allies' : 'enemies']; list.splice(i, 1); renderCombatantList(`${type}-list`, list, type); };
 
         // --- INITIALIZATION ---
         window.onload = () => {
             renderAll();
             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-                el.addEventListener('blur', (e) => {
-                    state.characterInfo[e.target.id.split('-')[1]] = e.target.innerHTML;
-                });
+                el.addEventListener('blur', (e) => state.characterInfo[e.target.id.split('-')[1]] = e.target.innerHTML);
             });
         };
     </script>
