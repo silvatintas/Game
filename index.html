@@ -269,7 +269,27 @@
         </main>
     </div>
 
-    <script>
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPisgGzruxqnXzf9hPlb05uCN3hMozt2s",
+            authDomain: "crm-silva-tintas.firebaseapp.com",
+            projectId: "crm-silva-tintas",
+            storageBucket: "crm-silva-tintas.appspot.com",
+            messagingSenderId: "37152653096",
+            appId: "1:37152653096:web:37e27f33544fdc36abda1d",
+            measurementId: "G-Y4EXZKNN2F"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const characterDocRef = doc(db, "characters", "cohen-uchiha");
+
         // --- DATA ---
         let state = {
             maxHp: 40,
@@ -302,6 +322,9 @@
             ],
             jutsus: [
                 { name: 'Katon: Goukakyuu no Jutsu', rank: 'C', cost: 6, damage: '3d8', desc: 'O jutsu assinatura do clã Uchiha. Uma massiva esfera de fogo.' },
+                { name: 'Katon: Hōsenka no Jutsu', rank: 'C', cost: 5, damage: '2d6', desc: 'Dispara múltiplas bolas de fogo menores, que podem esconder shurikens.' },
+                { name: 'Katon: Ryūka no Jutsu', rank: 'C', cost: 7, damage: '4d6', desc: 'Um fluxo de fogo intenso guiado por um fio ou outra superfície.' },
+                { name: 'Katon: Gōryūka no Jutsu', rank: 'B', cost: 10, damage: '4d10', desc: 'Cria uma cabeça de dragão de fogo maciça para incinerar um alvo.' },
                 { name: 'Chidori', rank: 'A', cost: 13, damage: '5d10', desc: 'Concentração de chakra de raio na mão, usada para perfurar. Requer Sharingan.' },
                 { name: 'Suiton: Suijinheki', rank: 'B', cost: 9, damage: 'Nenhum', desc: 'Expele um jato de água da boca que forma uma barreira defensiva circular.' },
                 { name: 'Genjutsu: Sharingan', rank: '-', cost: 8, damage: 'Nenhum', desc: 'Usando contato visual, prende o alvo em uma ilusão paralisante.' },
@@ -319,6 +342,35 @@
             { name: 'Tsukuyomi', rank: 'S', cost: 18, damage: 'Nenhum', desc: 'Prende o alvo em um genjutsu que distorce a percepção do tempo.' },
             { name: 'Susano\'o (Costelas)', rank: 'S', cost: 25, damage: 'Nenhum', desc: 'Manifesta uma caixa torácica de chakra como defesa. Custo inicial, mais 5 por turno para manter.' },
         ];
+
+        // --- FIREBASE FUNCTIONS ---
+        let saveTimeout;
+        async function saveState() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(async () => {
+                try {
+                    await setDoc(characterDocRef, { characterData: JSON.stringify(state) });
+                    console.log("Personagem salvo na nuvem!");
+                } catch (e) {
+                    console.error("Erro ao salvar personagem: ", e);
+                }
+            }, 1000); // Debounce de 1 segundo para evitar escritas excessivas
+        }
+
+        async function loadState() {
+            try {
+                const docSnap = await getDoc(characterDocRef);
+                if (docSnap.exists()) {
+                    state = JSON.parse(docSnap.data().characterData);
+                    console.log("Personagem carregado da nuvem!");
+                } else {
+                    console.log("Nenhum personagem encontrado, criando um novo na nuvem.");
+                    await saveState(); // Salva o estado inicial se não houver nenhum
+                }
+            } catch (e) {
+                console.error("Erro ao carregar personagem: ", e);
+            }
+        }
 
         // --- RENDER FUNCTIONS ---
         function renderAll() {
@@ -555,7 +607,7 @@
         }
 
         // --- LOGIC FUNCTIONS ---
-        function performGeneralRoll() {
+        window.performGeneralRoll = function() {
             const selector = document.getElementById('roll-selector');
             const selectedValue = selector.value;
             if (!selectedValue) return;
@@ -593,7 +645,7 @@
             showRollResult(resultHtml);
         }
 
-        function rollSkill(skillKey) {
+        window.rollSkill = function(skillKey) {
             const skill = state.skills[skillKey];
             const attrKey = skill.attr;
             let attrValue = state.attributes[attrKey].value;
@@ -612,7 +664,7 @@
             showRollResult(resultHtml);
         }
 
-        function rollDamage(damageString, sourceName) {
+        window.rollDamage = function(damageString, sourceName) {
             let totalDamage = 0;
             let rolls = [];
             
@@ -657,16 +709,17 @@
             }, 3000);
         }
 
-        function updateResource(type, amount) {
+        window.updateResource = function(type, amount) {
             if (type === 'hp') {
                 state.currentHp = Math.max(0, Math.min(state.maxHp, state.currentHp + amount));
             } else if (type === 'chakra') {
                 state.currentChakra = Math.max(0, Math.min(state.maxChakra, state.currentChakra + amount));
             }
             renderResources();
+            saveState();
         }
 
-        function useJutsu(cost) {
+        window.useJutsu = function(cost) {
             if (state.currentChakra >= cost) {
                 updateResource('chakra', -cost);
             } else {
@@ -674,24 +727,26 @@
             }
         }
         
-        function levelUp() {
+        window.levelUp = function() {
             state.levelUpPoints += 2;
             renderLevelUpPoints();
+            saveState();
         }
 
-        function increaseAttribute(key) {
+        window.increaseAttribute = function(key) {
             if (state.levelUpPoints > 0) {
                 state.attributes[key].value++;
                 state.levelUpPoints--;
                 state.maxHp = 10 + (state.attributes.vig.value * 5);
                 state.maxChakra = 10 + (state.attributes.vig.value * 4) + (state.attributes.con.value * 2);
                 renderAll();
+                saveState();
             } else {
                 alert('Sem pontos de atributo para distribuir.');
             }
         }
 
-        function addItem() {
+        window.addItem = function() {
             const name = document.getElementById('item-name').value.trim();
             const quantity = parseInt(document.getElementById('item-qty').value, 10) || 1;
             const type = document.getElementById('item-type').value.trim() || 'Misc';
@@ -706,15 +761,17 @@
                 document.getElementById('item-damage').value = '';
                 document.getElementById('item-desc').value = '';
                 renderInventory();
+                saveState();
             }
         }
         
-        function removeItem(index) {
+        window.removeItem = function(index) {
              state.inventory.splice(index, 1);
              renderInventory();
+             saveState();
         }
         
-        function addKekkeiGenkai() {
+        window.addKekkeiGenkai = function() {
             const name = document.getElementById('kg-name').value.trim();
             const desc = document.getElementById('kg-desc').value.trim();
             if (name && desc) {
@@ -723,6 +780,7 @@
                 kgText.innerHTML += newKgHtml;
                 document.getElementById('kg-name').value = '';
                 document.getElementById('kg-desc').value = '';
+                saveState();
             }
         }
 
@@ -732,7 +790,7 @@
             }
         }
 
-        function addJutsuFromForm() {
+        window.addJutsuFromForm = function() {
             const name = document.getElementById('jutsu-name').value.trim();
             const rank = document.getElementById('jutsu-rank').value.trim();
             const cost = parseInt(document.getElementById('jutsu-cost').value, 10);
@@ -747,17 +805,19 @@
                 document.getElementById('jutsu-damage').value = '';
                 document.getElementById('jutsu-desc').value = '';
                 renderJutsus();
+                saveState();
             } else {
                 alert('Por favor, preencha todos os campos do jutsu.');
             }
         }
         
-        function removeJutsu(index) {
+        window.removeJutsu = function(index) {
             state.jutsus.splice(index, 1);
             renderJutsus();
+            saveState();
         }
 
-        function toggleSharingan() {
+        window.toggleSharingan = function() {
             state.isSharinganActive = !state.isSharinganActive;
             const btn = document.getElementById('sharingan-toggle');
             if (state.isSharinganActive) {
@@ -771,27 +831,31 @@
             }
             renderAttributes();
             renderSkills();
+            saveState();
         }
 
         // --- COMBAT FUNCTIONS ---
-        function startCombat() {
+        window.startCombat = function() {
             state.combat.isActive = true;
             state.combat.turn = 1;
             state.combat.enemies = [];
             renderCombatTracker();
+            saveState();
         }
 
-        function endCombat() {
+        window.endCombat = function() {
             state.combat.isActive = false;
             renderCombatTracker();
+            saveState();
         }
 
-        function nextTurn() {
+        window.nextTurn = function() {
             state.combat.turn++;
             renderCombatTracker();
+            saveState();
         }
 
-        function addEnemy() {
+        window.addEnemy = function() {
             const nameInput = document.getElementById('enemy-name');
             const hpInput = document.getElementById('enemy-hp');
             const name = nameInput.value.trim() || 'Inimigo';
@@ -801,21 +865,24 @@
             nameInput.value = '';
             hpInput.value = '';
             renderEnemies();
+            saveState();
         }
 
-        function damageEnemy(index) {
+        window.damageEnemy = function(index) {
             const input = document.getElementById(`damage-input-${index}`);
             const damage = parseInt(input.value, 10);
             if (!isNaN(damage)) {
                 state.combat.enemies[index].currentHp = Math.max(0, state.combat.enemies[index].currentHp - damage);
                 input.value = '';
                 renderEnemies();
+                saveState();
             }
         }
 
-        function removeEnemy(index) {
+        window.removeEnemy = function(index) {
             state.combat.enemies.splice(index, 1);
             renderEnemies();
+            saveState();
         }
 
         // --- OBSERVERS ---
@@ -826,6 +893,7 @@
                     state.hasMangekyou = true;
                     mangekyouJutsus.forEach(jutsu => addJutsu(jutsu));
                     renderJutsus();
+                    saveState();
                     alert('Mangekyou Sharingan Despertado! Novos jutsus foram adicionados.');
                     kekkeiGenkaiObserver.disconnect();
                 }
@@ -833,10 +901,12 @@
         });
 
         // --- INITIALIZATION ---
-        window.onload = () => {
+        window.onload = async () => {
+            await loadState();
+            renderAll();
+            
             const kekkeiGenkaiNode = document.getElementById('kekkei-genkai-text');
             kekkeiGenkaiObserver.observe(kekkeiGenkaiNode, { characterData: true, subtree: true, childList: true });
-            renderAll();
         };
     </script>
 </body>
