@@ -124,12 +124,10 @@
 
     <div id="roll-result-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none z-50">
         <div id="roll-result-content" class="bg-gray-800 border border-gray-700 text-white p-8 rounded-xl shadow-lg text-center">
-            <!-- O resultado da rolagem aparecerá aqui -->
-        </div>
+            </div>
     </div>
 
     <div class="max-w-7xl mx-auto">
-        <!-- HEADER -->
         <header class="card p-4 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-4 text-center sm:text-left">
                 <svg class="uchiha-fan flex-shrink-0" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M78.6 128C98.4 128 128 98.4 128 78.6a49.5 49.5 0 0 0-14.5-35.3C100.3 29 84.4 22.3 78.6 22.3a125.8 125.8 0 0 0-29.2 4.2C27.7 32.7 11.3 49.8 4.3 71.5 0 84.4 0 98.4 0 98.4V128h78.6z" fill="#fff"></path><path d="M78.6 128c-57.8 0-66-70.9-29.2-91.5C62.6 24.2 78.6 22.3 78.6 22.3c35.3 0 49.4 35.4 35.3 49.4-14.2 14.2-49.4 35.3-35.3 56.3z"></path></svg>
@@ -145,9 +143,7 @@
         </header>
 
         <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- COLUNA ESQUERDA -->
             <div class="lg:col-span-1 flex flex-col gap-6">
-                <!-- EVOLUÇÃO -->
                 <div class="card p-6">
                     <h2 class="card-title">Evolução</h2>
                     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-2">
@@ -156,25 +152,18 @@
                     </div>
                      <p class="text-xs text-gray-400 text-center">Clique para ganhar 2 pontos para distribuir.</p>
                 </div>
-                <!-- ATRIBUTOS -->
                 <div class="card p-6">
                     <h2 class="card-title">Atributos</h2>
                     <div id="attributes-list" class="grid grid-cols-1 gap-3 text-lg">
-                        <!-- Atributos serão gerados pelo JS -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- ROLAGEM GERAL -->
                 <div id="general-roll-card" class="card p-6">
-                    <!-- Rolagem Geral será gerada pelo JS -->
-                </div>
+                    </div>
 
-                <!-- PERÍCIAS -->
                 <div id="skills-card" class="card p-6">
-                    <!-- Perícias serão geradas pelo JS -->
-                </div>
+                    </div>
 
-                <!-- RECURSOS -->
                 <div class="card p-6">
                     <h2 class="card-title">Recursos</h2>
                     <div class="mb-6">
@@ -202,19 +191,13 @@
                 </div>
             </div>
 
-            <!-- COLUNA DIREITA -->
             <div class="lg:col-span-2 flex flex-col gap-6">
-                <!-- MODO DE COMBATE -->
                 <div id="combat-mode-card" class="card p-6">
-                    <!-- Modo de Combate será gerado pelo JS -->
-                </div>
+                    </div>
 
-                <!-- ATAQUES BÁSICOS -->
                 <div id="basic-attacks-card" class="card p-6">
-                    <!-- Ataques Básicos serão gerados pelo JS -->
-                </div>
+                    </div>
 
-                <!-- INVENTÁRIO -->
                 <div class="card p-6">
                     <h2 class="card-title">Inventário</h2>
                     <ul id="inventory-list" class="space-y-3"></ul>
@@ -231,13 +214,15 @@
                     </div>
                 </div>
 
-                <!-- KEKKEI GENKAI & NATUREZAS -->
                 <div class="card p-6 relative">
                     <h2 class="card-title">Kekkei Genkai & Naturezas</h2>
-                    <button id="sharingan-toggle" onclick="toggleSharingan()" class="btn btn-secondary absolute top-4 right-4 text-xs sm:text-sm">Ativar Sharingan</button>
-                    <div id="kekkei-genkai-text" contenteditable="true" class="space-y-3 mr-24 sm:mr-32">
-                        <p><strong class="text-white">Sharingan (3 Tomoe):</strong> Permite prever movimentos, copiar jutsus e ver o fluxo de chakra.</p>
-                        <p class="text-red-400"><strong class="text-red-300">Mangekyou Sharingan:</strong> Despertado após o trauma da batalha contra Gantetsu. O seu padrão é o de três lâminas curvas que se encontram no centro, a girar lentamente. Concede acesso a jutsus lendários, mas cada utilização causa uma grande tensão e dano ao utilizador.</p>
+                    <div class="absolute top-4 right-4 flex flex-col sm:flex-row gap-2">
+                        <button id="sharingan-toggle" onclick="toggleSharingan()" class="btn btn-secondary text-xs">Sharingan</button>
+                        <button id="mangekyou-toggle" onclick="toggleMangekyou()" class="btn btn-secondary text-xs">Mangekyou</button>
+                    </div>
+                    <div id="kekkei-genkai-text" contenteditable="true" class="space-y-3 mr-32 sm:mr-48">
+                        <p><strong class="text-white">Sharingan (3 Tomoe):</strong> Permite prever movimentos, copiar jutsus e ver o fluxo de chakra. Concede +2 em AGI, CON e PER.</p>
+                        <p class="text-red-400"><strong class="text-red-300">Mangekyou Sharingan:</strong> Despertado após trauma. O seu padrão é de três lâminas curvas. Concede acesso a jutsus lendários e eleva o bônus para +4 em AGI, CON e PER, mas cada utilização e manutenção causa dano extremo ao utilizador.</p>
                         <p><strong class="text-white">Naturezas de Chakra:</strong> Katon (Fogo), Suiton (Água), Raiton (Relâmpago).</p>
                     </div>
                     <div class="mt-6 p-4 border border-gray-700 rounded-lg">
@@ -250,17 +235,17 @@
                     </div>
                 </div>
 
-                <!-- JUTSUS -->
                 <div class="card p-6">
                     <h2 class="card-title">Lista de Jutsus</h2>
                     <div id="jutsu-list" class="space-y-4"></div>
                      <div class="mt-6 p-4 border border-gray-700 rounded-lg">
                         <h3 class="font-bold text-white mb-2">Adicionar Novo Jutsu</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <input type="text" id="jutsu-name" placeholder="Nome do Jutsu" class="form-input">
+                            <input type="text" id="jutsu-name" placeholder="Nome do Jutsu" class="form-input sm:col-span-2">
                             <input type="text" id="jutsu-rank" placeholder="Rank (Ex: A)" class="form-input">
-                            <input type="number" id="jutsu-cost" placeholder="Custo de Chakra" class="form-input">
                             <input type="text" id="jutsu-damage" placeholder="Dano (Ex: 3d8)" class="form-input">
+                            <input type="number" id="jutsu-cost" placeholder="Custo de Chakra (PC)" class="form-input">
+                            <input type="number" id="jutsu-hp-cost" placeholder="Custo de Vida (PV)" class="form-input">
                             <textarea id="jutsu-desc" placeholder="Descrição do Jutsu" rows="2" class="form-input col-span-2"></textarea>
                         </div>
                         <button onclick="addJutsuFromForm()" class="btn btn-primary mt-2 w-full">Adicionar Jutsu</button>
@@ -299,6 +284,7 @@
             currentChakra: 58,
             levelUpPoints: 0,
             isSharinganActive: false,
+            isMangekyouActive: false,
             hasMangekyou: true,
             attributes: {
                 for: { name: 'Força', value: 4 },
@@ -322,17 +308,17 @@
                 { name: 'Pergaminho de Selamento (Cultista)', quantity: 1, type: 'Item de Missão', description: 'Contém o corpo selado do cultista capturado em Uzushio para interrogatório.'},
             ],
             jutsus: [
-                { name: 'Katon: Goukakyuu no Jutsu', rank: 'C', cost: 6, damage: '3d8', desc: 'O jutsu assinatura do clã Uchiha. Uma massiva esfera de fogo.' },
-                { name: 'Katon: Hōsenka no Jutsu', rank: 'C', cost: 5, damage: '2d6', desc: 'Dispara múltiplas bolas de fogo menores, que podem esconder shurikens.' },
-                { name: 'Katon: Ryūka no Jutsu', rank: 'C', cost: 7, damage: '4d6', desc: 'Um fluxo de fogo intenso guiado por um fio ou outra superfície.' },
-                { name: 'Katon: Gōryūka no Jutsu', rank: 'B', cost: 10, damage: '4d10', desc: 'Cria uma cabeça de dragão de fogo maciça para incinerar um alvo.' },
-                { name: 'Chidori', rank: 'A', cost: 13, damage: '5d10', desc: 'Concentração de chakra de raio na mão, usada para perfurar. Requer Sharingan.' },
-                { name: 'Suiton: Suijinheki', rank: 'B', cost: 9, damage: 'Nenhum', desc: 'Expele um jato de água da boca que forma uma barreira defensiva circular.' },
-                { name: 'Genjutsu: Sharingan', rank: '-', cost: 8, damage: 'Nenhum', desc: 'Usando contato visual, prende o alvo em uma ilusão paralisante.' },
-                { name: 'Jigoku Gouka no Jutsu (Original)', rank: 'A', cost: 15, damage: '2d8 + Paralisia', desc: 'Infunde o tantō com chakra de fogo e raio. O corte queima e paralisa.' },
-                { name: 'Amaterasu', rank: 'S', cost: 20, damage: '4d12', desc: 'Cria chamas negras inextinguíveis no ponto de foco do usuário.' },
-                { name: 'Tsukuyomi', rank: 'S', cost: 18, damage: 'Nenhum', desc: 'Prende o alvo em um genjutsu que distorce a percepção do tempo.' },
-                { name: 'Susano\'o (Costelas)', rank: 'S', cost: 25, damage: 'Nenhum', desc: 'Manifesta uma caixa torácica de chakra como defesa. Custo inicial, mais 5 por turno para manter.' },
+                { name: 'Katon: Goukakyuu no Jutsu', rank: 'C', cost: 6, hpCost: 0, damage: '3d8', desc: 'O jutsu assinatura do clã Uchiha. Uma massiva esfera de fogo.' },
+                { name: 'Katon: Hōsenka no Jutsu', rank: 'C', cost: 5, hpCost: 0, damage: '2d6', desc: 'Dispara múltiplas bolas de fogo menores, que podem esconder shurikens.' },
+                { name: 'Katon: Ryūka no Jutsu', rank: 'C', cost: 7, hpCost: 0, damage: '4d6', desc: 'Um fluxo de fogo intenso guiado por um fio ou outra superfície.' },
+                { name: 'Katon: Gōryūka no Jutsu', rank: 'B', cost: 10, hpCost: 0, damage: '4d10', desc: 'Cria uma cabeça de dragão de fogo maciça para incinerar um alvo.' },
+                { name: 'Chidori', rank: 'A', cost: 13, hpCost: 0, damage: '5d10', desc: 'Concentração de chakra de raio na mão, usada para perfurar. Requer Sharingan.' },
+                { name: 'Suiton: Suijinheki', rank: 'B', cost: 9, hpCost: 0, damage: 'Nenhum', desc: 'Expele um jato de água da boca que forma uma barreira defensiva circular.' },
+                { name: 'Genjutsu: Sharingan', rank: '-', cost: 8, hpCost: 0, damage: 'Nenhum', desc: 'Usando contato visual, prende o alvo em uma ilusão paralisante.' },
+                { name: 'Jigoku Gouka no Jutsu (Original)', rank: 'A', cost: 15, hpCost: 0, damage: '2d8 + Paralisia', desc: 'Infunde o tantō com chakra de fogo e raio. O corte queima e paralisa.' },
+                { name: 'Amaterasu', rank: 'S', cost: 20, hpCost: 4, damage: '4d12', desc: 'Olho Esquerdo: Cria chamas negras inextinguíveis no ponto de foco. Causa grande desgaste e sangramento ocular. Requer Mangekyou.' },
+                { name: 'Tsukuyomi', rank: 'S', cost: 18, hpCost: 3, damage: 'Nenhum', desc: 'Olho Direito: Prende o alvo num genjutsu que distorce o tempo, causando trauma mental massivo. Requer Mangekyou.' },
+                { name: 'Susano\'o (Incompleto)', rank: 'S', cost: 25, hpCost: 5, damage: 'Nenhum', desc: 'Ambos os Olhos: Manifesta uma caixa torácica de chakra como defesa absoluta. Custo inicial alto, mais 5 PC e 1 PV por turno para manter ativo. Requer Mangekyou.' },
             ],
             combat: {
                 isActive: false,
@@ -382,7 +368,8 @@
             renderCombatTracker();
             renderBasicAttacks();
             renderInventory();
-            renderKekkeiGenkai();
+            renderKekkeiGenkaiText();
+            renderDojutsuButtons();
             renderJutsus();
             renderLevelUpPoints();
         }
@@ -392,10 +379,16 @@
             list.innerHTML = '';
             for (const key in state.attributes) {
                 const attr = state.attributes[key];
+                
                 let bonus = 0;
-                if (state.isSharinganActive && ['agi', 'con', 'per'].includes(key)) {
-                    bonus = 2;
+                const isRelevantAttr = ['agi', 'con', 'per'].includes(key);
+                if (state.isSharinganActive && isRelevantAttr) {
+                    bonus = 2; // Bônus base do Sharingan
                 }
+                if (state.isMangekyouActive && isRelevantAttr) {
+                    bonus = 4; // Mangekyou sobrepõe com bônus maior
+                }
+
                 const element = document.createElement('div');
                 element.className = 'flex justify-between items-center';
                 element.innerHTML = `
@@ -441,15 +434,23 @@
                 const skill = state.skills[key];
                 const attrKey = skill.attr;
                 let attrValue = state.attributes[attrKey].value;
-                if (state.isSharinganActive && ['agi', 'con', 'per'].includes(attrKey)) {
-                    attrValue += 2;
+                
+                let bonus = 0;
+                const isRelevantAttr = ['agi', 'con', 'per'].includes(attrKey);
+                if (state.isSharinganActive && isRelevantAttr) {
+                    bonus = 2; // Bônus base do Sharingan
                 }
+                if (state.isMangekyouActive && isRelevantAttr) {
+                    bonus = 4; // Mangekyou sobrepõe
+                }
+                attrValue += bonus;
+
                 const totalBonus = attrValue + skill.bonus;
                 content += `
                     <div class="flex justify-between items-center p-2 bg-gray-900 rounded-md">
                         <div>
                             <p class="font-bold text-white">${skill.name}</p>
-                            <p class="text-xs text-gray-400">Bónus Total: +${totalBonus} (${attrKey.toUpperCase()}+${skill.bonus})</p>
+                            <p class="text-xs text-gray-400">Bónus Total: +${totalBonus} (${attrKey.toUpperCase()}+${skill.bonus}${bonus > 0 ? `+${bonus}`:''})</p>
                         </div>
                         <button onclick="rollSkill('${key}')" class="btn btn-secondary">Rolar</button>
                     </div>
@@ -579,10 +580,37 @@
             });
         }
 
-        function renderKekkeiGenkai() {
+        function renderKekkeiGenkaiText() {
             const kgText = document.getElementById('kekkei-genkai-text');
             if (state.kekkeiGenkaiHTML) {
                 kgText.innerHTML = state.kekkeiGenkaiHTML;
+            }
+        }
+
+        function renderDojutsuButtons() {
+            const sharinganBtn = document.getElementById('sharingan-toggle');
+            const mangekyouBtn = document.getElementById('mangekyou-toggle');
+
+            // Lógica para o botão do Sharingan
+            if (state.isSharinganActive) {
+                sharinganBtn.textContent = 'Sharingan (On)';
+                sharinganBtn.classList.remove('btn-secondary');
+                sharinganBtn.classList.add('btn-danger');
+            } else {
+                sharinganBtn.textContent = 'Sharingan (Off)';
+                sharinganBtn.classList.remove('btn-danger');
+                sharinganBtn.classList.add('btn-secondary');
+            }
+
+            // Lógica para o botão do Mangekyou
+            if (state.isMangekyouActive) {
+                mangekyouBtn.textContent = 'Mangekyou (On)';
+                mangekyouBtn.classList.remove('btn-secondary');
+                mangekyouBtn.classList.add('btn-danger');
+            } else {
+                mangekyouBtn.textContent = 'Mangekyou (Off)';
+                mangekyouBtn.classList.remove('btn-danger');
+                mangekyouBtn.classList.add('btn-secondary');
             }
         }
 
@@ -592,18 +620,24 @@
             state.jutsus.forEach((jutsu, index) => {
                 const element = document.createElement('div');
                 element.className = 'p-3 border border-gray-700 rounded-lg';
+                
+                let costText = `Custo: ${jutsu.cost} PC`;
+                if (jutsu.hpCost && jutsu.hpCost > 0) {
+                    costText += ` + <span class="text-red-400 font-semibold">${jutsu.hpCost} PV</span>`;
+                }
+
                 element.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
                             <h4 class="font-bold text-white">${jutsu.name}</h4>
-                            <p class="text-sm text-gray-400">Rank: ${jutsu.rank} | Custo: ${jutsu.cost} PC</p>
+                            <p class="text-sm text-gray-400">Rank: ${jutsu.rank} | ${costText}</p>
                             <p class="text-sm text-red-400 font-semibold">Dano: ${jutsu.damage}</p>
                         </div>
                         <button onclick="removeJutsu(${index})" class="btn btn-danger text-xs">x</button>
                     </div>
                     <p class="mt-2 text-gray-300 text-sm">${jutsu.desc}</p>
                     <div class="flex gap-2 mt-3">
-                        <button onclick="useJutsu(${jutsu.cost})" class="btn btn-primary w-1/2">Usar Jutsu</button>
+                        <button onclick="useJutsu(${index})" class="btn btn-primary w-1/2">Usar Jutsu</button>
                         ${jutsu.damage.toLowerCase() !== 'nenhum' ? `<button onclick="rollDamage('${jutsu.damage}', '${jutsu.name}')" class="btn btn-secondary w-1/2">Rolar Dano</button>` : ''}
                     </div>
                 `;
@@ -629,18 +663,22 @@
                 const attr = state.attributes[key];
                 name = attr.name;
                 totalBonus = attr.value;
-                if (state.isSharinganActive && ['agi', 'con', 'per'].includes(key)) {
-                    totalBonus += 2;
-                }
+                const isRelevantAttr = ['agi', 'con', 'per'].includes(key);
+                if (state.isSharinganActive && isRelevantAttr) totalBonus += 2;
+                if (state.isMangekyouActive && isRelevantAttr) totalBonus += 2; // +2 Adicional
+
             } else if (type === 'skill') {
                 const skill = state.skills[key];
                 name = skill.name;
                 const attrKey = skill.attr;
                 let attrValue = state.attributes[attrKey].value;
-                if (state.isSharinganActive && ['agi', 'con', 'per'].includes(attrKey)) {
-                    attrValue += 2;
-                }
-                totalBonus = attrValue + skill.bonus;
+                
+                let bonus = 0;
+                const isRelevantAttr = ['agi', 'con', 'per'].includes(attrKey);
+                if (state.isSharinganActive && isRelevantAttr) bonus = 2;
+                if (state.isMangekyouActive && isRelevantAttr) bonus = 4;
+                
+                totalBonus = attrValue + skill.bonus + bonus;
             }
             
             const roll = Math.floor(Math.random() * 20) + 1;
@@ -658,10 +696,13 @@
             const skill = state.skills[skillKey];
             const attrKey = skill.attr;
             let attrValue = state.attributes[attrKey].value;
-            if (state.isSharinganActive && ['agi', 'con', 'per'].includes(attrKey)) {
-                attrValue += 2;
-            }
-            const totalBonus = attrValue + skill.bonus;
+
+            let bonus = 0;
+            const isRelevantAttr = ['agi', 'con', 'per'].includes(attrKey);
+            if (state.isSharinganActive && isRelevantAttr) bonus = 2;
+            if (state.isMangekyouActive && isRelevantAttr) bonus = 4;
+            
+            const totalBonus = attrValue + skill.bonus + bonus;
             const roll = Math.floor(Math.random() * 20) + 1;
             const total = roll + totalBonus;
             
@@ -728,11 +769,33 @@
             saveState();
         }
 
-        window.useJutsu = function(cost) {
-            if (state.currentChakra >= cost) {
-                updateResource('chakra', -cost);
-            } else {
+        window.useJutsu = function(jutsuIndex) {
+            const jutsu = state.jutsus[jutsuIndex];
+            if (!jutsu) return;
+
+            const chakraCost = jutsu.cost || 0;
+            const hpCost = jutsu.hpCost || 0;
+
+            if (state.currentChakra < chakraCost) {
                 alert('Chakra insuficiente!');
+                return;
+            }
+            
+            if (state.currentHp <= hpCost) {
+                 alert('Vida insuficiente para usar este jutsu!');
+                 return;
+            }
+
+            if (jutsu.name.includes('Amaterasu') || jutsu.name.includes('Tsukuyomi') || jutsu.name.includes('Susano')) {
+                if (!state.isMangekyouActive) {
+                    alert('É preciso ativar o Mangekyou Sharingan para usar este jutsu!');
+                    return;
+                }
+            }
+
+            updateResource('chakra', -chakraCost);
+            if (hpCost > 0) {
+                updateResource('hp', -hpCost);
             }
         }
         
@@ -803,14 +866,16 @@
             const name = document.getElementById('jutsu-name').value.trim();
             const rank = document.getElementById('jutsu-rank').value.trim();
             const cost = parseInt(document.getElementById('jutsu-cost').value, 10);
+            const hpCost = parseInt(document.getElementById('jutsu-hp-cost').value, 10) || 0;
             const damage = document.getElementById('jutsu-damage').value.trim();
             const desc = document.getElementById('jutsu-desc').value.trim();
 
             if (name && rank && !isNaN(cost) && desc) {
-                addJutsu({ name, rank, cost, damage, desc });
+                addJutsu({ name, rank, cost, hpCost, damage, desc });
                 document.getElementById('jutsu-name').value = '';
                 document.getElementById('jutsu-rank').value = '';
                 document.getElementById('jutsu-cost').value = '';
+                document.getElementById('jutsu-hp-cost').value = '';
                 document.getElementById('jutsu-damage').value = '';
                 document.getElementById('jutsu-desc').value = '';
                 renderJutsus();
@@ -828,16 +893,30 @@
 
         window.toggleSharingan = function() {
             state.isSharinganActive = !state.isSharinganActive;
-            const btn = document.getElementById('sharingan-toggle');
-            if (state.isSharinganActive) {
-                btn.textContent = 'Desativar Sharingan';
-                btn.classList.remove('btn-secondary');
-                btn.classList.add('btn-danger');
-            } else {
-                btn.textContent = 'Ativar Sharingan';
-                btn.classList.remove('btn-danger');
-                btn.classList.add('btn-secondary');
+
+            if (!state.isSharinganActive) {
+                state.isMangekyouActive = false;
             }
+            
+            renderDojutsuButtons();
+            renderAttributes();
+            renderSkills();
+            saveState();
+        }
+
+        window.toggleMangekyou = function() {
+            if (!state.hasMangekyou) {
+                alert("Mangekyou Sharingan não foi despertado.");
+                return;
+            }
+
+            state.isMangekyouActive = !state.isMangekyouActive;
+
+            if (state.isMangekyouActive) {
+                state.isSharinganActive = true;
+            }
+            
+            renderDojutsuButtons();
             renderAttributes();
             renderSkills();
             saveState();
@@ -860,6 +939,13 @@
 
         window.nextTurn = function() {
             state.combat.turn++;
+            if (state.isMangekyouActive && state.combat.isActive) {
+                updateResource('chakra', -2);
+                if (Math.random() < 0.25) { // 25% de chance de perder vida
+                    updateResource('hp', -1);
+                    showRollResult(`<p class="text-lg font-bold text-red-400">A visão se turva...</p><p class="text-sm">Você sofre 1 de dano pela tensão do Mangekyou.</p>`);
+                }
+            }
             renderCombatTracker();
             saveState();
         }
@@ -900,10 +986,9 @@
                 const text = mutation.target.textContent;
                 if (text.toLowerCase().includes('mangekyou sharingan') && !state.hasMangekyou) {
                     state.hasMangekyou = true;
-                    mangekyouJutsus.forEach(jutsu => addJutsu(jutsu));
                     renderJutsus();
                     saveState();
-                    alert('Mangekyou Sharingan Despertado! Novos jutsus foram adicionados.');
+                    alert('Mangekyou Sharingan Despertado!');
                     kekkeiGenkaiObserver.disconnect();
                 }
             }
