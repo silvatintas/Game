@@ -237,6 +237,7 @@
                     <button id="sharingan-toggle" onclick="toggleSharingan()" class="btn btn-secondary absolute top-4 right-4 text-xs sm:text-sm">Ativar Sharingan</button>
                     <div id="kekkei-genkai-text" contenteditable="true" class="space-y-3 mr-24 sm:mr-32">
                         <p><strong class="text-white">Sharingan (3 Tomoe):</strong> Permite prever movimentos, copiar jutsus e ver o fluxo de chakra.</p>
+                        <p class="text-red-400"><strong class="text-red-300">Mangekyou Sharingan:</strong> Despertado após o trauma da batalha contra Gantetsu. O seu padrão é o de três lâminas curvas que se encontram no centro, a girar lentamente. Concede acesso a jutsus lendários, mas cada utilização causa uma grande tensão e dano ao utilizador.</p>
                         <p><strong class="text-white">Naturezas de Chakra:</strong> Katon (Fogo), Suiton (Água), Raiton (Relâmpago).</p>
                     </div>
                     <div class="mt-6 p-4 border border-gray-700 rounded-lg">
@@ -349,6 +350,9 @@
             clearTimeout(saveTimeout);
             saveTimeout = setTimeout(async () => {
                 try {
+                    // Salvar o conteúdo HTML editável também
+                    const kgText = document.getElementById('kekkei-genkai-text');
+                    state.kekkeiGenkaiHTML = kgText.innerHTML;
                     await setDoc(characterDocRef, { characterData: JSON.stringify(state) });
                     console.log("Personagem salvo na nuvem!");
                 } catch (e) {
@@ -381,6 +385,7 @@
             renderCombatTracker();
             renderBasicAttacks();
             renderInventory();
+            renderKekkeiGenkai();
             renderJutsus();
             renderLevelUpPoints();
         }
@@ -575,6 +580,13 @@
                 `;
                 list.appendChild(li);
             });
+        }
+
+        function renderKekkeiGenkai() {
+            const kgText = document.getElementById('kekkei-genkai-text');
+            if (state.kekkeiGenkaiHTML) {
+                kgText.innerHTML = state.kekkeiGenkaiHTML;
+            }
         }
 
         function renderJutsus() {
@@ -907,6 +919,11 @@
             
             const kekkeiGenkaiNode = document.getElementById('kekkei-genkai-text');
             kekkeiGenkaiObserver.observe(kekkeiGenkaiNode, { characterData: true, subtree: true, childList: true });
+            
+            // Save state on any contenteditable change
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                el.addEventListener('blur', saveState);
+            });
         };
     </script>
 </body>
