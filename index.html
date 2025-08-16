@@ -221,8 +221,8 @@
                         <button id="mangekyou-toggle" onclick="toggleMangekyou()" class="btn btn-secondary text-xs">Mangekyou</button>
                     </div>
                     <div id="kekkei-genkai-text" contenteditable="true" class="space-y-3 mr-32 sm:mr-48">
-                        <p><strong class="text-white">Sharingan (3 Tomoe):</strong> Permite prever movimentos, copiar jutsus e ver o fluxo de chakra. Concede +2 em AGI, CON e PER.</p>
-                        <p class="text-red-400"><strong class="text-red-300">Mangekyō Sharingan:</strong> Despertado para proteger a sua equipa. O uso contínuo, especialmente do Amaterasu, causou danos permanentes à visão do seu olho esquerdo, resultando em visão turva e dor. Kakashi Hatake o treinou por três anos para controlar o seu poder e mitigar os seus custos. Eleva o bônus para +4 em AGI, CON e PER.</p>
+                        <p><strong class="text-white">Sharingan (3 Tomoe):</strong> Permite prever movimentos, copiar jutsus e ver o fluxo de chakra. Concede +2 em rolagens de Percepção.</p>
+                        <p class="text-red-400"><strong class="text-red-300">Mangekyō Sharingan:</strong> Despertado para proteger a sua equipa. O uso contínuo, especialmente do Amaterasu, causou danos permanentes à visão do seu olho esquerdo, resultando em visão turva e dor. Kakashi Hatake o treinou por três anos para controlar o seu poder e mitigar os seus custos. Eleva o bônus para +4 em rolagens de Percepção.</p>
                         <p><strong class="text-white">Naturezas de Chakra:</strong> Katon (Fogo), Suiton (Água), Raiton (Relâmpago).</p>
                     </div>
                     <div class="mt-6 p-4 border border-gray-700 rounded-lg">
@@ -278,10 +278,10 @@
 
         // --- DATA ---
         let state = {
-            maxHp: 60,
-            currentHp: 60,
-            maxChakra: 78,
-            currentChakra: 78,
+            maxHp: 75,
+            currentHp: 75,
+            maxChakra: 120,
+            currentChakra: 120,
             levelUpPoints: 0,
             isSharinganActive: false,
             isMangekyouActive: false,
@@ -297,10 +297,10 @@
             skills: {
                 kenjutsu: { name: 'Kenjutsu', attr: 'agi', bonus: 6 },
                 analise: { name: 'Análise Tática', attr: 'int', bonus: 8 },
+                lideranca: { name: 'Liderança', attr: 'int', bonus: 6 },
                 furtividade: { name: 'Furtividade', attr: 'agi', bonus: 7 },
                 acrobacia: { name: 'Acrobacia', attr: 'agi', bonus: 5 },
                 rastreamento: { name: 'Rastreamento', attr: 'per', bonus: 5 },
-                lideranca: { name: 'Liderança', attr: 'int', bonus: 6 }
             },
             inventory: [
                 { name: 'Tantō "Corvo Sombrio"', quantity: 1, type: 'Arma', description: 'Uma lâmina de chakra personalizada, forjada para Cohen. Conduz seu chakra Raiton com eficiência mortal.', damage: '1d8 + AGI' },
@@ -309,16 +309,17 @@
                 { name: 'Pergaminho de Selamento (Grande)', quantity: 2, type: 'Ferramenta', description: 'Permite selar armas, itens ou até mesmo jutsus.'},
             ],
             jutsus: [
-                { name: 'Katon: Gōka Mekkyaku', rank: 'S', cost: 20, hpCost: 0, damage: '8d8', desc: 'Uma torrente de fogo devastadora que cobre uma vasta área, uma técnica digna de um comandante.' },
-                { name: 'Katon: Goukakyuu no Jutsu', rank: 'C', cost: 6, hpCost: 0, damage: '3d8', desc: 'O jutsu assinatura do clã Uchiha, aperfeiçoado ao longo dos anos.' },
-                { name: 'Raikiri', rank: 'S', cost: 15, hpCost: 0, damage: '6d10', desc: 'Uma versão refinada e mais poderosa do Chidori, dominada sob a tutela de Kakashi. Requer Sharingan.' },
-                { name: 'Chidori', rank: 'A', cost: 13, hpCost: 0, damage: '5d10', desc: 'Concentração de chakra de raio na mão, usada para perfurar. Requer Sharingan.' },
-                { name: 'Raiton: Kage Bunshin', rank: 'A', cost: 10, hpCost: 0, damage: 'Nenhum', desc: 'Cria um clone de sombra infundido com chakra de raio, que eletrocuta o que o destrói.' },
-                { name: 'Suiton: Suijinheki', rank: 'B', cost: 9, hpCost: 0, damage: 'Nenhum', desc: 'Expele um jato de água da boca que forma uma barreira defensiva circular.' },
-                { name: 'Genjutsu: Sharingan', rank: '-', cost: 8, hpCost: 0, damage: 'Nenhum', desc: 'Usando contato visual, prende o alvo em uma ilusão paralisante.' },
-                { name: 'Amaterasu', rank: 'S', cost: 20, hpCost: 4, damage: '4d12', desc: 'Olho Esquerdo: Invoca chamas negras inextinguíveis. O uso excessivo causa sangramento e danifica permanentemente a visão. Requer Mangekyou.' },
-                { name: 'Kagutsuchi: Escudo de Chamas', rank: 'S', cost: 15, hpCost: 3, damage: '2d12 retaliação', desc: 'Olho Direito: Manipula as chamas do Amaterasu para criar um escudo. Causa dano a quem atacar corpo a corpo. Requer Mangekyou.' },
-                { name: 'Susano\'o (Armadura)', rank: 'S', cost: 30, hpCost: 8, damage: '6d12', desc: 'Ambos os Olhos: Manifesta um guerreiro de chakra blindado com poder formidável. Custo de ativação, mais 8 PC e 2 PV por turno para manter. Requer Mangekyou.' },
+                { name: 'Amaterasu', rank: 'S', cost: 30, hpCost: 5, damage: '10d6 (+2d10/t)', desc: 'Olho Esquerdo: Conjura chamas negras inextinguíveis. Causa 5 de dano de ricochete e degrada a visão.' },
+                { name: 'Magen: Shinen no Kangoku', rank: 'S', cost: 35, hpCost: 5, damage: 'Especial', desc: 'Olho Direito: Genjutsu. Alvo rola Vigor (CD 25) ou fica Incapacitado por 1d4 turnos. Sucesso: 8d8 dano psíquico & -4 em rolagens.' },
+                { name: 'Susanoo (Caixa Torácica)', rank: 'S', cost: 25, hpCost: 0, damage: '4d12', desc: 'Manutenção: 10 PC/turno. Concede 75 PV temporários. O ataque usa a sua rolagem de Controle.' },
+                { name: 'Chidori', rank: 'A', cost: 12, hpCost: 0, damage: '8d10', desc: 'Uma concentração perfurante de chakra de raio na mão.' },
+                { name: 'Lança Afiada de Chidori', rank: 'A', cost: 15, hpCost: 0, damage: '6d8', desc: 'Estende o Chidori numa lança com alcance de 10 metros.' },
+                { name: 'Parede de Trovão', rank: 'B', cost: 10, hpCost: 0, damage: '4d6', desc: 'Cria uma parede elétrica (5x3m) por 3 turnos. Atravessar causa dano e paralisia (Vigor CD 16).' },
+                { name: 'Técnica da Grande Bola de Fogo', rank: 'C', cost: 5, hpCost: 0, damage: '4d6', desc: 'Dispara uma grande esfera de fogo em área.' },
+                { name: 'Técnica do Grande Dragão de Fogo', rank: 'B', cost: 10, hpCost: 0, damage: '6d8', desc: 'Cria uma cabeça de dragão de fogo para incinerar um alvo.' },
+                { name: 'Técnica do Fogo do Inferno', rank: 'B', cost: 3, hpCost: 0, damage: '+1d6', desc: 'Custo por turno. Infunde o tantō com Fogo/Raio, adicionando +1d6 de dano aos ataques.' },
+                { name: 'Técnica do Piscar Corporal', rank: 'D', cost: 2, hpCost: 0, damage: 'Nenhum', desc: 'Move-se a alta velocidade para um ponto visível em 30m. Ação de movimento.' },
+                { name: 'Estilo de Saque Rápido: Lua Enevoada', rank: 'A', cost: 0, hpCost: 0, damage: 'Crítico', desc: 'Uma vez por combate. Ataque de saque com +5 para acertar; se acertar, é um acerto crítico (dobro dos dados de dano).' }
             ],
             combat: {
                 isActive: false,
@@ -333,7 +334,6 @@
             clearTimeout(saveTimeout);
             saveTimeout = setTimeout(async () => {
                 try {
-                    // Salvar o conteúdo HTML editável também
                     const kgText = document.getElementById('kekkei-genkai-text');
                     state.kekkeiGenkaiHTML = kgText.innerHTML;
                     await setDoc(characterDocRef, { characterData: JSON.stringify(state) });
@@ -341,7 +341,7 @@
                 } catch (e) {
                     console.error("Erro ao salvar personagem: ", e);
                 }
-            }, 1000); // Debounce de 1 segundo para evitar escritas excessivas
+            }, 1000); 
         }
 
         async function loadState() {
@@ -349,18 +349,12 @@
                 const docSnap = await getDoc(characterDocRef);
                 if (docSnap.exists()) {
                     const loadedData = JSON.parse(docSnap.data().characterData);
-                    
                     state = { ...state, ...loadedData };
                     console.log("Personagem carregado e mesclado da nuvem!");
-
-                    // **CORREÇÃO DEFINITIVA APLICADA AQUI**
-                    // Garante que a ficha reconheça o Mangekyou como desperto,
-                    // sobrescrevendo qualquer dado antigo incorreto.
                     state.hasMangekyou = true;
-
                 } else {
                     console.log("Nenhum personagem encontrado, criando um novo na nuvem.");
-                    await saveState(); // Salva o estado inicial se não houver nenhum
+                    await saveState(); 
                 }
             } catch (e) {
                 console.error("Erro ao carregar personagem: ", e);
@@ -390,12 +384,10 @@
                 const attr = state.attributes[key];
                 
                 let bonus = 0;
-                const isRelevantAttr = ['agi', 'con', 'per'].includes(key);
-                if (state.isSharinganActive && isRelevantAttr) {
-                    bonus = 2; // Bônus base do Sharingan
-                }
-                if (state.isMangekyouActive && isRelevantAttr) {
-                    bonus = 4; // Mangekyou sobrepõe com bônus maior
+                // O bônus mecânico agora afeta apenas Percepção (Per)
+                if (key === 'per') {
+                    if (state.isSharinganActive) bonus = 2;
+                    if (state.isMangekyouActive) bonus = 4; // Mangekyou sobrepõe
                 }
 
                 const element = document.createElement('div');
@@ -445,12 +437,9 @@
                 let attrValue = state.attributes[attrKey].value;
                 
                 let bonus = 0;
-                const isRelevantAttr = ['agi', 'con', 'per'].includes(attrKey);
-                if (state.isSharinganActive && isRelevantAttr) {
-                    bonus = 2; // Bônus base do Sharingan
-                }
-                if (state.isMangekyouActive && isRelevantAttr) {
-                    bonus = 4; // Mangekyou sobrepõe
+                if (attrKey === 'per') {
+                    if (state.isSharinganActive) bonus = 2;
+                    if (state.isMangekyouActive) bonus = 4;
                 }
                 
                 const totalBonus = attrValue + skill.bonus + bonus;
@@ -603,7 +592,6 @@
             const sharinganBtn = document.getElementById('sharingan-toggle');
             const mangekyouBtn = document.getElementById('mangekyou-toggle');
 
-            // Lógica para o botão do Sharingan
             if (state.isSharinganActive) {
                 sharinganBtn.textContent = 'Sharingan (On)';
                 sharinganBtn.classList.remove('btn-secondary');
@@ -614,7 +602,6 @@
                 sharinganBtn.classList.add('btn-secondary');
             }
 
-            // Lógica para o botão do Mangekyou
             if (state.isMangekyouActive) {
                 mangekyouBtn.textContent = 'Mangekyou (On)';
                 mangekyouBtn.classList.remove('btn-secondary');
@@ -650,7 +637,7 @@
                     <p class="mt-2 text-gray-300 text-sm">${jutsu.desc}</p>
                     <div class="flex gap-2 mt-3">
                         <button onclick="useJutsu(${index})" class="btn btn-primary w-1/2">Usar Jutsu</button>
-                        ${jutsu.damage.toLowerCase() !== 'nenhum' && !jutsu.damage.includes('retaliação') ? `<button onclick="rollDamage('${jutsu.damage}', '${jutsu.name}')" class="btn btn-secondary w-1/2">Rolar Dano</button>` : ''}
+                        ${jutsu.damage.toLowerCase() !== 'nenhum' && !['especial', 'crítico'].some(s => jutsu.damage.toLowerCase().includes(s)) ? `<button onclick="rollDamage('${jutsu.damage}', '${jutsu.name}')" class="btn btn-secondary w-1/2">Rolar Dano</button>` : ''}
                     </div>
                 `;
                 list.appendChild(element);
@@ -670,19 +657,18 @@
             const [type, key] = selectedValue.split('_');
             let totalBonus = 0;
             let name = '';
-            let baseValue = 0;
             let bonusText = '';
 
             if (type === 'attr') {
                 const attr = state.attributes[key];
                 name = attr.name;
                 let dojutsuBonus = 0;
-                const isRelevantAttr = ['agi', 'con', 'per'].includes(key);
-                if (state.isSharinganActive && isRelevantAttr) dojutsuBonus = 2;
-                if (state.isMangekyouActive && isRelevantAttr) dojutsuBonus = 4;
-                baseValue = attr.value;
-                totalBonus = baseValue + dojutsuBonus;
-                bonusText = `${baseValue} + ${dojutsuBonus}`;
+                if (key === 'per') {
+                    if (state.isSharinganActive) dojutsuBonus = 2;
+                    if (state.isMangekyouActive) dojutsuBonus = 4;
+                }
+                totalBonus = attr.value + dojutsuBonus;
+                bonusText = `${attr.value} (base) + ${dojutsuBonus} (dōjutsu)`;
             } else if (type === 'skill') {
                 const skill = state.skills[key];
                 name = skill.name;
@@ -690,9 +676,10 @@
                 let attrValue = state.attributes[attrKey].value;
                 
                 let dojutsuBonus = 0;
-                const isRelevantAttr = ['agi', 'con', 'per'].includes(attrKey);
-                if (state.isSharinganActive && isRelevantAttr) dojutsuBonus = 2;
-                if (state.isMangekyouActive && isRelevantAttr) dojutsuBonus = 4;
+                if (attrKey === 'per') {
+                    if (state.isSharinganActive) dojutsuBonus = 2;
+                    if (state.isMangekyouActive) dojutsuBonus = 4;
+                }
                 
                 totalBonus = attrValue + skill.bonus + dojutsuBonus;
                 bonusText = `${attrValue} (attr) + ${skill.bonus} (perícia) + ${dojutsuBonus} (dōjutsu)`;
@@ -716,9 +703,10 @@
             let attrValue = state.attributes[attrKey].value;
 
             let dojutsuBonus = 0;
-            const isRelevantAttr = ['agi', 'con', 'per'].includes(attrKey);
-            if (state.isSharinganActive && isRelevantAttr) dojutsuBonus = 2;
-            if (state.isMangekyouActive && isRelevantAttr) dojutsuBonus = 4;
+            if (attrKey === 'per') {
+                if (state.isSharinganActive) dojutsuBonus = 2;
+                if (state.isMangekyouActive) dojutsuBonus = 4;
+            }
             
             const totalBonus = attrValue + skill.bonus + dojutsuBonus;
             const roll = Math.floor(Math.random() * 20) + 1;
@@ -746,7 +734,7 @@
             
             const dicePart = parts.find(p => p.includes('d'));
             if (dicePart) {
-                const [numDice, diceType] = dicePart.split('d').map(Number);
+                const [numDice, diceType] = dicePart.split('d').map(s => parseInt(s, 10));
                 for (let i = 0; i < numDice; i++) {
                     const roll = Math.floor(Math.random() * diceType) + 1;
                     rolls.push(roll);
@@ -794,27 +782,16 @@
         window.useJutsu = function(jutsuIndex) {
             const jutsu = state.jutsus[jutsuIndex];
             if (!jutsu) return;
-
             const chakraCost = jutsu.cost || 0;
             const hpCost = jutsu.hpCost || 0;
-
             if (state.currentChakra < chakraCost) {
                 alert('Chakra insuficiente!');
                 return;
             }
-            
             if (state.currentHp <= hpCost) {
                  alert('Vida insuficiente para usar este jutsu!');
                  return;
             }
-
-            if (jutsu.desc.includes('Requer Mangekyou')) {
-                if (!state.isMangekyouActive) {
-                    alert('É preciso ativar o Mangekyou Sharingan para usar este jutsu!');
-                    return;
-                }
-            }
-
             updateResource('chakra', -chakraCost);
             if (hpCost > 0) {
                 updateResource('hp', -hpCost);
@@ -831,8 +808,7 @@
             if (state.levelUpPoints > 0) {
                 state.attributes[key].value++;
                 state.levelUpPoints--;
-                state.maxHp = 10 + (state.attributes.vig.value * 5);
-                state.maxChakra = 10 + (state.attributes.vig.value * 4) + (state.attributes.con.value * 2);
+                // As fórmulas de HP/Chakra foram removidas para usar os valores fixos
                 renderAll();
                 saveState();
             } else {
@@ -878,12 +854,6 @@
             }
         }
 
-        function addJutsu(jutsu) {
-            if (!state.jutsus.some(j => j.name === jutsu.name)) {
-                state.jutsus.push(jutsu);
-            }
-        }
-
         window.addJutsuFromForm = function() {
             const name = document.getElementById('jutsu-name').value.trim();
             const rank = document.getElementById('jutsu-rank').value.trim();
@@ -893,7 +863,7 @@
             const desc = document.getElementById('jutsu-desc').value.trim();
 
             if (name && rank && !isNaN(cost) && desc) {
-                addJutsu({ name, rank, cost, hpCost, damage, desc });
+                state.jutsus.push({ name, rank, cost, hpCost, damage, desc });
                 document.getElementById('jutsu-name').value = '';
                 document.getElementById('jutsu-rank').value = '';
                 document.getElementById('jutsu-cost').value = '';
@@ -915,11 +885,9 @@
 
         window.toggleSharingan = function() {
             state.isSharinganActive = !state.isSharinganActive;
-
             if (!state.isSharinganActive) {
                 state.isMangekyouActive = false;
             }
-            
             renderDojutsuButtons();
             renderAttributes();
             renderSkills();
@@ -931,13 +899,10 @@
                 alert("Mangekyou Sharingan não foi despertado.");
                 return;
             }
-
             state.isMangekyouActive = !state.isMangekyouActive;
-
             if (state.isMangekyouActive) {
                 state.isSharinganActive = true;
             }
-            
             renderDojutsuButtons();
             renderAttributes();
             renderSkills();
@@ -948,7 +913,6 @@
         window.startCombat = function() {
             state.combat.isActive = true;
             state.combat.turn = 1;
-            state.combat.enemies = [];
             renderCombatTracker();
             saveState();
         }
@@ -961,11 +925,11 @@
 
         window.nextTurn = function() {
             state.combat.turn++;
-            if (state.isMangekyouActive && state.combat.isActive) {
-                updateResource('chakra', -2);
-                if (Math.random() < 0.25) { // 25% de chance de perder vida
-                    updateResource('hp', -1);
-                    showRollResult(`<p class="text-lg font-bold text-red-400">A visão se turva...</p><p class="text-sm">Você sofre 1 de dano pela tensão do Mangekyou.</p>`);
+            if (state.combat.isActive) {
+                if (state.isMangekyouActive) {
+                    updateResource('chakra', -4); // Custo de manutenção do Mangekyou
+                } else if (state.isSharinganActive) {
+                    updateResource('chakra', -1); // Custo de manutenção do Sharingan
                 }
             }
             renderCombatTracker();
@@ -977,7 +941,7 @@
             const hpInput = document.getElementById('enemy-hp');
             const name = nameInput.value.trim() || 'Inimigo';
             const hp = parseInt(hpInput.value, 10) || 10;
-            
+            if (!state.combat.enemies) state.combat.enemies = [];
             state.combat.enemies.push({ name: `${name} #${state.combat.enemies.length + 1}`, maxHp: hp, currentHp: hp });
             nameInput.value = '';
             hpInput.value = '';
@@ -1002,29 +966,15 @@
             saveState();
         }
 
-        // --- OBSERVERS ---
-        const kekkeiGenkaiObserver = new MutationObserver((mutations) => {
-            for (let mutation of mutations) {
-                const text = mutation.target.textContent;
-                if (text.toLowerCase().includes('mangekyou sharingan') && !state.hasMangekyou) {
-                    state.hasMangekyou = true;
-                    renderJutsus();
-                    saveState();
-                    alert('Mangekyou Sharingan Despertado!');
-                    kekkeiGenkaiObserver.disconnect();
-                }
-            }
-        });
-
         // --- INITIALIZATION ---
         window.onload = async () => {
             await loadState();
             renderAll();
             
             const kekkeiGenkaiNode = document.getElementById('kekkei-genkai-text');
-            kekkeiGenkaiObserver.observe(kekkeiGenkaiNode, { characterData: true, subtree: true, childList: true });
+            const observer = new MutationObserver(() => saveState());
+            observer.observe(kekkeiGenkaiNode, { characterData: true, subtree: true, childList: true });
             
-            // Save state on any contenteditable change
             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
                 el.addEventListener('blur', saveState);
             });
