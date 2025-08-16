@@ -133,11 +133,11 @@
                 <svg class="uchiha-fan flex-shrink-0" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M78.6 128C98.4 128 128 98.4 128 78.6a49.5 49.5 0 0 0-14.5-35.3C100.3 29 84.4 22.3 78.6 22.3a125.8 125.8 0 0 0-29.2 4.2C27.7 32.7 11.3 49.8 4.3 71.5 0 84.4 0 98.4 0 98.4V128h78.6z" fill="#fff"></path><path d="M78.6 128c-57.8 0-66-70.9-29.2-91.5C62.6 24.2 78.6 22.3 78.6 22.3c35.3 0 49.4 35.4 35.3 49.4-14.2 14.2-49.4 35.3-35.3 56.3z"></path></svg>
                 <div>
                     <h1 contenteditable="true" class="text-2xl md:text-3xl font-bold text-white">Cohen Uchiha</h1>
-                    <p class="text-gray-400" contenteditable="true">Jounin / ANBU (Líder da Equipa de Assalto)</p>
+                    <p class="text-gray-400" contenteditable="true">Jounin Comandante</p>
                 </div>
             </div>
             <div class="text-center sm:text-right">
-                <p class="text-gray-400">Idade: <span contenteditable="true">15</span></p>
+                <p class="text-gray-400">Idade: <span contenteditable="true">18</span></p>
                 <p class="text-gray-400">Vila: <span contenteditable="true">Konohagakure</span></p>
             </div>
         </header>
@@ -222,7 +222,7 @@
                     </div>
                     <div id="kekkei-genkai-text" contenteditable="true" class="space-y-3 mr-32 sm:mr-48">
                         <p><strong class="text-white">Sharingan (3 Tomoe):</strong> Permite prever movimentos, copiar jutsus e ver o fluxo de chakra. Concede +2 em AGI, CON e PER.</p>
-                        <p class="text-red-400"><strong class="text-red-300">Mangekyou Sharingan:</strong> Despertado após trauma. O seu padrão é de três lâminas curvas. Concede acesso a jutsus lendários e eleva o bônus para +4 em AGI, CON e PER, mas cada utilização e manutenção causa dano extremo ao utilizador.</p>
+                        <p class="text-red-400"><strong class="text-red-300">Mangekyō Sharingan:</strong> Despertado para proteger a sua equipa. O uso contínuo, especialmente do Amaterasu, causou danos permanentes à visão do seu olho esquerdo, resultando em visão turva e dor. Kakashi Hatake o treinou por três anos para controlar o seu poder e mitigar os seus custos. Eleva o bônus para +4 em AGI, CON e PER.</p>
                         <p><strong class="text-white">Naturezas de Chakra:</strong> Katon (Fogo), Suiton (Água), Raiton (Relâmpago).</p>
                     </div>
                     <div class="mt-6 p-4 border border-gray-700 rounded-lg">
@@ -278,47 +278,47 @@
 
         // --- DATA ---
         let state = {
-            maxHp: 40,
-            currentHp: 40,
-            maxChakra: 58,
-            currentChakra: 58,
+            maxHp: 60,
+            currentHp: 60,
+            maxChakra: 78,
+            currentChakra: 78,
             levelUpPoints: 0,
             isSharinganActive: false,
             isMangekyouActive: false,
             hasMangekyou: true,
             attributes: {
-                for: { name: 'Força', value: 4 },
-                agi: { name: 'Agilidade', value: 7 },
-                vig: { name: 'Vigor', value: 6 },
-                int: { name: 'Inteligência', value: 7 },
-                con: { name: 'Controle', value: 9 },
-                per: { name: 'Percepção', value: 6 },
+                for: { name: 'Força', value: 6 },
+                agi: { name: 'Agilidade', value: 12 },
+                vig: { name: 'Vigor', value: 10 },
+                int: { name: 'Inteligência', value: 12 },
+                con: { name: 'Controle', value: 14 },
+                per: { name: 'Percepção', value: 9 },
             },
             skills: {
-                furtividade: { name: 'Furtividade', attr: 'agi', bonus: 4 },
-                rastreamento: { name: 'Rastreamento', attr: 'per', bonus: 2 },
-                acrobacia: { name: 'Acrobacia', attr: 'agi', bonus: 2 },
-                kenjutsu: { name: 'Kenjutsu', attr: 'agi', bonus: 3 },
-                analise: { name: 'Análise Tática', attr: 'int', bonus: 4 }
+                kenjutsu: { name: 'Kenjutsu', attr: 'agi', bonus: 6 },
+                analise: { name: 'Análise Tática', attr: 'int', bonus: 8 },
+                furtividade: { name: 'Furtividade', attr: 'agi', bonus: 7 },
+                acrobacia: { name: 'Acrobacia', attr: 'agi', bonus: 5 },
+                rastreamento: { name: 'Rastreamento', attr: 'per', bonus: 5 },
+                lideranca: { name: 'Liderança', attr: 'int', bonus: 6 }
             },
             inventory: [
-                { name: 'Tantō da ANBU', quantity: 1, type: 'Arma', description: 'Uma lâmina curta e resistente, ideal para combate próximo e assassinato silencioso.', damage: '1d6 + FOR' },
-                { name: 'Kunai', quantity: 10, type: 'Ferramenta', description: 'Lâmina de arremesso versátil, usada tanto como arma quanto como ferramenta.', damage: '1d4' },
-                { name: 'Papel Bomba', quantity: 5, type: 'Consumível', description: 'Um selo explosivo que pode ser detonado remotamente ou por proximidade.', damage: '3d6' },
-                { name: 'Pergaminho de Selamento (Cultista)', quantity: 1, type: 'Item de Missão', description: 'Contém o corpo selado do cultista capturado em Uzushio para interrogatório.'},
+                { name: 'Tantō "Corvo Sombrio"', quantity: 1, type: 'Arma', description: 'Uma lâmina de chakra personalizada, forjada para Cohen. Conduz seu chakra Raiton com eficiência mortal.', damage: '1d8 + AGI' },
+                { name: 'Kunai', quantity: 20, type: 'Ferramenta', description: 'Lâmina de arremesso versátil.', damage: '1d4' },
+                { name: 'Papel Bomba', quantity: 15, type: 'Consumível', description: 'Um selo explosivo que pode ser detonado remotamente ou por proximidade.', damage: '3d6' },
+                { name: 'Pergaminho de Selamento (Grande)', quantity: 2, type: 'Ferramenta', description: 'Permite selar armas, itens ou até mesmo jutsus.'},
             ],
             jutsus: [
-                { name: 'Katon: Goukakyuu no Jutsu', rank: 'C', cost: 6, hpCost: 0, damage: '3d8', desc: 'O jutsu assinatura do clã Uchiha. Uma massiva esfera de fogo.' },
-                { name: 'Katon: Hōsenka no Jutsu', rank: 'C', cost: 5, hpCost: 0, damage: '2d6', desc: 'Dispara múltiplas bolas de fogo menores, que podem esconder shurikens.' },
-                { name: 'Katon: Ryūka no Jutsu', rank: 'C', cost: 7, hpCost: 0, damage: '4d6', desc: 'Um fluxo de fogo intenso guiado por um fio ou outra superfície.' },
-                { name: 'Katon: Gōryūka no Jutsu', rank: 'B', cost: 10, hpCost: 0, damage: '4d10', desc: 'Cria uma cabeça de dragão de fogo maciça para incinerar um alvo.' },
+                { name: 'Katon: Gōka Mekkyaku', rank: 'S', cost: 20, hpCost: 0, damage: '8d8', desc: 'Uma torrente de fogo devastadora que cobre uma vasta área, uma técnica digna de um comandante.' },
+                { name: 'Katon: Goukakyuu no Jutsu', rank: 'C', cost: 6, hpCost: 0, damage: '3d8', desc: 'O jutsu assinatura do clã Uchiha, aperfeiçoado ao longo dos anos.' },
+                { name: 'Raikiri', rank: 'S', cost: 15, hpCost: 0, damage: '6d10', desc: 'Uma versão refinada e mais poderosa do Chidori, dominada sob a tutela de Kakashi. Requer Sharingan.' },
                 { name: 'Chidori', rank: 'A', cost: 13, hpCost: 0, damage: '5d10', desc: 'Concentração de chakra de raio na mão, usada para perfurar. Requer Sharingan.' },
+                { name: 'Raiton: Kage Bunshin', rank: 'A', cost: 10, hpCost: 0, damage: 'Nenhum', desc: 'Cria um clone de sombra infundido com chakra de raio, que eletrocuta o que o destrói.' },
                 { name: 'Suiton: Suijinheki', rank: 'B', cost: 9, hpCost: 0, damage: 'Nenhum', desc: 'Expele um jato de água da boca que forma uma barreira defensiva circular.' },
                 { name: 'Genjutsu: Sharingan', rank: '-', cost: 8, hpCost: 0, damage: 'Nenhum', desc: 'Usando contato visual, prende o alvo em uma ilusão paralisante.' },
-                { name: 'Jigoku Gouka no Jutsu (Original)', rank: 'A', cost: 15, hpCost: 0, damage: '2d8 + Paralisia', desc: 'Infunde o tantō com chakra de fogo e raio. O corte queima e paralisa.' },
-                { name: 'Amaterasu', rank: 'S', cost: 20, hpCost: 4, damage: '4d12', desc: 'Olho Esquerdo: Cria chamas negras inextinguíveis no ponto de foco. Causa grande desgaste e sangramento ocular. Requer Mangekyou.' },
-                { name: 'Tsukuyomi', rank: 'S', cost: 18, hpCost: 3, damage: 'Nenhum', desc: 'Olho Direito: Prende o alvo num genjutsu que distorce o tempo, causando trauma mental massivo. Requer Mangekyou.' },
-                { name: 'Susano\'o (Incompleto)', rank: 'S', cost: 25, hpCost: 5, damage: 'Nenhum', desc: 'Ambos os Olhos: Manifesta uma caixa torácica de chakra como defesa absoluta. Custo inicial alto, mais 5 PC e 1 PV por turno para manter ativo. Requer Mangekyou.' },
+                { name: 'Amaterasu', rank: 'S', cost: 20, hpCost: 4, damage: '4d12', desc: 'Olho Esquerdo: Invoca chamas negras inextinguíveis. O uso excessivo causa sangramento e danifica permanentemente a visão. Requer Mangekyou.' },
+                { name: 'Kagutsuchi: Escudo de Chamas', rank: 'S', cost: 15, hpCost: 3, damage: '2d12 retaliação', desc: 'Olho Direito: Manipula as chamas do Amaterasu para criar um escudo. Causa dano a quem atacar corpo a corpo. Requer Mangekyou.' },
+                { name: 'Susano\'o (Armadura)', rank: 'S', cost: 30, hpCost: 8, damage: '6d12', desc: 'Ambos os Olhos: Manifesta um guerreiro de chakra blindado com poder formidável. Custo de ativação, mais 8 PC e 2 PV por turno para manter. Requer Mangekyou.' },
             ],
             combat: {
                 isActive: false,
@@ -348,8 +348,13 @@
             try {
                 const docSnap = await getDoc(characterDocRef);
                 if (docSnap.exists()) {
-                    state = JSON.parse(docSnap.data().characterData);
-                    console.log("Personagem carregado da nuvem!");
+                    const loadedData = JSON.parse(docSnap.data().characterData);
+                    // **CORREÇÃO APLICADA AQUI**
+                    // Mescla o estado padrão com o estado carregado da nuvem.
+                    // Isso garante que novas propriedades (como hasMangekyou) sejam adicionadas
+                    // ao seu personagem, mesmo que o save seja de uma versão anterior.
+                    state = { ...state, ...loadedData };
+                    console.log("Personagem carregado e mesclado da nuvem!");
                 } else {
                     console.log("Nenhum personagem encontrado, criando um novo na nuvem.");
                     await saveState(); // Salva o estado inicial se não houver nenhum
@@ -358,6 +363,7 @@
                 console.error("Erro ao carregar personagem: ", e);
             }
         }
+
 
         // --- RENDER FUNCTIONS ---
         function renderAll() {
@@ -443,9 +449,8 @@
                 if (state.isMangekyouActive && isRelevantAttr) {
                     bonus = 4; // Mangekyou sobrepõe
                 }
-                attrValue += bonus;
-
-                const totalBonus = attrValue + skill.bonus;
+                
+                const totalBonus = attrValue + skill.bonus + bonus;
                 content += `
                     <div class="flex justify-between items-center p-2 bg-gray-900 rounded-md">
                         <div>
@@ -537,10 +542,10 @@
                 <div class="space-y-3">
                     <div class="p-3 bg-gray-900 rounded-lg">
                         <div class="flex justify-between items-center">
-                            <p class="font-bold text-white">Tantō da ANBU</p>
-                            <button onclick="rollDamage('1d6 + FOR', 'Tantō da ANBU')" class="btn btn-secondary">Rolar Dano</button>
+                            <p class="font-bold text-white">Tantō "Corvo Sombrio"</p>
+                            <button onclick="rollDamage('1d8 + AGI', 'Tantō Corvo Sombrio')" class="btn btn-secondary">Rolar Dano</button>
                         </div>
-                        <p class="text-sm text-red-400 mt-1">Dano: 1d6 + ${state.attributes.for.value} (perfurante)</p>
+                        <p class="text-sm text-red-400 mt-1">Dano: 1d8 + ${state.attributes.agi.value} (perfurante/raio)</p>
                     </div>
                     <div class="p-3 bg-gray-900 rounded-lg">
                         <div class="flex justify-between items-center">
@@ -559,7 +564,11 @@
             state.inventory.forEach((item, index) => {
                 const li = document.createElement('li');
                 li.className = 'p-3 bg-gray-900 rounded-lg';
-                let damageInfo = item.damage ? `<p class="text-xs text-red-400">Dano: ${item.damage.replace('FOR', state.attributes.for.value)}</p>` : '';
+                let damageInfo = '';
+                if (item.damage) {
+                   let resolvedDamage = item.damage.replace('FOR', state.attributes.for.value).replace('AGI', state.attributes.agi.value);
+                   damageInfo = `<p class="text-xs text-red-400">Dano: ${resolvedDamage}</p>`;
+                }
                 li.innerHTML = `
                     <details>
                         <summary class="flex justify-between items-center">
@@ -658,27 +667,32 @@
             const [type, key] = selectedValue.split('_');
             let totalBonus = 0;
             let name = '';
+            let baseValue = 0;
+            let bonusText = '';
 
             if (type === 'attr') {
                 const attr = state.attributes[key];
                 name = attr.name;
-                totalBonus = attr.value;
+                let dojutsuBonus = 0;
                 const isRelevantAttr = ['agi', 'con', 'per'].includes(key);
-                if (state.isSharinganActive && isRelevantAttr) totalBonus += 2;
-                if (state.isMangekyouActive && isRelevantAttr) totalBonus += 2; // +2 Adicional
-
+                if (state.isSharinganActive && isRelevantAttr) dojutsuBonus = 2;
+                if (state.isMangekyouActive && isRelevantAttr) dojutsuBonus = 4;
+                baseValue = attr.value;
+                totalBonus = baseValue + dojutsuBonus;
+                bonusText = `${baseValue} + ${dojutsuBonus}`;
             } else if (type === 'skill') {
                 const skill = state.skills[key];
                 name = skill.name;
                 const attrKey = skill.attr;
                 let attrValue = state.attributes[attrKey].value;
                 
-                let bonus = 0;
+                let dojutsuBonus = 0;
                 const isRelevantAttr = ['agi', 'con', 'per'].includes(attrKey);
-                if (state.isSharinganActive && isRelevantAttr) bonus = 2;
-                if (state.isMangekyouActive && isRelevantAttr) bonus = 4;
+                if (state.isSharinganActive && isRelevantAttr) dojutsuBonus = 2;
+                if (state.isMangekyouActive && isRelevantAttr) dojutsuBonus = 4;
                 
-                totalBonus = attrValue + skill.bonus + bonus;
+                totalBonus = attrValue + skill.bonus + dojutsuBonus;
+                bonusText = `${attrValue} (attr) + ${skill.bonus} (perícia) + ${dojutsuBonus} (dōjutsu)`;
             }
             
             const roll = Math.floor(Math.random() * 20) + 1;
@@ -688,6 +702,7 @@
                 <p class="text-lg font-bold mb-2">${name}</p>
                 <p class="text-5xl font-bold my-4">${total}</p>
                 <p class="text-sm text-gray-400">d20(${roll}) + Bónus(${totalBonus})</p>
+                <p class="text-xs text-gray-500 mt-1">${bonusText}</p>
             `;
             showRollResult(resultHtml);
         }
@@ -697,19 +712,21 @@
             const attrKey = skill.attr;
             let attrValue = state.attributes[attrKey].value;
 
-            let bonus = 0;
+            let dojutsuBonus = 0;
             const isRelevantAttr = ['agi', 'con', 'per'].includes(attrKey);
-            if (state.isSharinganActive && isRelevantAttr) bonus = 2;
-            if (state.isMangekyouActive && isRelevantAttr) bonus = 4;
+            if (state.isSharinganActive && isRelevantAttr) dojutsuBonus = 2;
+            if (state.isMangekyouActive && isRelevantAttr) dojutsuBonus = 4;
             
-            const totalBonus = attrValue + skill.bonus + bonus;
+            const totalBonus = attrValue + skill.bonus + dojutsuBonus;
             const roll = Math.floor(Math.random() * 20) + 1;
             const total = roll + totalBonus;
             
+            const bonusText = `${attrValue} (attr) + ${skill.bonus} (perícia) + ${dojutsuBonus} (dōjutsu)`;
             const resultHtml = `
                 <p class="text-lg font-bold mb-2">${skill.name}</p>
                 <p class="text-5xl font-bold my-4">${total}</p>
                 <p class="text-sm text-gray-400">d20(${roll}) + Bónus(${totalBonus})</p>
+                <p class="text-xs text-gray-500 mt-1">${bonusText}</p>
             `;
             showRollResult(resultHtml);
         }
@@ -718,7 +735,11 @@
             let totalDamage = 0;
             let rolls = [];
             
-            const parts = damageString.split('+').map(p => p.trim());
+            const resolvedDamageString = damageString
+                .replace('FOR', state.attributes.for.value)
+                .replace('AGI', state.attributes.agi.value);
+            
+            const parts = resolvedDamageString.split('+').map(p => p.trim());
             
             const dicePart = parts.find(p => p.includes('d'));
             if (dicePart) {
@@ -732,9 +753,7 @@
 
             parts.forEach(part => {
                 if (!part.includes('d')) {
-                    if (part.toUpperCase() === 'FOR') {
-                        totalDamage += state.attributes.for.value;
-                    } else if (!isNaN(parseInt(part))) {
+                     if (!isNaN(parseInt(part))) {
                         totalDamage += parseInt(part);
                     }
                 }
@@ -743,7 +762,7 @@
             const resultHtml = `
                 <p class="text-lg font-bold mb-2">Dano: ${sourceName}</p>
                 <p class="text-5xl font-bold my-4 text-red-400">${totalDamage}</p>
-                <p class="text-sm text-gray-400">${damageString}</p>
+                <p class="text-sm text-gray-400">${resolvedDamageString}</p>
                 <p class="text-xs text-gray-500 mt-2">Rolagens: ${rolls.join(', ')}</p>
             `;
             showRollResult(resultHtml);
@@ -786,7 +805,7 @@
                  return;
             }
 
-            if (jutsu.name.includes('Amaterasu') || jutsu.name.includes('Tsukuyomi') || jutsu.name.includes('Susano')) {
+            if (jutsu.desc.includes('Requer Mangekyou')) {
                 if (!state.isMangekyouActive) {
                     alert('É preciso ativar o Mangekyou Sharingan para usar este jutsu!');
                     return;
