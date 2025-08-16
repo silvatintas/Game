@@ -9,112 +9,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
-            color: #d1d5db; /* text-gray-300 */
-        }
-        .card {
-            background-color: #1f2937; /* bg-gray-800 */
-            border: 1px solid #374151; /* border-gray-700 */
-            border-radius: 0.75rem; /* rounded-xl */
-        }
-        .card-title {
-            color: #f3f4f6; /* text-gray-100 */
-            font-weight: 700;
-            border-bottom: 1px solid #374151; /* border-gray-700 */
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        [contenteditable]:focus {
-            outline: 2px solid #4f46e5; /* focus:ring-indigo-500 */
-            background-color: #374151;
-            border-radius: 0.25rem;
-            padding: 0.25rem;
-        }
-        .btn {
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-        }
-        .btn-primary {
-            background-color: #4f46e5; /* bg-indigo-600 */
-            color: white;
-        }
-        .btn-primary:hover {
-            background-color: #4338ca; /* hover:bg-indigo-700 */
-        }
-        .btn-success {
-            background-color: #16a34a; /* bg-green-600 */
-            color: white;
-        }
-        .btn-success:hover {
-            background-color: #15803d; /* hover:bg-green-700 */
-        }
-        .btn-danger {
-            background-color: #dc2626; /* bg-red-600 */
-            color: white;
-        }
-        .btn-danger:hover {
-            background-color: #b91c1c; /* hover:bg-red-700 */
-        }
-        .btn-secondary {
-            background-color: #374151;
-            color: #d1d5db;
-        }
-        .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-        .progress-bar-container {
-            background-color: #374151; /* bg-gray-700 */
-            border-radius: 9999px;
-            overflow: hidden;
-            height: 1.25rem;
-        }
-        .progress-bar {
-            transition: width 0.5s ease-in-out;
-            text-align: center;
-            color: white;
-            font-weight: 500;
-            font-size: 0.75rem;
-            line-height: 1.25rem;
-        }
-        .uchiha-fan {
-            width: 2.5rem;
-            height: 2.5rem;
-            fill: #ef4444; /* fill-red-500 */
-        }
-        .form-input {
-            background-color: #374151;
-            border: 1px solid #4b5563;
-            border-radius: 0.375rem;
-            padding: 0.5rem;
-            width: 100%;
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 2px #4f46e5;
-        }
-        details > summary {
-            cursor: pointer;
-            list-style: none;
-        }
-        details > summary::-webkit-details-marker {
-            display: none;
-        }
-        .hidden {
-            display: none;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #d1d5db; }
+        .card { background-color: #1f2937; border: 1px solid #374151; border-radius: 0.75rem; }
+        .card-title { color: #f3f4f6; font-weight: 700; border-bottom: 1px solid #374151; padding-bottom: 0.75rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
+        [contenteditable]:focus { outline: 2px solid #4f46e5; background-color: #374151; border-radius: 0.25rem; padding: 0.25rem; }
+        .btn { padding: 0.25rem 0.75rem; border-radius: 0.375rem; font-weight: 500; transition: all 0.2s; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; }
+        .btn-primary { background-color: #4f46e5; color: white; }
+        .btn-primary:hover { background-color: #4338ca; }
+        .btn-success { background-color: #16a34a; color: white; }
+        .btn-success:hover { background-color: #15803d; }
+        .btn-danger { background-color: #dc2626; color: white; }
+        .btn-danger:hover { background-color: #b91c1c; }
+        .btn-secondary { background-color: #374151; color: #d1d5db; }
+        .btn-secondary:hover { background-color: #4b5563; }
+        .progress-bar-container { background-color: #374151; border-radius: 9999px; overflow: hidden; height: 1.25rem; }
+        .progress-bar { transition: width 0.5s ease-in-out; text-align: center; color: white; font-weight: 500; font-size: 0.75rem; line-height: 1.25rem; }
+        .uchiha-fan { width: 2.5rem; height: 2.5rem; fill: #ef4444; }
+        .form-input { background-color: #374151; border: 1px solid #4b5563; border-radius: 0.375rem; padding: 0.5rem; width: 100%; }
+        .form-input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 2px #4f46e5; }
+        details > summary { cursor: pointer; list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        .hidden { display: none; }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
@@ -142,22 +57,24 @@
                         <label class="font-bold text-white">Pontos de Vida (PV)</label>
                         <div class="progress-bar-container mt-2"><div id="hp-bar" class="progress-bar bg-red-600"></div></div>
                         <div class="flex items-center justify-between mt-2">
-                            <div class="flex items-center gap-2">
-                                <button onclick="updateResource('hp', -1)" class="btn btn-danger">-1</button>
-                                <button onclick="updateResource('hp', 1)" class="btn btn-primary">+1</button>
+                             <div class="flex items-center gap-2 w-full">
+                                <button onclick="adjustResource('hp', 'subtract')" class="btn btn-danger">-</button>
+                                <input type="number" id="hp-adjust-amount" class="form-input w-full text-center" value="1" min="1">
+                                <button onclick="adjustResource('hp', 'add')" class="btn btn-primary">+</button>
                             </div>
-                            <span id="hp-text" class="font-mono text-lg font-bold text-white"></span>
+                            <span id="hp-text" class="font-mono text-lg font-bold text-white ml-4 whitespace-nowrap"></span>
                         </div>
                     </div>
                     <div>
                         <label class="font-bold text-white">Pontos de Chakra (PC)</label>
                         <div class="progress-bar-container mt-2"><div id="chakra-bar" class="progress-bar bg-blue-600"></div></div>
                         <div class="flex items-center justify-between mt-2">
-                            <div class="flex items-center gap-2">
-                                <button onclick="updateResource('chakra', -1)" class="btn btn-danger">-1</button>
-                                <button onclick="updateResource('chakra', 1)" class="btn btn-primary">+1</button>
+                            <div class="flex items-center gap-2 w-full">
+                                <button onclick="adjustResource('chakra', 'subtract')" class="btn btn-danger">-</button>
+                                <input type="number" id="chakra-adjust-amount" class="form-input w-full text-center" value="5" min="1">
+                                <button onclick="adjustResource('chakra', 'add')" class="btn btn-primary">+</button>
                             </div>
-                            <span id="chakra-text" class="font-mono text-lg font-bold text-white"></span>
+                            <span id="chakra-text" class="font-mono text-lg font-bold text-white ml-4 whitespace-nowrap"></span>
                         </div>
                     </div>
                 </div>
@@ -165,6 +82,22 @@
                 <div class="card p-6">
                     <h2 class="card-title">Atributos</h2>
                     <div id="attributes-list" class="grid grid-cols-1 gap-3 text-lg"></div>
+                </div>
+
+                <div class="card p-6">
+                    <h2 class="card-title">Kekkei Genkai & Dōjutsu</h2>
+                    <div class="space-y-4">
+                        <div>
+                             <p class="font-bold text-white">Sharingan (Três Tomoe)</p>
+                             <p class="text-xs text-gray-400">Custo: 1 PC/turno. Bônus: +2 em Percepção.</p>
+                             <button id="sharingan-toggle" onclick="toggleSharingan()" class="btn btn-secondary w-full mt-2">Ativar Sharingan</button>
+                        </div>
+                         <div>
+                             <p class="font-bold text-white">Mangekyō Sharingan</p>
+                             <p class="text-xs text-red-400">Custo: 4 PC/turno. Bônus: +4 em Percepção.</p>
+                             <button id="mangekyou-toggle" onclick="toggleMangekyou()" class="btn btn-secondary w-full mt-2">Ativar Mangekyō</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -217,14 +150,15 @@
     </div>
 
     <script type="module">
-        // Import Firebase (configuração omitida por segurança, mas funcional)
-        
         // --- DATA ---
         let state = {
             maxHp: 75,
             currentHp: 75,
             maxChakra: 120,
             currentChakra: 120,
+            isSharinganActive: false,
+            isMangekyouActive: false,
+            hasMangekyou: true,
             characterInfo: {
                 identificacao: `<p><b>Nome Completo:</b> Cohen Uchiha</p><p><b>Idade:</b> 18 Anos</p><p><b>Clã:</b> Uchiha</p><p><b>Afiliação:</b> Konohagakure (Aldeia da Folha)</p><p><b>Rank:</b> Jounin Comandante</p><p><b>Título(s):</b> Capitão do Esquadrão Kage; "O Corvo de Olhos Vermelhos"</p>`,
                 aparencia: `Aos 18 anos, Cohen já não tem a aparência de um rapaz prodígio, mas sim a de um jovem homem forjado em batalhas. Ele é alto, com uma constituição magra e musculada, construída para velocidade e agilidade. O seu cabelo preto, típico do clã Uchiha, é um pouco mais comprido do que nos seus dias de ANBU, com franjas que por vezes lhe caem sobre os olhos.<br>O seu rosto é pálido e de traços finos, geralmente com uma expressão calma e analítica. Os seus olhos de ônix são a sua característica mais marcante; eles carregam uma intensidade e uma sabedoria que desmentem a sua idade. O seu olho esquerdo, permanentemente danificado pelo uso do Mangekyō, tem uma ligeira e quase impercetível turvação na íris, visível apenas sob luz forte. Ele carrega pequenas cicatrizes da sua carreira, incluindo uma fina linha na sua bochecha e outra no seu antebraço, lembretes das suas batalhas mais difíceis.`,
@@ -233,12 +167,8 @@
                 historia: `Nascido à sombra do massacre do seu clã, Cohen foi criado para ser um prodígio, destinado a restaurar a honra do nome Uchiha através de uma lealdade inabalável a Konoha. A sua ascensão foi meteórica, culminando no seu recrutamento para a ANBU com o codinome "Corvo".<br>A sua vida mudou para sempre durante a "Missão do Semeador", onde uma simples tarefa de recuperação o arrastou para uma conspiração ligada aos restos da organização Raiz de Danzou. Forçado a tornar-se um líder, ele aprendeu a confiar nos seus companheiros, Hinami Hyuuga e Yoji Aburame. A missão culminou num ataque desesperado ao laboratório principal do Semeador, onde, à beira da morte e a lutar para proteger Hinami, Cohen despertou o Mangekyō Sharingan. Ele usou o poder proibido do Amaterasu para derrotar o seu inimigo, um ato que lhe custou a visão do seu olho esquerdo e quase a sua vida.<br>Após uma longa recuperação, ele foi promovido a Jounin Comandante e colocado sob a tutela de Kakashi Hatake. Nos três anos que se seguiram, ele treinou para controlar o seu novo poder, liderou a sua equipa para desmantelar os últimos vestígios da Raiz, e solidificou a sua reputação como um dos heróis mais formidáveis, embora discretos, de Konoha.`
             },
             attributes: {
-                for: { name: 'Força', value: 6 },
-                agi: { name: 'Agilidade', value: 12 },
-                vig: { name: 'Vigor', value: 10 },
-                int: { name: 'Inteligência', value: 12 },
-                con: { name: 'Controle', value: 14 },
-                per: { name: 'Percepção', value: 9 },
+                for: { name: 'Força', value: 6 }, agi: { name: 'Agilidade', value: 12 }, vig: { name: 'Vigor', value: 10 },
+                int: { name: 'Inteligência', value: 12 }, con: { name: 'Controle', value: 14 }, per: { name: 'Percepção', value: 9 },
             },
             inventory: [
                 { name: 'Tantō "Corvo Sombrio"', quantity: 1, type: 'Arma', damage: '1d8 + AGI' },
@@ -246,17 +176,19 @@
                 { name: 'Papel Bomba', quantity: 15, type: 'Consumível', damage: '3d6' },
             ],
             jutsus: [
-                 { name: 'Amaterasu', rank: 'S', cost: 30, hpCost: 5, damage: '10d6', desc: 'Olho Esquerdo: Chamas negras inextinguíveis. Causa dano de ricochete.' },
-                 { name: 'Magen: Shinen no Kangoku', rank: 'S', cost: 35, hpCost: 5, damage: 'Especial', desc: 'Olho Direito: Genjutsu paralisante (Vigor CD 25).' },
-                 { name: 'Susanoo (Caixa Torácica)', rank: 'S', cost: 25, damage: '4d12', desc: 'Manutenção: 10 PC/turno. Concede 75 PV temporários.' },
-                 { name: 'Chidori', rank: 'A', cost: 12, damage: '8d10', desc: 'Concentração perfurante de chakra de raio na mão.' },
+                { name: 'Amaterasu', rank: 'S', cost: 30, hpCost: 5, damage: '10d6', desc: 'Olho Esquerdo: Conjura chamas negras inextinguíveis. Causa 5 de dano de ricochete e degrada a visão.' },
+                { name: 'Magen: Shinen no Kangoku', rank: 'S', cost: 35, hpCost: 5, damage: 'Especial', desc: 'Olho Direito: Genjutsu. Alvo rola Vigor (CD 25) ou fica Incapacitado por 1d4 turnos.' },
+                { name: 'Susanoo (Caixa Torácica)', rank: 'S', cost: 25, damage: '4d12', desc: 'Manutenção: 10 PC/turno. Concede 75 PV temporários. O ataque usa a sua rolagem de Controle.' },
+                { name: 'Chidori', rank: 'A', cost: 12, damage: '8d10', desc: 'Uma concentração perfurante de chakra de raio na mão.' },
+                { name: 'Lança Afiada de Chidori', rank: 'A', cost: 15, damage: '6d8', desc: 'Estende o Chidori numa lança com alcance de 10 metros.' },
+                { name: 'Parede de Trovão', rank: 'B', cost: 10, damage: '4d6', desc: 'Cria uma parede elétrica (5x3m) por 3 turnos. Causa dano e paralisia (Vigor CD 16).' },
+                { name: 'Técnica da Grande Bola de Fogo', rank: 'C', cost: 5, damage: '4d6', desc: 'Dispara uma grande esfera de fogo em área.' },
+                { name: 'Técnica do Grande Dragão de Fogo', rank: 'B', cost: 10, damage: '6d8', desc: 'Cria uma cabeça de dragão de fogo para incinerar um alvo.' },
+                { name: 'Técnica do Fogo do Inferno', rank: 'B', cost: 3, damage: '+1d6', desc: 'Custo por turno. Infunde o tantō com Fogo/Raio, adicionando +1d6 de dano aos ataques.' },
+                { name: 'Técnica do Piscar Corporal', rank: 'D', cost: 2, damage: 'Nenhum', desc: 'Move-se a alta velocidade para um ponto visível em 30m. Ação de movimento.' },
+                { name: 'Estilo de Saque Rápido: Lua Enevoada', rank: 'A', cost: 0, damage: 'Crítico', desc: 'Uma vez por combate. Ataque de saque com +5 para acertar; se acertar, é um acerto crítico.' }
             ],
-            combat: {
-                isActive: false,
-                turn: 0,
-                enemies: [],
-                allies: []
-            }
+            combat: { isActive: false, turn: 0, enemies: [], allies: [] }
         };
 
         // --- RENDER FUNCTIONS ---
@@ -265,16 +197,15 @@
             renderAttributes();
             renderResources();
             renderInventory();
+            renderDojutsuButtons();
             renderJutsus();
             renderBasicAttacks();
         }
         
         function renderCharacterInfo() {
-            document.getElementById('info-identificacao').innerHTML = state.characterInfo.identificacao;
-            document.getElementById('info-aparencia').innerHTML = state.characterInfo.aparencia;
-            document.getElementById('info-vestuario').innerHTML = state.characterInfo.vestuario;
-            document.getElementById('info-personalidade').innerHTML = state.characterInfo.personalidade;
-            document.getElementById('info-historia').innerHTML = state.characterInfo.historia;
+            for (const key in state.characterInfo) {
+                document.getElementById(`info-${key}`).innerHTML = state.characterInfo[key];
+            }
         }
 
         function renderAttributes() {
@@ -282,18 +213,43 @@
             list.innerHTML = '';
             for (const key in state.attributes) {
                 const attr = state.attributes[key];
+                let bonus = 0;
+                if (key === 'per') {
+                    if (state.isMangekyouActive) bonus = 4;
+                    else if (state.isSharinganActive) bonus = 2;
+                }
+                const totalValue = attr.value + bonus;
                 const element = document.createElement('div');
                 element.className = 'flex justify-between items-center';
-                element.innerHTML = `<span>${attr.name} (${key.toUpperCase()})</span><span class="font-bold text-white text-xl">${attr.value}</span>`;
+                element.innerHTML = `<span>${attr.name} (${key.toUpperCase()})</span><span class="font-bold text-white text-xl">${totalValue} ${bonus > 0 ? `<span class='text-sm text-red-400'>(+${bonus})</span>` : ''}</span>`;
                 list.appendChild(element);
             }
         }
 
         function renderResources() {
-            document.getElementById('hp-text').textContent = `${state.currentHp} / ${state.maxHp}`;
+            document.getElementById('hp-text').textContent = `${state.currentHp}/${state.maxHp}`;
             document.getElementById('hp-bar').style.width = `${(state.currentHp / state.maxHp) * 100}%`;
-            document.getElementById('chakra-text').textContent = `${state.currentChakra} / ${state.maxChakra}`;
+            document.getElementById('chakra-text').textContent = `${state.currentChakra}/${state.maxChakra}`;
             document.getElementById('chakra-bar').style.width = `${(state.currentChakra / state.maxChakra) * 100}%`;
+        }
+        
+        function renderDojutsuButtons() {
+            const sharinganBtn = document.getElementById('sharingan-toggle');
+            const mangekyouBtn = document.getElementById('mangekyou-toggle');
+            if (state.isMangekyouActive) {
+                mangekyouBtn.textContent = 'Desativar Mangekyō';
+                mangekyouBtn.classList.replace('btn-secondary', 'btn-danger');
+            } else {
+                mangekyouBtn.textContent = 'Ativar Mangekyō';
+                mangekyouBtn.classList.replace('btn-danger', 'btn-secondary');
+            }
+            if (state.isSharinganActive) {
+                sharinganBtn.textContent = 'Desativar Sharingan';
+                sharinganBtn.classList.replace('btn-secondary', 'btn-danger');
+            } else {
+                sharinganBtn.textContent = 'Ativar Sharingan';
+                sharinganBtn.classList.replace('btn-danger', 'btn-secondary');
+            }
         }
 
         function renderInventory() {
@@ -317,8 +273,8 @@
                 element.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
-                            <h4 class="font-bold text-white">${jutsu.name}</h4>
-                            <p class="text-sm text-gray-400">Rank: ${jutsu.rank} | Custo: ${costText}</p>
+                            <h4 class="font-bold text-white">${jutsu.name} <span class="text-xs font-normal text-gray-400">(Rank ${jutsu.rank})</span></h4>
+                            <p class="text-sm text-gray-400">Custo: ${costText} | Dano: <span class="text-red-400 font-semibold">${jutsu.damage}</span></p>
                         </div>
                         <button onclick="useJutsu(${index})" class="btn btn-primary text-xs">Usar</button>
                     </div>
@@ -332,18 +288,8 @@
             document.getElementById('basic-attacks-card').innerHTML = `
                 <h2 class="card-title">Ataques Básicos</h2>
                 <div class="space-y-3">
-                    <div class="p-3 bg-gray-900 rounded-lg flex justify-between items-center">
-                        <div>
-                           <p class="font-bold text-white">Tantō "Corvo Sombrio"</p>
-                           <p class="text-sm text-red-400 mt-1">Dano: 1d8 + AGI</p>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-gray-900 rounded-lg flex justify-between items-center">
-                        <div>
-                            <p class="font-bold text-white">Golpe Desarmado</p>
-                            <p class="text-sm text-red-400 mt-1">Dano: 1d4 + FOR</p>
-                        </div>
-                    </div>
+                    <div class="p-3 bg-gray-900 rounded-lg"><p><span class="font-bold text-white">Tantō "Corvo Sombrio":</span> <span class="text-red-400">Dano: 1d8 + AGI</span></p></div>
+                    <div class="p-3 bg-gray-900 rounded-lg"><p><span class="font-bold text-white">Golpe Desarmado:</span> <span class="text-red-400">Dano: 1d4 + FOR</span></p></div>
                 </div>
             `;
         }
@@ -363,155 +309,125 @@
                     <div>
                         <h3 class="font-bold text-xl text-green-400 mb-2">Aliados</h3>
                         <div id="ally-list" class="space-y-3 mb-4"></div>
-                        <div class="p-4 border border-gray-700 rounded-lg">
-                            <div class="flex gap-2">
-                                <input type="text" id="ally-name" placeholder="Nome do Aliado" class="form-input w-2/3">
-                                <input type="number" id="ally-hp" placeholder="HP" class="form-input w-1/3">
-                                <button onclick="addAlly()" class="btn btn-success">Add</button>
-                            </div>
-                        </div>
+                        <div class="p-4 border border-gray-700 rounded-lg"><div class="flex gap-2"><input type="text" id="ally-name" placeholder="Nome" class="form-input w-2/3"><input type="number" id="ally-hp" placeholder="HP" class="form-input w-1/3"><button onclick="addAlly()" class="btn btn-success">Add</button></div></div>
                     </div>
                     <div>
                         <h3 class="font-bold text-xl text-red-400 mb-2">Inimigos</h3>
                         <div id="enemy-list" class="space-y-3 mb-4"></div>
-                        <div class="p-4 border border-gray-700 rounded-lg">
-                            <div class="flex gap-2">
-                                <input type="text" id="enemy-name" placeholder="Nome do Inimigo" class="form-input w-2/3">
-                                <input type="number" id="enemy-hp" placeholder="HP" class="form-input w-1/3">
-                                <button onclick="addEnemy()" class="btn btn-danger">Add</button>
-                            </div>
-                        </div>
+                        <div class="p-4 border border-gray-700 rounded-lg"><div class="flex gap-2"><input type="text" id="enemy-name" placeholder="Nome" class="form-input w-2/3"><input type="number" id="enemy-hp" placeholder="HP" class="form-input w-1/3"><button onclick="addEnemy()" class="btn btn-danger">Add</button></div></div>
                     </div>
-                </div>
-            `;
-            renderAllies();
-            renderEnemies();
+                </div>`;
+            renderCombatantList('ally-list', state.combat.allies, 'ally');
+            renderCombatantList('enemy-list', state.combat.enemies, 'enemy');
         }
 
         function renderCombatantList(listElementId, combatants, type) {
             const list = document.getElementById(listElementId);
             list.innerHTML = '';
-            combatants.forEach((combatant, index) => {
+            combatants.forEach((c, index) => {
                 const li = document.createElement('div');
-                const hpPercentage = (combatant.currentHp / combatant.maxHp) * 100;
                 li.className = 'p-3 bg-gray-900 rounded-lg';
                 li.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <p class="font-bold text-white">${combatant.name}</p>
-                        <button onclick="removeCombatant('${type}', ${index})" class="btn btn-danger text-xs">x</button>
-                    </div>
-                    <div class="progress-bar-container mb-2">
-                        <div class="progress-bar ${type === 'ally' ? 'bg-green-600' : 'bg-red-600'}" style="width: ${hpPercentage}%">${combatant.currentHp}</div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <input type="number" id="damage-input-${type}-${index}" placeholder="Dano/Cura" class="form-input w-full">
-                        <button onclick="damageCombatant('${type}', ${index})" class="btn btn-secondary">Aplicar</button>
-                    </div>
-                `;
+                    <div class="flex justify-between items-center mb-2"><p class="font-bold text-white">${c.name}</p><button onclick="removeCombatant('${type}', ${index})" class="btn btn-danger text-xs">x</button></div>
+                    <div class="progress-bar-container mb-2"><div class="progress-bar ${type === 'ally' ? 'bg-green-600' : 'bg-red-600'}" style="width: ${ (c.currentHp / c.maxHp) * 100}%">${c.currentHp}</div></div>
+                    <div class="flex items-center gap-2"><input type="number" id="damage-input-${type}-${index}" placeholder="Dano/Cura" class="form-input w-full"><button onclick="damageCombatant('${type}', ${index})" class="btn btn-secondary">Aplicar</button></div>`;
                 list.appendChild(li);
             });
         }
         
-        window.renderAllies = () => renderCombatantList('ally-list', state.combat.allies, 'ally');
-        window.renderEnemies = () => renderCombatantList('enemy-list', state.combat.enemies, 'enemy');
-        
         // --- LOGIC FUNCTIONS ---
-        function saveState() {
-            // Esta função pode ser expandida para salvar no localStorage ou Firebase
-            console.log("Estado salvo (simulado).");
+        window.updateResource = (type, amount) => {
+            if (type === 'hp') state.currentHp = Math.max(0, Math.min(state.maxHp, state.currentHp + amount));
+            else if (type === 'chakra') state.currentChakra = Math.max(0, Math.min(state.maxChakra, state.currentChakra + amount));
+            renderResources();
         }
         
-        window.updateResource = function(type, amount) {
-            if (type === 'hp') {
-                state.currentHp = Math.max(0, Math.min(state.maxHp, state.currentHp + amount));
-            } else if (type === 'chakra') {
-                state.currentChakra = Math.max(0, Math.min(state.maxChakra, state.currentChakra + amount));
-            }
-            renderResources();
-            saveState();
+        window.adjustResource = (type, operation) => {
+            const input = document.getElementById(`${type}-adjust-amount`);
+            let amount = parseInt(input.value, 10) || 1;
+            updateResource(type, operation === 'subtract' ? -amount : amount);
         }
 
-        window.useJutsu = function(jutsuIndex) {
-            const jutsu = state.jutsus[jutsuIndex];
-            if (state.currentChakra < jutsu.cost) {
-                alert('Chakra insuficiente!');
-                return;
-            }
-             if (jutsu.hpCost && state.currentHp <= jutsu.hpCost) {
-                alert('Vida insuficiente para o custo do jutsu!');
-                return;
-            }
-            updateResource('chakra', -jutsu.cost);
-            if(jutsu.hpCost) updateResource('hp', -jutsu.hpCost);
+        window.useJutsu = (index) => {
+            const j = state.jutsus[index];
+            if (state.currentChakra < j.cost) return alert('Chakra insuficiente!');
+            if (j.hpCost && state.currentHp <= j.hpCost) return alert('Vida insuficiente!');
+            updateResource('chakra', -j.cost);
+            if (j.hpCost) updateResource('hp', -j.hpCost);
+        }
+        
+        window.toggleSharingan = () => {
+            state.isSharinganActive = !state.isSharinganActive;
+            if (!state.isSharinganActive) state.isMangekyouActive = false; // Desativa Mangekyou se o Sharingan base for desligado
+            renderDojutsuButtons();
+            renderAttributes();
+        }
+
+        window.toggleMangekyou = () => {
+            if (!state.hasMangekyou) return alert("Mangekyou não despertado.");
+            state.isMangekyouActive = !state.isMangekyouActive;
+            if (state.isMangekyouActive) state.isSharinganActive = true; // Ativa o base se o Mangekyou for ligado
+            renderDojutsuButtons();
+            renderAttributes();
         }
 
         // --- COMBAT FUNCTIONS ---
-        window.startCombat = function() {
+        window.startCombat = () => {
             state.combat.isActive = true;
             state.combat.turn = 1;
             document.getElementById('peacetime-view').classList.add('hidden');
             document.getElementById('combat-view').classList.remove('hidden');
             renderCombatTracker();
-            saveState();
         }
 
-        window.endCombat = function() {
+        window.endCombat = () => {
             state.combat.isActive = false;
             document.getElementById('combat-view').classList.add('hidden');
             document.getElementById('peacetime-view').classList.remove('hidden');
-            saveState();
         }
         
-        window.nextTurn = function() {
+        window.nextTurn = () => {
             state.combat.turn++;
+            if (state.isMangekyouActive) updateResource('chakra', -4);
+            else if (state.isSharinganActive) updateResource('chakra', -1);
             renderCombatTracker();
-            saveState();
         }
 
-        function addCombatant(type) {
-            const nameInput = document.getElementById(`${type}-name`);
-            const hpInput = document.getElementById(`${type}-hp`);
-            const name = nameInput.value.trim() || (type === 'ally' ? 'Aliado' : 'Inimigo');
-            const hp = parseInt(hpInput.value, 10) || 10;
-            const combatantArray = type === 'ally' ? state.combat.allies : state.combat.enemies;
-            combatantArray.push({ name: `${name} #${combatantArray.length + 1}`, maxHp: hp, currentHp: hp });
-            nameInput.value = '';
-            hpInput.value = '';
-            if(type === 'ally') renderAllies(); else renderEnemies();
-            saveState();
+        const addCombatant = (type) => {
+            const name = document.getElementById(`${type}-name`).value.trim() || (type === 'ally' ? 'Aliado' : 'Inimigo');
+            const hp = parseInt(document.getElementById(`${type}-hp`).value, 10) || 10;
+            const list = state.combat[type === 'ally' ? 'allies' : 'enemies'];
+            list.push({ name: `${name} #${list.length + 1}`, maxHp: hp, currentHp: hp });
+            document.getElementById(`${type}-name`).value = '';
+            document.getElementById(`${type}-hp`).value = '';
+            renderCombatantList(`${type}-list`, list, type);
         }
-
         window.addAlly = () => addCombatant('ally');
         window.addEnemy = () => addCombatant('enemy');
 
-        window.damageCombatant = function(type, index) {
+        window.damageCombatant = (type, index) => {
             const input = document.getElementById(`damage-input-${type}-${index}`);
             const damage = parseInt(input.value, 10);
             if (!isNaN(damage)) {
-                const combatant = (type === 'ally' ? state.combat.allies : state.combat.enemies)[index];
-                combatant.currentHp = Math.max(0, combatant.currentHp - damage);
+                const list = state.combat[type === 'ally' ? 'allies' : 'enemies'];
+                list[index].currentHp = Math.max(0, list[index].currentHp - damage);
                 input.value = '';
-                if(type === 'ally') renderAllies(); else renderEnemies();
-                saveState();
+                renderCombatantList(`${type}-list`, list, type);
             }
         }
 
-        window.removeCombatant = function(type, index) {
-            const combatantArray = type === 'ally' ? state.combat.allies : state.combat.enemies;
-            combatantArray.splice(index, 1);
-            if(type === 'ally') renderAllies(); else renderEnemies();
-            saveState();
+        window.removeCombatant = (type, index) => {
+            const list = state.combat[type === 'ally' ? 'allies' : 'enemies'];
+            list.splice(index, 1);
+            renderCombatantList(`${type}-list`, list, type);
         }
 
         // --- INITIALIZATION ---
         window.onload = () => {
             renderAll();
-            // Salvar alterações nos campos de texto
             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
                 el.addEventListener('blur', (e) => {
-                    const id = e.target.id.split('-')[1];
-                    state.characterInfo[id] = e.target.innerHTML;
-                    saveState();
+                    state.characterInfo[e.target.id.split('-')[1]] = e.target.innerHTML;
                 });
             });
         };
