@@ -349,12 +349,15 @@
                 const docSnap = await getDoc(characterDocRef);
                 if (docSnap.exists()) {
                     const loadedData = JSON.parse(docSnap.data().characterData);
-                    // **CORREÇÃO APLICADA AQUI**
-                    // Mescla o estado padrão com o estado carregado da nuvem.
-                    // Isso garante que novas propriedades (como hasMangekyou) sejam adicionadas
-                    // ao seu personagem, mesmo que o save seja de uma versão anterior.
+                    
                     state = { ...state, ...loadedData };
                     console.log("Personagem carregado e mesclado da nuvem!");
+
+                    // **CORREÇÃO DEFINITIVA APLICADA AQUI**
+                    // Garante que a ficha reconheça o Mangekyou como desperto,
+                    // sobrescrevendo qualquer dado antigo incorreto.
+                    state.hasMangekyou = true;
+
                 } else {
                     console.log("Nenhum personagem encontrado, criando um novo na nuvem.");
                     await saveState(); // Salva o estado inicial se não houver nenhum
@@ -647,7 +650,7 @@
                     <p class="mt-2 text-gray-300 text-sm">${jutsu.desc}</p>
                     <div class="flex gap-2 mt-3">
                         <button onclick="useJutsu(${index})" class="btn btn-primary w-1/2">Usar Jutsu</button>
-                        ${jutsu.damage.toLowerCase() !== 'nenhum' ? `<button onclick="rollDamage('${jutsu.damage}', '${jutsu.name}')" class="btn btn-secondary w-1/2">Rolar Dano</button>` : ''}
+                        ${jutsu.damage.toLowerCase() !== 'nenhum' && !jutsu.damage.includes('retaliação') ? `<button onclick="rollDamage('${jutsu.damage}', '${jutsu.name}')" class="btn btn-secondary w-1/2">Rolar Dano</button>` : ''}
                     </div>
                 `;
                 list.appendChild(element);
